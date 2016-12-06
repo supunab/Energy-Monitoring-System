@@ -1,0 +1,22 @@
+{
+  "name": "energy-monitoring-system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smb564/Energy-Monitoring-System.git"
+  },
+  "author": "Prabod Rathnayaka, Supun Abeysinghe, Viran Malaka, Eranga Dulshan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/smb564/Energy-Monitoring-System/issues"
+  },
+  "homepage": "https://github.com/smb564/Energy-Monitoring-System#readme"
+}
