@@ -18,6 +18,9 @@ export class CharField extends Field{
     set(char){
         this.char = char;
     }
+    get(){
+        return this.char;
+    }
 }
 
 
@@ -30,6 +33,9 @@ export class IntegerField extends Field{
     set(int){
         this.int = parseInt(int);
     }
+    get(){
+        return this.int;
+    }
 }
 
 export class FloatField extends Field{
@@ -41,6 +47,9 @@ export class FloatField extends Field{
     set(float){
         this.float = parseFloat(float);
     }
+    get(){
+        return this.float;
+    }
 }
 
 export class BooleanField extends Field{
@@ -49,6 +58,9 @@ export class BooleanField extends Field{
         this.boolean = null;
     }
     set(boolean){
-        this.boolean = parseFloat(float);
+        this.boolean = parseFloat(boolean);
+    }
+    get(){
+        return this.boolean;
     }
 }
