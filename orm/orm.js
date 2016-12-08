@@ -2,7 +2,7 @@
  * Created by prabod on 12/7/16.
  */
 
-const mysql      = require('mysql');
+const mysql = require('mysql');
 export class orm{
     constructor(host, user, password, database) {
         this.connection = mysql.createConnection({

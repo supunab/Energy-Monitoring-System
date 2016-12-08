@@ -3,8 +3,9 @@
  */
 import * as field from '../orm/Fields'
 import * as ORM from '../orm/orm'
+import Model from 'Model'
 
-class User{
+class User extends Model{
     constructor(){
         this.first_name = new field.CharField(30);
         this.last_name = new field.CharField(50);
