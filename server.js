@@ -23,7 +23,7 @@ app.use(passport.session());
 app.use(serveStatic('./public'));
 //app.use(express.favicon(__dirname + '/public/images/shortcut-icon.png'))
 
-app.set('view engine', 'jade')
+app.set('view engine', 'jade');
 app.set('views', __dirname + '/views');
 require('./routes')(app,passport);
 app.listen(process.env.PORT || 3000);

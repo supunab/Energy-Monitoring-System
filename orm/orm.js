@@ -3,7 +3,7 @@
  */
 
 const mysql = require('mysql');
-export class orm{
+export default class orm{
     constructor(host, user, password, database) {
         this.connection = mysql.createConnection({
             host: host,
@@ -13,7 +13,6 @@ export class orm{
         });
         this.connection.connect();
     }
-
     insert(model){
         let table = model.constructor.name;
         let values = [];
@@ -25,5 +24,8 @@ export class orm{
             " VALUES " + "(" +
             values.join() +")"
         );
+    }
+
+    createTable(model){
     }
 }

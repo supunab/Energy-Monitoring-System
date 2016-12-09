@@ -3,15 +3,17 @@
  */
 
 class Field{
-    constructor(required=true, defaultVal=null){
+    constructor(required=true, defaultVal=null, pk=false, ai=false){
         this.required = required;
         this.defaultVal = defaultVal;
+        this.pk = pk;
+        this.ai = ai;
+
     }
 }
-
 export class CharField extends Field{
-    constructor( maxLength,required=true, defaultVal=null){
-        super(required=true, defaultVal=null);
+    constructor( maxLength,required=true, defaultVal=null, pk=false){
+        super(required, defaultVal, pk);
         this.maxLength = maxLength;
         this.char = null;
     }
@@ -25,8 +27,8 @@ export class CharField extends Field{
 
 
 export class IntegerField extends Field{
-    constructor( maxLength,required=true, defaultVal=null){
-        super(required=true, defaultVal=null);
+    constructor( maxLength = null,required=true, defaultVal=null, pk=false, ai=false){
+        super(required, defaultVal, pk,ai);
         this.maxLength = maxLength;
         this.int = null;
     }
@@ -39,8 +41,8 @@ export class IntegerField extends Field{
 }
 
 export class FloatField extends Field{
-    constructor( maxLength,required=true, defaultVal=null){
-        super(required=true, defaultVal=null);
+    constructor( maxLength,required=true, defaultVal=null, pk=false){
+        super(required, defaultVal, pk);
         this.maxLength = maxLength;
         this.float = null;
     }
@@ -54,13 +56,26 @@ export class FloatField extends Field{
 
 export class BooleanField extends Field{
     constructor(required=true, defaultVal=null){
-        super(required=true, defaultVal=null);
+        super(required, defaultVal);
         this.boolean = null;
     }
     set(boolean){
-        this.boolean = parseFloat(boolean);
+        this.boolean = boolean;
     }
     get(){
         return this.boolean;
+    }
+}
+
+export class DateField extends Field{
+    constructor(required=true, defaultVal=null){
+        super(required, defaultVal);
+        this.date = null;
+    }
+    set(date){
+        this.date = date;
+    }
+    get(){
+        return this.date;
     }
 }
