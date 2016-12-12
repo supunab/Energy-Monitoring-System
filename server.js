@@ -24,8 +24,12 @@ app.use(passport.session());
 app.use(serveStatic('./public'));
 //app.use(express.favicon(__dirname + '/public/images/shortcut-icon.png'))
 
-app.set('view engine', 'jade');
-app.set('views', __dirname + '/views');
+var handlebars=require('express-handlebars').create({defaultLayout:'main'});
+
+app.engine('handlebars',handlebars.engine);
+
+app.set('view engine','handlebars');
+
 require('./routes')(app,passport);
 app.listen(process.env.PORT || 3000);
 
