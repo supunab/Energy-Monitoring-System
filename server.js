@@ -5,7 +5,8 @@ var express = require('express'),
     serveStatic = require('serve-static'),
     expressValidator = require('express-validator'),
     passport = require('passport'),
-    crypto = require('crypto');
+    crypto = require('crypto'),
+    flash = require('connect-flash');
 
 var app = express();
 
