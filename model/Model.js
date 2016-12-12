@@ -1,24 +1,18 @@
 /**
  * Created by prabod on 12/9/16.
  */
-import * as ORM from '../orm/orm'
+import orm from '../orm/orm'
 import * as field from '../orm/Fields'
 
 export default class Model{
     constructor(){
 
     }
-    insert(){
-        let orm = new ORM();
-        orm.insert(this);
-    }
 
-    findbyId(id){
-        let orm = new ORM();
-        let obj = orm.findbyId(this, id);
-        return obj;
+    save(callback) {
+        let o = new orm('localhost', 'root', 'root', 'university');
+        o.insert(this);
     }
-
     generateSchema(){
         let schema = 'CREATE TABLE ' + this.constructor.name + ' (';
         let pk ;
@@ -106,4 +100,20 @@ export default class Model{
 
         return schema;
     }
+
+    static findOne(param, callback) {
+        let o = new orm('localhost', 'root', 'root', 'university');
+        o.findOne(new this(), param, callback);
+    }
+
+    static findById(id, callback) {
+        let o = new orm('localhost', 'root', 'root', 'university');
+        o.findById(new this(), id, callback);
+    }
+
+    static find(id, callback) {
+        let o = new orm('localhost', 'root', 'root', 'university');
+        o.find(new this(), id, callback);
+    }
+
 }

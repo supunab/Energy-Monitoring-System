@@ -4,8 +4,9 @@ var express = require('express'),
     cookieSession = require('cookie-session'),
     serveStatic = require('serve-static'),
     expressValidator = require('express-validator'),
-    passport = require('passport')
-    crypto = require('crypto');
+    passport = require('passport'),
+    crypto = require('crypto'),
+    flash = require('connect-flash');
 
 var app = express();
 
@@ -30,7 +31,6 @@ app.engine('handlebars',handlebars.engine);
 app.set('view engine','handlebars');
 
 require('./routes')(app,passport);
-
 app.listen(process.env.PORT || 3000);
 
 console.log('Listening on port 3000');

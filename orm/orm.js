@@ -3,7 +3,7 @@
  */
 
 const mysql = require('mysql');
-export default class orm{
+export default class orm {
     constructor(host, user, password, database) {
         this.connection = mysql.createConnection({
             host: host,
@@ -13,19 +13,66 @@ export default class orm{
         });
         this.connection.connect();
     }
-    insert(model){
+
+    insert(model, callback) {
         let table = model.constructor.name;
         let values = [];
-        for(let key in model){
+        for (let key in model) {
             values.push(model[key].get())
         }
         this.connection.query(
             "INSERT INTO " + table +
             " VALUES " + "(" +
-            values.join() +")"
-        );
+            values.join() + ")",
+            callback);
     }
 
-    createTable(model){
+    findOne(model, param, callback) {
+        let table = model.constructor.name;
+        let vals = [];
+        for (let key in param) {
+            vals.push("'" + param[key] + "'");
+        }
+        console.log("SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
+        this.connection.query(
+            "SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
+            , function (error, results, fields) {
+                callback(error, results[0]);
+            });
     }
+
+    find(model, param, callback) {
+        let table = model.constructor.name;
+        let vals = [];
+        for (let key in param) {
+            vals.push("'" + param[key] + "'");
+        }
+        console.log("SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
+        this.connection.query(
+            "SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
+            , function (error, results, fields) {
+                callback(error, results);
+            });
+    }
+
+    findById(model, id, callback) {
+        let table = model.constructor.name;
+        let vals = [];
+        for (let key in param) {
+            vals.push("'" + param[key] + "'");
+        }
+        console.log("SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE id = " + id + ";");
+        this.connection.query(
+            "SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE id = " + id + ";"
+            , function (error, results, fields) {
+                callback(error, results[0]);
+            });
+    }
+
 }
