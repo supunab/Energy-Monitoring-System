@@ -12,8 +12,9 @@ export default class User extends Model{
         this.first_name = new field.CharField(30,);
         this.last_name = new field.CharField(50,false);
         this.user_name = new field.CharField(20);
-        this.password = new field.CharField(30);
-        this.is_admin = new field.BooleanField(false);
+        this.email = new field.CharField(40);
+        this.password = new field.CharField(100);
+        this.is_admin = new field.BooleanField(true, false);
 
     }
     createObject(first_name, last_name, user_name, password,is_admin){
@@ -29,6 +30,6 @@ export default class User extends Model{
     }
 
     validPassword(password) {
-        return bcrypt.compareSync(password, this.password);
+        return bcrypt.compareSync(password, this.password.get());
     }
 }

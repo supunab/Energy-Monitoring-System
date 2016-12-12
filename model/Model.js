@@ -1,6 +1,3 @@
-/**
- * Created by prabod on 12/9/16.
- */
 import orm from '../orm/orm'
 import * as field from '../orm/Fields'
 
@@ -11,7 +8,7 @@ export default class Model{
 
     save(callback) {
         let o = new orm('localhost', 'root', 'root', 'university');
-        o.insert(this);
+        o.insert(this, callback);
     }
     generateSchema(){
         let schema = 'CREATE TABLE ' + this.constructor.name + ' (';
@@ -36,7 +33,7 @@ export default class Model{
                     statement += ' AUTO_INCREMENT';
                 }
                 if (this[entity].defaultVal !== null){
-                    statement += ' DEFAULT ' + "`" + this[entity].defaultVal + "`";
+                    statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
             }
 
@@ -52,7 +49,7 @@ export default class Model{
                     statement += ' NULL';
                 }
                 if (this[entity].defaultVal !== null){
-                    statement += ' DEFAULT ' + "`" + this[entity].defaultVal + "`";
+                    statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
             }
 
@@ -84,7 +81,7 @@ export default class Model{
                     statement += ' NULL';
                 }
                 if (this[entity].defaultVal !== null){
-                    statement += ' DEFAULT ' + "`" + this[entity].defaultVal + "`";
+                    statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
             }
             statement += ',';
@@ -114,6 +111,12 @@ export default class Model{
     static find(id, callback) {
         let o = new orm('localhost', 'root', 'root', 'university');
         o.find(new this(), id, callback);
+    }
+
+    fromDB(model) {
+        for (let key in this) {
+            this[key].set(model[key]);
+        }
     }
 
 }
