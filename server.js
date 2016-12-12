@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+require("babel-register");
 var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
@@ -7,7 +9,7 @@ var express = require('express'),
     passport = require('passport'),
     crypto = require('crypto'),
     flash = require('connect-flash');
-
+require('./middleware/passport')(passport);
 var app = express();
 
 app.use(cookieParser('energymonitor'));
@@ -22,13 +24,14 @@ app.use(expressValidator());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(serveStatic('./public'));
+app.use(flash());
 //app.use(express.favicon(__dirname + '/public/images/shortcut-icon.png'))
 
-var handlebars=require('express-handlebars').create({defaultLayout:'main'});
+var handlebars = require('express-handlebars').create({defaultLayout: 'main'});
 
-app.engine('handlebars',handlebars.engine);
+app.engine('handlebars', handlebars.engine);
 
-app.set('view engine','handlebars');
+app.set('view engine', 'handlebars');
 
 require('./routes')(app,passport);
 app.listen(process.env.PORT || 3000);

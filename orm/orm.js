@@ -17,11 +17,18 @@ export default class orm {
     insert(model, callback) {
         let table = model.constructor.name;
         let values = [];
+        let keys = [];
         for (let key in model) {
-            values.push(model[key].get())
+            if (model[key].get() !== null) {
+                keys.push(key);
+                values.push("'" + model[key].get() + "'");
+            }
+
         }
+        console.log(values, keys);
         this.connection.query(
             "INSERT INTO " + table +
+            "( " + keys.join() + " ) " +
             " VALUES " + "(" +
             values.join() + ")",
             callback);
@@ -39,6 +46,7 @@ export default class orm {
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
             , function (error, results, fields) {
+                //onsole.log(error, results, fields);
                 callback(error, results[0]);
             });
     }
@@ -61,12 +69,9 @@ export default class orm {
 
     findById(model, id, callback) {
         let table = model.constructor.name;
-        let vals = [];
-        for (let key in param) {
-            vals.push("'" + param[key] + "'");
-        }
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";");
+        console.log(id);
         this.connection.query(
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";"

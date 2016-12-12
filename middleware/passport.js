@@ -2,7 +2,7 @@
 let LocalStrategy = require('passport-local').Strategy;
 
 // load up the user model
-let User = require('../model/User');
+import User from '../model/User'
 
 // expose this function to our app using module.exports
 module.exports = function (passport) {
@@ -15,13 +15,15 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function (user, done) {
-        done(null, user.id);
+        done(null, user.id.get());
     });
 
     // used to deserialize the user
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
-            done(err, user);
+            let loggedin = new User();
+            loggedin.fromDB(user);
+            done(err, loggedin);
         });
     });
 
@@ -60,8 +62,12 @@ module.exports = function (passport) {
                         let newUser = new User();
 
                         // set the user's local credentials
-                        newUser.email = email;
-                        newUser.password = User.generateHash(password);
+                        newUser.email.set(email);
+                        newUser.password.set(User.generateHash(password));
+                        newUser.first_name.set(req.body.first_name);
+                        newUser.last_name.set(req.body.last_name);
+                        newUser.user_name.set(req.body.user_name);
+
 
                         // save the user
                         newUser.save(function (err, result) {
@@ -90,19 +96,21 @@ module.exports = function (passport) {
             // we are checking to see if the user trying to login already exists
             User.findOne({'email': email}, function (err, user) {
                 // if there are any errors, return the error before anything else
-                if (err)
+                if (err) {
+                    console.log(err);
                     return done(err);
-
+                }
                 // if no user is found, return the message
                 if (!user)
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
-
+                let loggedin = new User();
+                loggedin.fromDB(user);
                 // if the user is found but the password is wrong
-                if (!user.validPassword(password))
+                if (!loggedin.validPassword(password))
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
 
                 // all is well, return successful user
-                return done(null, user);
+                return done(null, loggedin);
             });
 
         }));

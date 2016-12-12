@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "async": "^1.0.0",
+    "babel-register": "^6.18.0",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.4",
     "connect-flash": "^0.1.1",
