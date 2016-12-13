@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 require("babel-register");
+
 var express = require('express'),
     bodyParser = require('body-parser'),
     cookieParser = require('cookie-parser'),
@@ -11,7 +12,6 @@ var express = require('express'),
     flash = require('connect-flash');
 require('./middleware/passport')(passport);
 var app = express();
-
 app.use(cookieParser('energymonitor'));
 app.use(cookieSession({
     keys: ['key1', 'key2']

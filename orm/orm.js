@@ -5,13 +5,14 @@
 const mysql = require('mysql');
 export default class orm {
     constructor(host, user, password, database) {
-        this.connection = mysql.createConnection({
+        this.connection = mysql.createPool({
+            connectionLimit: 10,
             host: host,
             user: user,
             password: password,
             database: database
         });
-        this.connection.connect();
+        //this.connection.connect();
     }
 
     insert(model, callback) {
