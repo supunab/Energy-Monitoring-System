@@ -1,4 +1,4 @@
-export default {
+exports.default = {
     host: 'localhost',
     user: 'root',
     password: 'root',
