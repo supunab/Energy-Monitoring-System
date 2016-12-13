@@ -1,5 +1,8 @@
 import orm from '../orm/orm'
 import * as field from '../orm/Fields'
+import db from '../db.config'
+
+let o = new orm(db.host, db.user, db.password, db.database);
 
 export default class Model{
     constructor(){
@@ -7,7 +10,6 @@ export default class Model{
     }
 
     save(callback) {
-        let o = new orm('localhost', 'root', 'root', 'university');
         o.insert(this, callback);
     }
     generateSchema(){
@@ -89,28 +91,25 @@ export default class Model{
         }
         if (pk !== undefined){
             schema += 'PRIMARY KEY ( ' + pk + ' )';
-            schema += ');'
+            schema += ')ENGINE=INNODB;'
         }else {
             schema = schema.substring(0,schema.length-1);
-            schema += ');'
+            schema += ')ENGINE=INNODB;'
         }
 
         return schema;
     }
 
     static findOne(param, callback) {
-        let o = new orm('localhost', 'root', 'root', 'university');
         o.findOne(new this(), param, callback);
     }
 
     static findById(id, callback) {
-        let o = new orm('localhost', 'root', 'root', 'university');
         o.findById(new this(), id, callback);
     }
 
-    static find(id, callback) {
-        let o = new orm('localhost', 'root', 'root', 'university');
-        o.find(new this(), id, callback);
+    static find(param, callback) {
+        o.find(new this(), param, callback);
     }
 
     fromDB(model) {
