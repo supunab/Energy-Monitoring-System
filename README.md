@@ -39,58 +39,61 @@ export default class User extends Model{
 ```
 Basic methods for a model
  * find(params, callback(err,model))
-  ```javascript
-    User.find({user_name:"prabod",email:"praboderathnayaka@gmail.com"}, function (err, user) {
-                /** user = [{
-                           id: 1,
-                           first_name: 'Prabod',
-                           last_name: 'Rathnayaka',
-                           user_name: 'prabod',
-                           email: 'praboderathnayaka@gmail.com',
-                           password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
-                           is_admin: 0 }]
-                  **/
-                let loggedin = new User();
-                loggedin.fromDB(user);
-                done(err, loggedin);
-            });
-  ```
+```javascript
+User.find({user_name:"prabod",email:"praboderathnayaka@gmail.com"}, function (err, user) {
+            /** user = [{
+                       id: 1,
+                       first_name: 'Prabod',
+                       last_name: 'Rathnayaka',
+                       user_name: 'prabod',
+                       email: 'praboderathnayaka@gmail.com',
+                       password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
+                       is_admin: 0 }]
+              **/
+            let loggedin = new User();
+            loggedin.fromDB(user);
+            done(err, loggedin);
+        });
+```
+
  * findOne(params, callback(err,model))
- ```javascript
-     User.findOne({user_name:"prabod",email:"praboderathnayaka@gmail.com"}, function (err, user) {
-                 /** user = {
-                            id: 1,
-                            first_name: 'Prabod',
-                            last_name: 'Rathnayaka',
-                            user_name: 'prabod',
-                            email: 'praboderathnayaka@gmail.com',
-                            password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
-                            is_admin: 0 }
-                   **/
-                 let loggedin = new User();
-                 loggedin.fromDB(user);
-                 done(err, loggedin);
-             });
-   ```
+```javascript
+User.findOne({user_name:"prabod",email:"praboderathnayaka@gmail.com"}, function (err, user) {
+         /** user = {
+                    id: 1,
+                    first_name: 'Prabod',
+                    last_name: 'Rathnayaka',
+                    user_name: 'prabod',
+                    email: 'praboderathnayaka@gmail.com',
+                    password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
+                    is_admin: 0 }
+           **/
+         let loggedin = new User();
+         loggedin.fromDB(user);
+         done(err, loggedin);
+     });
+```
+
  * findById(id, callback(err,model))
- ```javascript
-     User.findById(1, function (err, user) {
-                 /** user = [{
-                            id: 1,
-                            first_name: 'Prabod',
-                            last_name: 'Rathnayaka',
-                            user_name: 'prabod',
-                            email: 'praboderathnayaka@gmail.com',
-                            password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
-                            is_admin: 0 }]
-                   **/
-                 let loggedin = new User();
-                 loggedin.fromDB(user);
-                 done(err, loggedin);
-             });
-   ```
+```javascript
+User.findById(1, function (err, user) {
+         /** user = [{
+                    id: 1,
+                    first_name: 'Prabod',
+                    last_name: 'Rathnayaka',
+                    user_name: 'prabod',
+                    email: 'praboderathnayaka@gmail.com',
+                    password: '$2a$08$z7ELhdgazimXDx8hXx2Cd.fQn.4/7k59OCLLTiDfoy39rJd9K28Hq',
+                    is_admin: 0 }]
+           **/
+         let loggedin = new User();
+         loggedin.fromDB(user);
+         done(err, loggedin);
+     });
+```
+
  * save(callback)
- ```javascript
+```javascript
     let newUser = new User();
     // set the user's local credentials
     newUser.email.set(email);
@@ -105,6 +108,7 @@ Basic methods for a model
         return done(null, newUser);
     });
 ```
+
  * fromDB(object)
  ``
  refer find
