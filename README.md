@@ -7,8 +7,9 @@
 3. cd into dir
 4. npm install
 5. Edit db.config.js
-6. migrate models to database by running ```npm run migrate```
-6. npm start
+6. compile models  by running ```npm run compile```
+7. migrate models to database by running ```npm run migrate```
+8. npm start
 
 enjoy !!
 

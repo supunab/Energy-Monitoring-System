@@ -9,8 +9,9 @@ var express = require('express'),
     expressValidator = require('express-validator'),
     passport = require('passport'),
     crypto = require('crypto'),
-    flash = require('connect-flash');
-require('./middleware/passport')(passport);
+    flash = require('connect-flash'),
+    path = require('path');
+require('./src/middleware/passport')(passport);
 var app = express();
 app.use(cookieParser('energymonitor'));
 app.use(cookieSession({
@@ -19,19 +20,23 @@ app.use(cookieSession({
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.set('views', __dirname + '/src/views');
+app.set('view engine', 'handlebars');
 app.use(expressValidator());
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(serveStatic('./public'));
+app.use(serveStatic('./src/public'));
 app.use(flash());
 //app.use(express.favicon(__dirname + '/public/images/shortcut-icon.png'))
-
-var handlebars = require('express-handlebars').create({defaultLayout: 'main'});
+console.log(__dirname + '/src/views');
+var handlebars = require('express-handlebars').create({
+    layoutsDir: path.join(__dirname, "src/views/layouts"),
+    partialsDir: path.join(__dirname, "src/views/partials"),
+    defaultLayout: 'main'
+});
 
 app.engine('handlebars', handlebars.engine);
 
-app.set('view engine', 'handlebars');
 
 require('./routes')(app,passport);
 app.listen(process.env.PORT || 3000);
