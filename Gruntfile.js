@@ -10,17 +10,18 @@ module.exports = function(grunt) {
 
         babel: {
             options: {
-                sourceMap: false,
+                sourceMap: true,
                 modules: "common"
             },
             dist: {
-                files: [{
-                    expand: true,
-                    cwd: '',
-                    src: ['**/*.js'],
-                    dest: 'dist/src',
-                    ext:'.js'
-                }]
+                files: {
+                    "middleware/*.js": "dist/middleware",
+                    "model/*.js": "dist/model",
+                    "orm/*.js": "dist/orm",
+                    "./*.js": "dist/",
+                    "tests/*.js": "dist/tests",
+                    $FilePathRelativeToProjectRoot$ --out - dir dist --source - maps--presets es2015
+                }
             },
             distSpecs: {
                 files: [{
