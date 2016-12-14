@@ -1,10 +1,65 @@
-<nav>
-    <div class="nav-wrapper">
-        <a href="#" class="brand-logo">Logo</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="sass.html">Sass</a></li>
-            <li><a href="badges.html">Components</a></li>
-            <li><a href="collapsible.html">JavaScript</a></li>
-        </ul>
-    </div>
-</nav>
+<header>
+    <nav data-pg-collapsed>
+        <div class="nav-wrapper" data-pg-collapsed>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li>
+                    <a class="dropdown-button" href="#!" data-activates="dropdown1">User<i class="material-icons right">arrow_drop_down</i> </a>
+                    <ul id="dropdown1" class="dropdown-content">
+                        <li>
+                            <a href="#!">User Profile</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#!">Login</a>
+                        </li>
+                        <li>
+                            <a href="#!">Log out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <ul id="nav-mobile" class="side-nav fixed" style="width: 240px;" data-pg-collapsed>
+        <li class="logo" >
+            <a id="logo-container" href="#" class="brand-logo">
+                <img src="/img/logo.png" alt="logo" height="80px">
+            </a>
+        </li>
+        <li class="bold" >
+            <a href="#" class="waves-effect waves-red" style="padding-left: 16px">First Link</a>
+        </li>
+        <li class="bold">
+            <a href="#" class="waves-effect waves-red" style="padding-left: 16px">Second Link</a>
+        </li>
+        <li class="no-padding">
+            <ul class="collapsible collapsible-accordion">
+                <li class="bold">
+                    <a class="collapsible-header waves-effect waves-red">Third Link</a>
+                    <div class="collapsible-body">
+                        <ul>
+                            <li>
+                                <a href="#">Third, First</a>
+                            </li>
+                            <li>
+                                <a href="#">Third, Second</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="bold active">
+                    <a class="collapsible-header waves-effect active waves-red">Components</a>
+                    <div class="collapsible-body" style="display: block;">
+                        <ul>
+                            <li>
+                                <a class="waves-effect waves-red" href="">Parallax</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</header>
+
+

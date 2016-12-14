@@ -7,6 +7,7 @@ let connection = mysql.createConnection({
     password: db.password,
     database: db.database
 });
+
 connection.connect();
 let migrate = new Migrate();
 let sql = '';
