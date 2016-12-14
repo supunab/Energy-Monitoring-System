@@ -29,7 +29,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "migrate": "node dist/manage.js"
+    "migrate": "node dist/manage.js",
+    "compile": "babel src server.js routes.js manage.js db.config.js --out-dir dist --source-maps  --presets es2015"
   },
   "repository": {
     "type": "git",
@@ -44,12 +45,13 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-es2015": "^6.18.0",
-    "grunt-babel": "^6.0.0",
-    "gulp-babel": "^6.1.2",
     "grunt": "^1.0.1",
+    "grunt-babel": "^6.0.0",
     "grunt-cli": "^1.2.0",
     "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-nodeunit": "^1.0.0"
+    "grunt-contrib-nodeunit": "^1.0.0",
+    "grunt-execute": "^0.2.2",
+    "gulp-babel": "^6.1.2"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
