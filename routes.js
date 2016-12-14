@@ -33,6 +33,11 @@ module.exports = function (app, passport) {
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
+
+    //dummy routes to test viwes.
+    app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
+    app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+    app.get("/connectionrequest", (req, res) => {res.render('connection/request');});
 };
 
 
