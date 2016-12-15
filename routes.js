@@ -5,7 +5,10 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+<<<<<<< cdd1e961d09c7cd3dc71700cb2098831df382e22
 
+=======
+>>>>>>> create complain views.
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -75,7 +78,6 @@ module.exports = function (app, passport) {
     app.get('/complain/edit/:id', ComplainController.editComplainGET);
     app.post('/complain/edit', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
-
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
