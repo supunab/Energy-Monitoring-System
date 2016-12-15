@@ -8,7 +8,6 @@ import Connection from '../model/Connection'
 import Customer from '../model/Customer'
 import PowerCut from '../model/PowerCut'
 
-
 export default class Migrate {
     constructor() {
         this.user = new User().generateSchema();

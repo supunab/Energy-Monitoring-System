@@ -1,0 +1,14 @@
+<h1>Complain</h1>
+<div class="row">
+    <ul class="collapsible">
+        {{#each complains}}
+        <li>
+            <div class="collapsible-header">{{this.title}}</div>
+            <div class="collapsible-body">
+                <p>{{this.body}}</p>
+                <p style="margin-left:50px"><a href="#">View the Complain >></a></p>
+            </div>
+        </li>
+        {{/each}}
+    </ul>
+</div>
