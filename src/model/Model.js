@@ -14,9 +14,10 @@ export default class Model {
     }
 
     generateSchema() {
-        let schema = 'CREATE TABLE ' + this.constructor.name + ' (';
+        let schema = 'CREATE TABLE ' + this.constructor.name + '(';
         let pk;
         let fk = [];
+        let m2m = [];
         for (let entity in this) {
 
             let statement = entity;
@@ -39,6 +40,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.FloatField) {
@@ -55,6 +57,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.CharField) {
@@ -74,6 +77,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + "`" + this[entity].defaultVal + "`";
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.BooleanField) {
@@ -87,6 +91,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.DateField) {
@@ -100,6 +105,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.DateTimeField) {
@@ -113,6 +119,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.TimeStampField) {
@@ -126,6 +133,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.TextField) {
@@ -139,6 +147,7 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
             }
 
             else if (this[entity] instanceof field.ForeignKeyField) {
@@ -152,11 +161,44 @@ export default class Model {
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
+                statement += ',';
                 let reference = ", FOREIGN KEY (" + entity + ") REFERENCES " + this[entity].getModel.call(this[entity]).name + "(" + this[entity].getPK().call(this[entity]) + ") ";
                 fk.push(reference);
             }
 
-            statement += ',';
+            else if (this[entity] instanceof field.OneToOneField) {
+                statement += ' INT UNIQUE';
+                if (this[entity].required) {
+                    statement += ' NOT NULL';
+                }
+                else {
+                    statement += ' NULL';
+                }
+                if (this[entity].defaultVal !== null) {
+                    statement += ' DEFAULT ' + this[entity].defaultVal;
+                }
+                statement += ',';
+                let reference = ", FOREIGN KEY (" + entity + ") REFERENCES " + this[entity].getModel.call(this[entity]).name + "(" + this[entity].getPK().call(this[entity]) + ") ";
+                fk.push(reference);
+            }
+
+            else if (this[entity] instanceof field.ManyToManyField) {
+                statement = statement.substring(0, statement.length - entity.length);
+                let foreignTable = this[entity].getModel.call(this[entity]).name;
+                let foreignPK = this[entity].getPK().call(this[entity]);
+                let thisTable = this.constructor.name;
+                let thisPK = this.getPK();
+                let reference = "CREATE TABLE " + foreignTable + "_m2m_" + thisTable +
+                    "(" +
+                    foreignTable + "_" + foreignPK + " INT NOT NULL, " +
+                    thisTable + "_" + thisPK + " INT NOT NULL, " +
+                    "FOREIGN KEY (" + foreignTable + "_" + foreignPK + ") REFERENCES " + foreignTable + "(" + foreignPK + ")," +
+                    "FOREIGN KEY (" + thisTable + "_" + thisPK + ") REFERENCES " + thisTable + "(" + thisPK + ")" +
+                    ")ENGINE=INNODB;";
+                m2m.push(reference);
+            }
+
+
             schema += statement;
         }
         if (pk !== undefined) {
@@ -168,7 +210,11 @@ export default class Model {
         for (let index = 0; index < fk.length; ++index) {
             schema += fk[index];
         }
-        schema += ')ENGINE=INNODB;'
+        schema += ')ENGINE=INNODB;';
+
+        for (let index = 0; index < m2m.length; ++index) {
+            schema += '\n' + m2m[index];
+        }
         return schema;
     }
 

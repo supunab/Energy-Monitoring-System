@@ -1,4 +1,3 @@
-require("babel-register");
 import Migrate from './model/index'
 const mysql = require('mysql');
 import db from './db.config.js'
@@ -15,7 +14,7 @@ connection.connect();
 let migrate = new Migrate();
 let sql = '';
 for (let model in migrate) {
-    sql += migrate[model];
+    sql += migrate[model] + '\n';
 }
 let fs = require('fs');
 var path = require('path');
