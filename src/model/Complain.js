@@ -9,10 +9,10 @@ export default class Complain extends Models{
         this.title = new Fields.CharField(255,true);
         this.body = new Fields.TextField();
         this.comment = new Fields.TextField();
-    }
+    };
 
     getPK() {
         return this.id;
-    }
+    };
 
-}
+};
