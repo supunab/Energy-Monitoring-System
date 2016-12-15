@@ -5,10 +5,6 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
-<<<<<<< cdd1e961d09c7cd3dc71700cb2098831df382e22
-
-=======
->>>>>>> create complain views.
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
