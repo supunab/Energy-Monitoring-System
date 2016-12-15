@@ -72,7 +72,7 @@ export default class orm {
         let table = model.constructor.name;
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";");
-        console.log(id);
+        console.log("this is id", id);
         this.connection.query(
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";"
