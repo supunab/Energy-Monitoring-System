@@ -11,11 +11,18 @@ module.exports = function (app, passport) {
     app.get('/login', AuthController.getLogin);
     app.get('/signup', AuthController.getSignup);
     app.get('/logout', AuthController.getLogout);
-    app.post('/login', AuthController.postLogin);
-    app.post('/signup', AuthController.postSignup);
+    app.post('/login', function(req,res){
+        AuthController.postLogin
+    });
+    app.post('/signup', function(req,res){
+        AuthController.postSignup
+    });
 
+    app.get('/showBreakdowns',function (req,res) {
+        
+    });
     //Connection routes
-    app.get('/connection/request', ConnectionController.getRequest);
+    app.get('/connectionRequest', ConnectionController.getRequest);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});

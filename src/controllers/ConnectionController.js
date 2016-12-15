@@ -1,7 +1,24 @@
+import ConnectionRequest from '../model/ConnectionRequest'
 exports.getRequest = function (req, res) {
+
+
     res.render("connection/request");
 };
 
 exports.postRequest = function (req, res) {
-
+    let newConnectionRequest= new ConnectionRequest();
+    let userId=req.user.id;
+    let name = req.body.name;
+    let telephone = req.body.tpNumber;
+    let address1=req.body.address1;
+    let address2 =req.body.address2;
+    let street = req.body.street;
+    let city=req.body.city;
+    let district=req.body.district;
+    newConnectionRequest.createobject(userId,name,telephone,address1,address2,street,city,district);
+    newConnectionRequest.save(function (err,result) {
+        if(err)
+            throw err;
+        return done(null,newConnectionRequest);
+    });
 };

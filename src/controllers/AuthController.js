@@ -15,20 +15,22 @@ exports.getLogout = function (req, res) {
 
     //post login
 exports.postLogin = function(passport) {
+
     passport.authenticate('local-login', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
-    })
+    });
 }
 
     // post signup
 exports.postSignup = function (passport) {
+    console.log("In sign up");
     passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
-    })
+    });
 }
 
 
