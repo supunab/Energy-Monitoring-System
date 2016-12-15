@@ -4,23 +4,27 @@ var _index = require('./model/index');
 
 var _index2 = _interopRequireDefault(_index);
 
-var _db = require('./db.config');
+var _dbConfig = require('./db.config.js');
 
-var _db2 = _interopRequireDefault(_db);
+var _dbConfig2 = _interopRequireDefault(_dbConfig);
 
 function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {default: obj};
 }
 
+require("babel-register");
+
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
-    host: _db2.default.host,
-    user: _db2.default.user,
-    password: _db2.default.password,
-    database: _db2.default.database
+    host: _dbConfig2.default.host,
+    user: _dbConfig2.default.user,
+    password: _dbConfig2.default.password,
+    database: _dbConfig2.default.database
 });
+
 connection.connect();
+
 var migrate = new _index2.default();
 var sql = '';
 for (var model in migrate) {
