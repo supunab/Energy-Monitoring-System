@@ -14,7 +14,7 @@ export default class Model {
     }
 
     generateSchema() {
-        let schema = 'CREATE TABLE ' + this.constructor.name + ' (';
+        let schema = 'CREATE TABLE IF NOT EXISTS' + this.constructor.name + ' (';
         let pk;
         for (let entity in this) {
 
