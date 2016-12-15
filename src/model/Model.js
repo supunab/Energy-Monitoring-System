@@ -16,6 +16,7 @@ export default class Model {
     generateSchema() {
         let schema = 'CREATE TABLE ' + this.constructor.name + ' (';
         let pk;
+        let fk = [];
         for (let entity in this) {
 
             let statement = entity;
@@ -127,8 +128,8 @@ export default class Model {
                 }
             }
 
-            else if (this[entity] instanceof field.ForeignKeyField) {
-                statement += ' Date';
+            else if (this[entity] instanceof field.TextField) {
+                statement += ' TEXT';
                 if (this[entity].required) {
                     statement += ' NOT NULL';
                 }
@@ -139,17 +140,35 @@ export default class Model {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
                 }
             }
+
+            else if (this[entity] instanceof field.ForeignKeyField) {
+                statement += ' INT';
+                if (this[entity].required) {
+                    statement += ' NOT NULL';
+                }
+                else {
+                    statement += ' NULL';
+                }
+                if (this[entity].defaultVal !== null) {
+                    statement += ' DEFAULT ' + this[entity].defaultVal;
+                }
+                let reference = ", FOREIGN KEY (" + entity + ") REFERENCES " + this[entity].getModel.call(this[entity]).name + "(" + this[entity].getPK().call(this[entity]) + ") ";
+                fk.push(reference);
+            }
+
             statement += ',';
             schema += statement;
         }
         if (pk !== undefined) {
             schema += 'PRIMARY KEY ( ' + pk + ' )';
-            schema += ')ENGINE=INNODB;'
         } else {
             schema = schema.substring(0, schema.length - 1);
-            schema += ')ENGINE=INNODB;'
         }
 
+        for (let index = 0; index < fk.length; ++index) {
+            schema += fk[index];
+        }
+        schema += ')ENGINE=INNODB;'
         return schema;
     }
 

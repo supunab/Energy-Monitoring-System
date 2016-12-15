@@ -6,7 +6,8 @@ let connection = mysql.createConnection({
     host: db.host,
     user: db.user,
     password: db.password,
-    database: db.database
+    database: db.database,
+    multipleStatements: true
 });
 
 connection.connect();
@@ -14,7 +15,7 @@ connection.connect();
 let migrate = new Migrate();
 let sql = '';
 for (let model in migrate) {
-    sql += migrate[model] + '\n';
+    sql += migrate[model];
 }
 let fs = require('fs');
 var path = require('path');
