@@ -1,6 +1,7 @@
 const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
+const ComplainController = require("./src/controllers/ComplainController");
 
 module.exports = function (app, passport) {
 
@@ -16,6 +17,9 @@ module.exports = function (app, passport) {
 
     //Connection routes
     app.get('/connection/request', ConnectionController.getRequest);
+
+    //Complains
+    app.get("/complainMake", ComplainController.getCreateComplain);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
