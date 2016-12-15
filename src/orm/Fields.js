@@ -141,3 +141,20 @@ export class ForeignKeyField extends Field {
         return this.model;
     }
 }
+
+
+export class TextField extends Field {
+    constructor(){
+        super();
+        this.text = null;
+    };
+
+    set(text){
+        this.text = text;
+    }
+
+    get(){
+        return this.text;
+    }
+
+}
