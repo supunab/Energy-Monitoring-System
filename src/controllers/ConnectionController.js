@@ -1,13 +1,14 @@
 import ConnectionRequest from '../model/ConnectionRequest'
+
 exports.getRequest = function (req, res) {
-
-
     res.render("connection/request");
 };
 
 exports.postRequest = function (req, res) {
+    console.log("Came to Post request");
     let newConnectionRequest= new ConnectionRequest();
-    let userId=req.user.id;
+    let userId=req.user.getPK().int;
+    console.log(userId);
     let name = req.body.name;
     let telephone = req.body.tpNumber;
     let address1=req.body.address1;
@@ -15,10 +16,10 @@ exports.postRequest = function (req, res) {
     let street = req.body.street;
     let city=req.body.city;
     let district=req.body.district;
-    newConnectionRequest.createobject(userId,name,telephone,address1,address2,street,city,district);
+    newConnectionRequest.createObject(userId,telephone,address1,address2,street,city,district);
     newConnectionRequest.save(function (err,result) {
         if(err)
             throw err;
-        return done(null,newConnectionRequest);
+        res.redirect('/connectionRequest');
     });
 };
