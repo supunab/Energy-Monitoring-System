@@ -1,4 +1,3 @@
-require("babel-register");
 import Migrate from './model/index'
 const mysql = require('mysql');
 import db from './db.config.js'
@@ -6,7 +5,8 @@ let connection = mysql.createConnection({
     host: db.host,
     user: db.user,
     password: db.password,
-    database: db.database
+    database: db.database,
+    multipleStatements: true
 });
 
 connection.connect();

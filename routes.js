@@ -4,7 +4,6 @@ const ConnectionController = require("./src/controllers/ConnectionController");
 const ComplainController = require("./src/controllers/ComplainController");
 
 module.exports = function (app, passport) {
-
     app.get('/', function (req, res) {
         res.render('index');
     });
@@ -25,7 +24,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/', // redirect to the secure profile section
+        successRedirect: '/connectionRequest', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -42,6 +41,10 @@ module.exports = function (app, passport) {
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+
+    app.get('/connectionRequest',ConnectionController.getRequest);
+
+    app.post('/connectionRequest',ConnectionController.postRequest);
 };
 
 

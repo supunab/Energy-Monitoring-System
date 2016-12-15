@@ -9,7 +9,7 @@ export default class User extends Model {
     constructor() {
         super();
         this.id = new field.IntegerField(null, true, null, true, true);
-        this.first_name = new field.CharField(30,);
+        this.first_name = new field.CharField(30);
         this.last_name = new field.CharField(50, false);
         this.user_name = new field.CharField(20);
         this.email = new field.CharField(40);
@@ -35,6 +35,6 @@ export default class User extends Model {
     }
 
     getPK() {
-        return this.id;
+        return 'id';
     }
 }

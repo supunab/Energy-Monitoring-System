@@ -1,5 +1,5 @@
 
-export default{
+exports.module = {
     host: 'localhost',
     user: 'root',
     password: 'root',
