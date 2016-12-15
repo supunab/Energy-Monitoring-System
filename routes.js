@@ -6,7 +6,6 @@ const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
 
-
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
@@ -56,6 +55,9 @@ module.exports = function (app, passport) {
     app.get('/complain/edit/:id', ComplainController.editComplainGET);
     app.post('/complain/edit', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
+
+    //Complains
+    app.get("/complainMake", ComplainController.getCreateComplain);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
