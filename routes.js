@@ -3,26 +3,38 @@ const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
 
 module.exports = function (app, passport) {
+    app.get('/', function (req, res) {
 
-    //pages
-	app.get('/', PageController.getIndex);
-
-	//auth routes
-    app.get('/login', AuthController.getLogin);
-    app.get('/signup', AuthController.getSignup);
-    app.get('/logout', AuthController.getLogout);
-    app.post('/login', function(req,res){
-        AuthController.postLogin
+        res.render('index');
     });
-    app.post('/signup', function(req,res){
-        AuthController.postSignup
+    app.get('/login', function (req, res) {
+        res.render('login', {message: req.flash('loginMessage')});
     });
 
-    app.get('/showBreakdowns',function (req,res) {
-        
+    app.get('/signup', function (req, res) {
+
+        // render the page and pass in any flash data if it exists
+        res.render('signup', {message: req.flash('signupMessage')});
     });
-    //Connection routes
-    app.get('/connectionRequest', ConnectionController.getRequest);
+
+
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/', // redirect to the secure profile section
+        failureRedirect: '/login', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
+    }));
+
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/', // redirect to the secure profile section
+        failureRedirect: '/signup', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
+    }));
+
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
