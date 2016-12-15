@@ -60,12 +60,20 @@ export default class orm {
         }
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
-        this.connection.query(
-            "SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
-            , function (error, results, fields) {
-                callback(error, results);
-            });
+        if (param.length == 0) {
+            this.connection.query(
+                "SELECT " + Object.keys(model).join() + " from " + table + ";"
+                , function (error, results, fields) {
+                    callback(error, results);
+                });
+        } else {
+            this.connection.query(
+                "SELECT " + Object.keys(model).join() + " from " + table +
+                " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
+                , function (error, results, fields) {
+                    callback(error, results);
+                });
+        }
     }
 
     findById(model, id, callback) {

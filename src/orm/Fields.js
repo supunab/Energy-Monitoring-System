@@ -161,3 +161,53 @@ export class ForeignKeyField extends Field {
         return temp.getPK;
     }
 }
+
+export class OneToOneField extends Field {
+    constructor(model, required = false, defaultVal = null) {
+        super(required, defaultVal);
+        this.model = model;
+        this.key = null;
+    }
+
+    set(key) {
+        this.key = parseInt(key);
+    }
+
+    get() {
+        return this.key;
+    }
+
+    getModel() {
+        return this.model;
+    }
+
+    getPK() {
+        let temp = new this.model();
+        return temp.getPK;
+    }
+}
+
+export class ManyToManyField extends Field {
+    constructor(model, required = false, defaultVal = null) {
+        super(required, defaultVal);
+        this.model = model;
+        this.key = null;
+    }
+
+    set(key) {
+        this.key = parseInt(key);
+    }
+
+    get() {
+        return this.key;
+    }
+
+    getModel() {
+        return this.model;
+    }
+
+    getPK() {
+        let temp = new this.model();
+        return temp.getPK;
+    }
+}

@@ -10,8 +10,6 @@ var _dbConfig2 = _interopRequireDefault(_dbConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-require("babel-register");
-
 var mysql = require('mysql');
 
 var connection = mysql.createConnection({
@@ -27,7 +25,7 @@ connection.connect();
 var migrate = new _index2.default();
 var sql = '';
 for (var model in migrate) {
-    sql += migrate[model];
+    sql += migrate[model] + '\n';
 }
 var fs = require('fs');
 var path = require('path');
