@@ -1,11 +1,13 @@
+const PageController = require("./src/controllers/PageController");
+const AuthController = require("./src/controllers/AuthController");
+const ConnectionController = require("./src/controllers/ConnectionController");
 
 module.exports = function (app, passport) {
 
-	app.get('/', function (req, res) {
+    app.get('/', function (req, res) {
 
         res.render('index');
     });
-
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
     });
@@ -37,7 +39,6 @@ module.exports = function (app, passport) {
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-    app.get("/connectionrequest", (req, res) => {res.render('connection/request');});
 };
 
 
