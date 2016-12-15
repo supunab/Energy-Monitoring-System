@@ -5,31 +5,37 @@ const ComplainController = require("./src/controllers/ComplainController");
 
 module.exports = function (app, passport) {
 
-    //pages
-	app.get('/', PageController.getIndex);
+    app.get('/', function (req, res) {
 
-	//auth routes
-    app.get('/login', AuthController.getLogin);
-    app.get('/signup', AuthController.getSignup);
-    app.get('/logout', AuthController.getLogout);
-
-    app.post('/login', function (req, res) {
-        passport.authenticate('local-login', {
-            successRedirect: '/', // redirect to the secure profile section
-            failureRedirect: '/login', // redirect back to the signup page if there is an error
-            failureFlash: true // allow flash messages
-        })
+        res.render('index');
     });
-    app.post('/signup', function (req, res) {
-        passport.authenticate('local-signup', {
-            successRedirect: '/', // redirect to the secure profile section
-            failureRedirect: '/signup', // redirect back to the signup page if there is an error
-            failureFlash: true // allow flash messages
-        })
+    app.get('/login', function (req, res) {
+        res.render('login', {message: req.flash('loginMessage')});
     });
 
-    //Connection routes
-    app.get('/connection/request', ConnectionController.getRequest);
+    app.get('/signup', function (req, res) {
+
+        // render the page and pass in any flash data if it exists
+        res.render('signup', {message: req.flash('signupMessage')});
+    });
+
+
+    app.get('/logout', function (req, res) {
+        req.logout();
+        res.redirect('/');
+    });
+
+    app.post('/login', passport.authenticate('local-login', {
+        successRedirect: '/', // redirect to the secure profile section
+        failureRedirect: '/login', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
+    }));
+
+    app.post('/signup', passport.authenticate('local-signup', {
+        successRedirect: '/', // redirect to the secure profile section
+        failureRedirect: '/signup', // redirect back to the signup page if there is an error
+        failureFlash: true // allow flash messages
+    }));
 
     //Complains
     app.get("/complainMake", ComplainController.getCreateComplain);
