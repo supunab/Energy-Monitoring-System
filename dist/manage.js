@@ -8,9 +8,7 @@ var _dbConfig = require('./db.config.js');
 
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
 
-function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {default: obj};
-}
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require("babel-register");
 
@@ -20,7 +18,8 @@ var connection = mysql.createConnection({
     host: _dbConfig2.default.host,
     user: _dbConfig2.default.user,
     password: _dbConfig2.default.password,
-    database: _dbConfig2.default.database
+    database: _dbConfig2.default.database,
+    multipleStatements: true
 });
 
 connection.connect();
@@ -28,13 +27,13 @@ connection.connect();
 var migrate = new _index2.default();
 var sql = '';
 for (var model in migrate) {
-    sql += migrate[model] + '\n';
+    sql += migrate[model];
 }
 var fs = require('fs');
 var path = require('path');
 
 var filePath = path.join(__dirname, '../migrations', 'tables.sql');
-fs.writeFile(filePath, sql, {flag: 'w'}, function (err) {
+fs.writeFile(filePath, sql, { flag: 'w' }, function (err) {
     if (err) throw err;
     console.log("It's saved on /migrations/tables.sql");
 });

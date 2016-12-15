@@ -122,6 +122,21 @@ export class TimeStampField extends Field {
     }
 }
 
+export class TextField extends Field {
+    constructor(required = false, defaultVal = null) {
+        super(required, defaultVal);
+        this.text = null;
+    }
+
+    set(text) {
+        this.text = text;
+    }
+
+    get() {
+        return this.text;
+    }
+}
+
 export class ForeignKeyField extends Field {
     constructor(model, required = false, defaultVal = null) {
         super(required, defaultVal);
@@ -139,5 +154,10 @@ export class ForeignKeyField extends Field {
 
     getModel() {
         return this.model;
+    }
+
+    getPK() {
+        let temp = new this.model();
+        return temp.getPK;
     }
 }
