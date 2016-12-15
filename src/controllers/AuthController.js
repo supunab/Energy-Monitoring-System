@@ -14,11 +14,13 @@ exports.logoutGET = function (req, res) {
 };
 
     //post login
+
 exports.loginPOST = function (passport) {
     passport.authenticate('local-login', {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
+
     })
 };
 
@@ -28,6 +30,7 @@ exports.signupPOST = function (passport) {
         successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
+
     })
 };
 
