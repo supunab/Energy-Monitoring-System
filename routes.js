@@ -4,7 +4,7 @@ const ConnectionController = require("./src/controllers/ConnectionController");
 const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
-
+const ComplainController = require("./src/controllers/ComplainController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -48,6 +48,9 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
+
+    //Complains
+    app.get("/complainMake", ComplainController.getCreateComplain);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
