@@ -48,7 +48,6 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
-
     //Complains
     app.get("/complainMake", ComplainController.getCreateComplain);
 
