@@ -52,6 +52,7 @@ module.exports = function (app, passport) {
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+
     app.get('/connectionRequest',ConnectionController.getRequest);
     app.post('/connectionRequest',ConnectionController.postRequest);
 };
