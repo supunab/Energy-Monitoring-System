@@ -1,36 +1,36 @@
 <h1>Request Connection</h1>
-<form>
+<form method="post" action="/connectionRequest">
     <div class="row">
         <div class="input-field col s8 m8 l8">
-            <input id="name" type="text" class="validate">
+            <input id="name" type="text" class="validate" name="name" required>
             <label for="name">Name</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="telephone" type="text" class="validate">
+            <input id="telephone" type="text" class="validate" name="tpNumber" required>
             <label for="name">Telephone No</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="addLine1" type="text" class="validate">
+            <input id="addLine1" type="text" class="validate" name="address1">
             <label for="addLine1">Address Line 1</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="addLine2" type="text" class="validate">
+            <input id="addLine2" type="text" class="validate" name="address2" required>
             <label for="addLine2">Address Line 2</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="street" type="text" class="validate">
+            <input id="street" type="text" class="validate" name="street">
             <label for="street">Street</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="city" type="text" class="validate">
+            <input id="city" type="text" class="validate" name="city" required>
             <label for="city">City</label>
         </div>
         <div class="input-field col s8 m8 l8">
-            <input id="district" type="text" class="validate">
+            <input id="district" type="text" class="validate" name="district" required>
             <label for="name">District</label>
         </div>
     </div>
     <div class="row">
-        <a class="btn">Submit</a>
+        <button type="submit" class="btn">Submit</button>
     </div>
 </form>
