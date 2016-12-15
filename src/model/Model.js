@@ -277,5 +277,4 @@ export default class Model {
             this[key].set(model[key]);
         }
     }
-
 }
