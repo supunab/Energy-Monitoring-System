@@ -1,4 +1,5 @@
 import Complaint from '../model/Complaint'
+<<<<<<< f8bd22c90b706b5985d748ff075440553ac9b652
 const DB = require("./DBController");
 
 exports.getShow = function(req, res){
@@ -16,12 +17,22 @@ exports.getShow = function(req, res){
                     res.send("404 - you are unauthorized to view this post");
                 }
             }
+=======
+
+exports.getShow = function(req, res){
+    Complaint.find(req.param.id, function (err, cmpln) {
+        if (err){
+
+        }else {
+            res.render('complain/view', {complain: cmpln});
+>>>>>>> Error correction and create complaint admin views
         }
     });
 };
 
 // return all complain objects only for admins
 exports.getIndex = function (req, res) {
+<<<<<<< f8bd22c90b706b5985d748ff075440553ac9b652
     Complaint.find({user_id : req.user.id.int},(err, complains) => {
         res.render('complain/index', {complains : complains});
     });
@@ -33,6 +44,15 @@ exports.CreateComplainGET = function (req, res) {
     }else{
         res.render('complain/create');
     }
+=======
+    let complains = Complaint.find();
+    console.log(complains);
+};
+
+
+exports.CreateComplainGET = function (req, res) {
+    res.render('complain/create');
+>>>>>>> Error correction and create complaint admin views
 };
 
 // save complain
@@ -41,12 +61,17 @@ exports.createComplainPOST = function (req, res) {
     req.check('description', "Description cannot be empty").notEmpty();
     req.check('category', "You should select a category").notEmpty();
 
+<<<<<<< f8bd22c90b706b5985d748ff075440553ac9b652
     let err = req.validationErrors();
+=======
+    var err = req.validationErrors();
+>>>>>>> Error correction and create complaint admin views
     if (err){
         res.render('complain/create', {message: err, value: req.body});
     }else{
         let c = new Complaint();
 
+<<<<<<< f8bd22c90b706b5985d748ff075440553ac9b652
         c.title.set(req.body.title);
         c.description.set(req.body.description);
         c.comment.set("");
@@ -61,6 +86,17 @@ exports.createComplainPOST = function (req, res) {
                 c.id.set(result.insertId);
                 res.redirect('/complain/' + result.insertId);
             }
+=======
+        c.title = req.body.title;
+        c.description = req.body.description;
+        c.comment = "";
+        c.comp_type = req.body.category;
+        c.user_id = req.user.id.int;
+
+        console.log(c);
+        c.save(function (req, res) {
+            console.log("saved");
+>>>>>>> Error correction and create complaint admin views
         });
     }
 
@@ -68,6 +104,7 @@ exports.createComplainPOST = function (req, res) {
 
 // return complain edit form with complain
 exports.editComplainGET = function (req, res) {
+<<<<<<< f8bd22c90b706b5985d748ff075440553ac9b652
     DB.execQuery("SELECT user_id from Complaint where id = ?", [req.params.id], function (err, result) {
 
         if(result[0].user_id == req.user.id.int){
@@ -91,6 +128,18 @@ exports.editComplainGET = function (req, res) {
             res.send("401");
         }
     })
+=======
+    req.check('title', "Title cannot be empty").notEmpty();
+    req.check('description', "Description cannot be empty").notEmpty();
+    req.check('category', "You should select a category").notEmpty();
+
+    let err = req.validationErrors();
+    if (err){
+
+    }else{
+
+    }
+>>>>>>> Error correction and create complaint admin views
 };
 
 // update the complain object

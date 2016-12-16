@@ -2,7 +2,7 @@ import orm from '../orm/orm'
 import * as field from '../orm/Fields'
 import db from '../../db.config'
 
-let o = new orm(db.host, db.user, db.password, db.database);
+let o = new orm(db.module.host, db.module.user, db.module.password, db.module.database);
 
 export default class Model {
     constructor() {

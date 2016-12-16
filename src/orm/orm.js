@@ -16,6 +16,7 @@ export default class orm {
     }
 
     insert(model, callback) {
+        console.log('insert');
         let table = model.constructor.name;
         let values = [];
         let keys = [];
@@ -67,6 +68,7 @@ export default class orm {
                     callback(error, results[0]);
                 }
             });
+
     }
 
     find(model, param, callback) {
