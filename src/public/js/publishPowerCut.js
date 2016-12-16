@@ -15,12 +15,12 @@ app.controller("PowerCutController",[
         $scope.to = "";
         $scope.newArea = "";
 
-        // Todo - get areas from the database
-        $scope.allAreas = ["area1", "sdasa", "feasd", "gegeta", "fadgfaeg"];
-
-        // Get all areas
+        // Load all the areas from the database
+        $scope.allAreas = [];
         $http.get('/areas').success(function(data){
-            $scope.allAreas.push(data);
+            for(var i=0; i <data.length; i++){
+                $scope.allAreas.push(data[i].name);
+            }
         });
 
         $scope.addNewArea = function(){
