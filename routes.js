@@ -48,7 +48,6 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
-
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});

@@ -23,6 +23,11 @@ app.controller("PowerCutController",[
             }
         });
 
+        // Get all areas
+        $http.get('/areas').success(function(data){
+            $scope.allAreas.push(data);
+        });
+
         $scope.addNewArea = function(){
             console.log($scope.from);
             if(!$scope.newArea || $scope.newArea===""){return;}
