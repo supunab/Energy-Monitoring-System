@@ -16,6 +16,7 @@ export default class orm {
     }
 
     insert(model, callback) {
+        console.log('insert');
         let table = model.constructor.name;
         let values = [];
         let keys = [];
@@ -60,9 +61,14 @@ export default class orm {
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
             , function (error, results, fields) {
-                //console.log(error, results, fields);
-                callback(error, results[0]);
+                //onsole.log(error, results, fields);
+                if (error){
+                    console.log(error);
+                }else{
+                    callback(error, results[0]);
+                }
             });
+
     }
 
     find(model, param, callback) {
