@@ -272,6 +272,9 @@ export default class Model {
         o.find(new this(), param, callback);
     }
 
+    static all(callback){
+        o.all(new this(), callback);
+    }
     fromDB(model) {
         for (let key in this) {
             this[key].set(model[key]);
