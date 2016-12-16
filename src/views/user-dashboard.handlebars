@@ -19,7 +19,7 @@
         {{/if}}
         <h1>Welcome</h1>
     </div>
-    <div class="col s12 m4 l4 power-cut-table z-depth-3" style="border-color:red; ">
+    <div class="col s12 m4 l4 power-cut-table z-depth-3" style="border-color:{{#if powercuts}}red{{else}}green{{/if}}; ">
         <table>
             <thead>
             <tr>
@@ -27,11 +27,17 @@
             </tr>
             </thead>
             <tbody>
+            {{#if powercuts}}
             {{#each powercuts}}
                 <tr>
                     <td>{{this.area}} {{this.time}}</td>
                 </tr>
             {{/each}}
+            {{else}}
+                <tr>
+                    <td>No Power Cuts</td>
+                </tr>
+            {{/if}}
             </tbody>
         </table>
     </div>
