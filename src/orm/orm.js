@@ -94,4 +94,14 @@ export default class orm {
             });
     }
 
+    all(model, callback){
+        let table = model.constructor.name;
+        console.log("SELECT " + Object.keys(model).join() + " from " + table);
+        this.connection.query(
+            "SELECT " + Object.keys(model).join() + " FROM " + table,
+            (error, results, fields) => {
+                callback(error, results);
+            }
+        );
+    }
 }
