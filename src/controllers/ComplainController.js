@@ -1,11 +1,14 @@
 import Complaint from '../model/Complaint'
+import User from "../model/User"
 
 exports.getShow = function(req, res){
-    Complaint.find(req.param.id, function (err, cmpln) {
+    Complaint.findOne({'id' : req.params.id}, function (err, cmpln) {
         if (err){
-
+            res.send("404");
         }else {
-            res.render('complain/view', {complain: cmpln});
+            User.findOne({id : cmpln.user_id}, (err, usr) => {
+               res.render('complain/view', {complain: cmpln, username : usr.first_name});
+            });
         }
     });
 };
@@ -33,15 +36,20 @@ exports.createComplainPOST = function (req, res) {
     }else{
         let c = new Complaint();
 
-        c.title = req.body.title;
-        c.description = req.body.description;
-        c.comment = "";
-        c.comp_type = req.body.category;
-        c.user_id = req.user.id.int;
+        c.title.set(req.body.title);
+        c.description.set(req.body.description);
+        c.comment.set("");
+        c.comp_type.set(req.body.category);
+        c.user_id.set(req.user.id.get());
 
         console.log(c);
-        c.save(function (req, res) {
-            console.log("saved");
+        c.save(function (err, result) {
+            if(err){
+
+            }else{
+                c.id.set(result.insertId);
+                this.getShow(req, res);
+            }
         });
     }
 
