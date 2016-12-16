@@ -1,11 +1,12 @@
 const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
+const BreakDownController = require("./src/controllers/BreakDownController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
 
-        res.render('index');
+        res.render('viewBreakDowns');
     });
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
@@ -43,6 +44,9 @@ module.exports = function (app, passport) {
     app.get('/connectionRequest',ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
+
+    app.get('/breakdownView',BreakDownController.getRequest);
+
 };
 
 
