@@ -7,7 +7,8 @@ app.config(function($interpolateProvider) {
 
 app.controller("PowerCutController",[
    '$scope',
-    function($scope){
+    '$http',
+    function($scope, $http ){
         $scope.areas = [];
         $scope.description = "";
         $scope.from = "";
@@ -16,6 +17,11 @@ app.controller("PowerCutController",[
 
         // Todo - get areas from the database
         $scope.allAreas = ["area1", "sdasa", "feasd", "gegeta", "fadgfaeg"];
+
+        // Get all areas
+        $http.get('/areas').success(function(data){
+            $scope.allAreas.push(data);
+        });
 
         $scope.addNewArea = function(){
             console.log($scope.to);

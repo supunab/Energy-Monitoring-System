@@ -17,10 +17,15 @@ module.exports = function (app, passport) {
     //Connection routes
     app.get('/connection/request', ConnectionController.getRequest);
 
+
+    // For admin
+    // Publish Power Cuts
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.post("/powercuts")
+
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
 };
 
 
