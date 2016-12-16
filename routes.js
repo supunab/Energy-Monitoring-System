@@ -57,7 +57,11 @@ module.exports = function (app, passport) {
     app.post("/complain/delete/:id", ComplainController.deletePOST);
 
     //Complains
-    app.get("/complainMake", ComplainController.getCreateComplain);
+    app.get("/complaincreate", ComplainController.CreateComplainGET);
+    app.post("/complaincreate", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/create.handlebars', ComplainController.editComplainGET);
+    app.post('/complainedit', ComplainController.editComplainPOST);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});

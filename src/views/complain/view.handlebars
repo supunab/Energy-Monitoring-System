@@ -1,11 +1,13 @@
-<h1 style="align=center">Complain</h1>
+<h1>Complain</h1>
 <div class="row">
     <div class="col m8 l8 s12">
-        <h5>// Title //</h5>
-        <dt style="margin-left:30px;">//&nbsp;<strong style="margin: 0px; padding: 0px; color: rgb(0, 0, 0); font-family: 'Open Sans', Arial, sans-serif; font-size: 14px; font-variant-ligatures: normal; orphans: 2; text-align: justify; widows: 2; background-color: rgb(255, 255, 255);">Lorem Ipsum</strong>&nbsp;is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an .&nbsp;//</dt>
+        <h5>{{compain.body}}</h5>
+        <dt style="margin-left:30px;"><strong>{{complain.body}}</strong></dt>
         <hr />
         <h6>Comments :&nbsp;</h6>
-        <dt style="margin-left:50px;">// There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which .&nbsp;//</dt>
+        <dt style="margin-left:50px;">{{#if complain.comment }}
+            {{ complain.comment }}
+        {{/if}}</dt>
     </div>
     <div class="col s12 m4 l4">
         <div>
