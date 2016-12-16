@@ -16,6 +16,7 @@ export default class orm {
     }
 
     insert(model, callback) {
+        console.log('insert');
         let table = model.constructor.name;
         let values = [];
         let keys = [];
@@ -48,8 +49,13 @@ export default class orm {
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
             , function (error, results, fields) {
                 //onsole.log(error, results, fields);
-                callback(error, results[0]);
+                if (error){
+                    console.log(error);
+                }else{
+                    callback(error, results[0]);
+                }
             });
+
     }
 
     find(model, param, callback) {
