@@ -73,7 +73,6 @@ module.exports = function (passport) {
                         newUser.save(function (err, result) {
                             if (err)
                                 throw err;
-                            newUser.id.set(result.insertId);
                             return done(null, newUser);
                         });
                     }
