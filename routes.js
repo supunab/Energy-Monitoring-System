@@ -53,8 +53,6 @@ module.exports = function (app, passport) {
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
     app.get('/connectionRequest',ConnectionController.getRequest);
     app.post('/connectionRequest',ConnectionController.postRequest);
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
-    
 };
 
 
