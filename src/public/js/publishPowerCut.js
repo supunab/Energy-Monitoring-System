@@ -17,15 +17,11 @@ app.controller("PowerCutController",[
 
         // Load all the areas from the database
         $scope.allAreas = [];
+
         $http.get('/areas').success(function(data){
             for(var i=0; i <data.length; i++){
                 $scope.allAreas.push(data[i].name);
             }
-        });
-
-        // Get all areas
-        $http.get('/areas').success(function(data){
-            $scope.allAreas.push(data);
         });
 
         $scope.addNewArea = function(){

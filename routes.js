@@ -38,6 +38,8 @@ module.exports = function (app, passport) {
     }));
 
 
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
 
     // For admin
     // Publish Power Cuts
@@ -47,6 +49,7 @@ module.exports = function (app, passport) {
 
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
+
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
