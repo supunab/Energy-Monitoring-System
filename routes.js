@@ -6,7 +6,7 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
 
-        res.render('viewBreakDowns');
+        res.redirect('/breakdownView');
     });
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
