@@ -73,7 +73,8 @@ export default class orm {
         }
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
-        if (param.length == 0) {
+        if (Object.keys(param).length === 0) {
+            console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table + ";");
             this.connection.query(
                 "SELECT " + Object.keys(model).join() + " from " + table + ";"
                 , function (error, results, fields) {
