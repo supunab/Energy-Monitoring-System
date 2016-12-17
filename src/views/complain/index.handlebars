@@ -5,8 +5,9 @@
         <li>
             <div class="collapsible-header">{{this.title}}</div>
             <div class="collapsible-body">
-                <p>{{this.body}}</p>
-                <p style="margin-left:50px"><a href="#">View the Complain >></a></p>
+                <p>{{this.description}}</p>
+                <p>{{this.user_id}}</p>
+                <p style="margin-left:50px"><a href="/complain/{{this.id}}">View the Complain >></a></p>
             </div>
         </li>
         {{/each}}

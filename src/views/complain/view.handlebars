@@ -15,10 +15,24 @@
         <div>
             <dl>
                 <dt>Asked : </dt>
-                <dd>{{username}}</dd>
+                <dd>{{complain.username}}</dd>
             </dl>
         </div>
-        <a class="btn blue text-lighten-3">Edit</a>
-        <a class="btn red text-lighten-3">Del</a>
+        <a class="btn blue text-lighten-3" href="/complain/edit/{{complain.id}}">Edit</a>
+        <a class="btn red text-lighten-3" onclick="delete_confirm()">Del</a>
+
+        <script>
+            function delete_confirm() {
+                var retVal = confirm("Do you want to delete ?");
+                if( retVal == true ){
+                    var form = document.createElement("form");
+                    form.setAttribute("method", "POST");
+                    form.setAttribute("action", "/complain/delete/{{complain.id}}");
+                    document.body.appendChild(form);
+                    form.submit();
+                    return true;
+                }
+            }
+        </script>
     </div>
 </div>
