@@ -10,10 +10,6 @@ app.controller("PowerCutController",[
     '$http',
     function($scope, $http ){
         $scope.areas = [];
-        $scope.description = "";
-        $scope.start = "";
-        $scope.to = "";
-        $scope.newArea = "";
 
         // Load all the areas from the database
         $scope.allAreas = [];
@@ -25,7 +21,7 @@ app.controller("PowerCutController",[
         });
 
         $scope.addNewArea = function(){
-            console.log($scope.from);
+            console.log($scope.start);
             if(!$scope.newArea || $scope.newArea===""){return;}
 
             $scope.areas.push($scope.newArea);
@@ -40,14 +36,28 @@ app.controller("PowerCutController",[
         $scope.publish = function(){
             if ($scope.areas.length === 0){return ;}
 
+            var startDate = new Date(String($scope.start_d));
+            console.log(startDate);
+            var startTime = new Date(String($scope.start_t));
+
+            var endDate = new Date(String($scope.to_d));
+            var endTime = new Date(String($scope.to_t));
+
+            startDate = startDate.getFullYear()+"-"+(startDate.getMonth()+1)+"-"+startDate.getDate()+" "+startTime.getHours()+":"+startTime.getMinutes();
+            console.log(startDate);
+            endDate = endDate.getFullYear()+"-"+(endDate.getMonth()+1)+"-"+endDate.getDate()+" "+endTime.getHours()+":"+endTime.getMinutes();
+            console.log(endDate);
+
             // Todo - Validate dates
             // Create a JSON object to send
             var powerCut = {
-                start_date : $scope.start,
-                end_date : $scope.to,
+                start_date : startDate,
+                end_date : endDate,
                 description : $scope.description,
                 areas : $scope.areas
             };
+
+            console.log(powerCut);
 
             // Send request
             $http.post("/newpowercut", powerCut);

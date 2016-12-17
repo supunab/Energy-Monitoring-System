@@ -8,21 +8,20 @@ exports.addPowerCut = function(req, res, next){
     let area_names = req.body.areas;
     let areas = [];
 
-    console.log(new PowerCut().generateSchema());
-
     for(let i=0; i<area_names.length; i++){
         Area.find({name:area_names[i]}, function(err, result){
             areas.push(result[0].id);
             if(i===area_names.length-1){
                 // After all the area_ids are taken
+                let powerCut = new PowerCut();
+                powerCut.generateSchema();
+                powerCut.createObject(start_date, end_date, description, areas);
 
-                //let powerCut = new PowerCut();
-                //powerCut.createObject(start_date, end_date, description, areas);
-                //powerCut.save(function(err){
-                //    if (err){
-                //        console.log("Insert Error : "+err);
-                //    }
-                //});
+                powerCut.save(function(err){
+                    if (err){
+                        console.log("Save Error : "+err);
+                    }
+                })
             }
         });
     }

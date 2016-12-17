@@ -16,7 +16,9 @@ export default class PowerCut extends Model{
         this.starting_date.set(start_date);
         this.ending_date.set(end_date);
         this.description.set(description);
-        this.areas.set(areas);
+        for(let i=0; i<areas.length; i++){
+            this.areas.push(areas[i]);
+        }
     }
 
     getPK(){
