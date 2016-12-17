@@ -4,6 +4,7 @@ const DB = require("./DBController");
 exports.getShow = function(req, res){
     DB.execQuery("SELECT Complaint.id, comp_type, description, title, comment, User.id as userid, User.first_name as username from " +
     "Complaint join User where Complaint.user_id = User.id and Complaint.id = ?", [req.params.id], function (err, result) {
+
         if(err){
             console.log("error" , err);
         }else{
