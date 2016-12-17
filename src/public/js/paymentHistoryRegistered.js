@@ -82,6 +82,5 @@ app.controller("PaymentHistoryCtrl",[
             ];
 
         $scope.connections = ['test1', 'connection 2', 'connection 3'];
-
     }
 ]);

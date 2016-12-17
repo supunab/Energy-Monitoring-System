@@ -84,8 +84,8 @@ module.exports = function (app, passport) {
     app.post('/connectionRequest',ConnectionController.postRequest);
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
-
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+
 
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
