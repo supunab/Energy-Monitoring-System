@@ -38,14 +38,10 @@ module.exports = function (app, passport) {
     }));
 
 
-    // Get all areas
-    app.get('/areas', GeneralController.getAllAreas);
-
     // For admin
     // Publish Power Cuts
     app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
     app.post("/newpowercut", AdminController.addPowerCut);
-
 
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
