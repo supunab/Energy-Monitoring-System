@@ -73,6 +73,8 @@ module.exports = function (app, passport) {
 
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
+    app.post('/breakdownPost',BreakDownController.postBreakdown);
+
 };
 
 
