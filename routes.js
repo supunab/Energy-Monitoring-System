@@ -8,8 +8,8 @@ const AdminController = require("./src/controllers/AdminController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-
-        res.redirect('/breakdownView');
+        res.render('index');
+        //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
