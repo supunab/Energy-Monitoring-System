@@ -20,7 +20,7 @@
 
             <div class="row">
                 <div class="input-field col m6">
-                    <input id="from_datetime" type="datetime-local" ng-model="from"/>
+                    <input id="from_datetime" type="datetime-local" ng-model="start"/>
                 </div>
 
                 <div class="input-field col m6">
@@ -63,7 +63,7 @@
 
             <div class="row">
                 <div class="col m3 offset-m4">
-                    <a class="waves-effect waves-light btn blue">Publish</a>
+                    <a class="waves-effect waves-light btn blue" ng-click="publish()">Publish</a>
                 </div>
             </div>
         </form>

@@ -2,6 +2,7 @@ const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
 const GeneralController = require("./src/controllers/GeneralController");
+const AdminController = require("./src/controllers/AdminController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -41,16 +42,11 @@ module.exports = function (app, passport) {
     // For admin
     // Publish Power Cuts
     app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
-    app.post("/powercuts");
+    app.post("/newpowercut", AdminController.addPowerCut);
 
 
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
-
-    // For admin
-    // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
-    app.post("/powercuts");
 
 
     //dummy routes to test viwes.
