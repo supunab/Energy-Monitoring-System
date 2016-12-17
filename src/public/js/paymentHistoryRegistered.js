@@ -1,7 +1,5 @@
 var app = angular.module("energy-monitor", []);
 
-
-
 function getFixedDate(dateString){
     var temp = dateString.split(" ");
     var date = temp[0];
@@ -61,8 +59,6 @@ app.controller("PaymentHistoryCtrl",[
     "$scope",
     "$http",
     function($scope, $http){
-
-
         // Assume customer id is already known (Should take from the login details)
         var customerid = '1';
 
@@ -86,9 +82,6 @@ app.controller("PaymentHistoryCtrl",[
             ];
 
         $scope.connections = ['test1', 'connection 2', 'connection 3'];
-
-
-
 
     }
 ]);
