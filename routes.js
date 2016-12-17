@@ -40,9 +40,12 @@ module.exports = function (app, passport) {
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
 
-    app.get('/connectionRequest',ConnectionController.getRequest);
+    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
+    app.get('/admin', function (req, res) {
+        res.render('admin/dashboard', {layout: 'admin-main'});
+    });
 };
 
 
@@ -53,5 +56,5 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
 }
