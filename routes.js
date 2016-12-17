@@ -2,6 +2,9 @@ const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
 const BreakDownController = require("./src/controllers/BreakDownController");
+const GeneralController = require("./src/controllers/GeneralController");
+const AdminController = require("./src/controllers/AdminController");
+
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -37,12 +40,19 @@ module.exports = function (app, passport) {
     }));
 
 
+    // For admin
+    // Publish Power Cuts
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.post("/newpowercut", AdminController.addPowerCut);
+
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
+
+
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-
     app.get('/connectionRequest',ConnectionController.getRequest);
-
     app.post('/connectionRequest',ConnectionController.postRequest);
 
     app.get('/breakdownView',BreakDownController.getRequest);
