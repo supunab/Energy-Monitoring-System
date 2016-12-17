@@ -1,5 +1,5 @@
 <h1 style="align=center">Report Breakdown</h1>
-<form>
+<form method="post" action="/breakdownPost">
     <div class="row">
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-input"></i>
@@ -19,7 +19,7 @@
         </div>
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-description"></i>
-            <textarea id="description" class="materialize-textarea"></textarea>
+            <textarea id="description" class="materialize-textarea" name="description"></textarea>
             <label for="description">Description</label>
         </div>
     </div>
