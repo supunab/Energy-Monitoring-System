@@ -65,6 +65,10 @@ app.controller("PaymentHistoryCtrl",[
 =======
 >>>>>>> Completed html payment history for registered view
 
+
+        // Assume customer id is already known (Should take from the login details)
+        var customerid = '1';
+
         // dummy data
         $scope.records = [
         {
