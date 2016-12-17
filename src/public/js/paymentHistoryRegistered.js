@@ -59,12 +59,8 @@ app.controller("PaymentHistoryCtrl",[
     "$scope",
     "$http",
     function($scope, $http){
-<<<<<<< 209a04531f16c788cb9a7d0214f0560654134159
         // Assume customer id is already known (Should take from the login details)
         var customerid = '1';
-=======
->>>>>>> Completed html payment history for registered view
-
 
         // Assume customer id is already known (Should take from the login details)
         var customerid = '1';
@@ -89,12 +85,6 @@ app.controller("PaymentHistoryCtrl",[
             ];
 
         $scope.connections = ['test1', 'connection 2', 'connection 3'];
-<<<<<<< 209a04531f16c788cb9a7d0214f0560654134159
-=======
 
-
-
-
->>>>>>> Completed html payment history for registered view
     }
 ]);
