@@ -1,13 +1,15 @@
 const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
+const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
+
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
 
-        res.render('index');
+        res.redirect('/breakdownView');
     });
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
@@ -52,6 +54,9 @@ module.exports = function (app, passport) {
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
     app.get('/connectionRequest',ConnectionController.getRequest);
     app.post('/connectionRequest',ConnectionController.postRequest);
+
+    app.get('/breakdownView',BreakDownController.getRequest);
+
 };
 
 

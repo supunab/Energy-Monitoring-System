@@ -32,7 +32,13 @@ console.log(__dirname + '/src/views');
 var handlebars = require('express-handlebars').create({
     layoutsDir: path.join(__dirname, "src/views/layouts"),
     partialsDir: path.join(__dirname, "src/views/partials"),
-    defaultLayout: 'main'
+    defaultLayout: 'main',
+    helpers: {
+        getType : function (re) {
+            if(re==0) return "No";
+            else return "yes";
+        }
+    }
 });
 
 app.engine('handlebars', handlebars.engine);

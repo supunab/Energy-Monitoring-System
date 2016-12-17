@@ -2,7 +2,8 @@
     <section class="container">
         <div class="login">
             <h1>Login to Web App</h1>
-            {{#if message.length }}
+            {{#if message.length}}
+
                 <div class="alert alert-danger">{{message}}</div>
             {{/if}}
             <form method="post" action="/login">
