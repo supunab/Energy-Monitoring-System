@@ -9,6 +9,7 @@ const ComplainController = require("./src/controllers/ComplainController");
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
+        //res.redirect('/breakdownView'); //breakdownView
     });
 
     app.get('/login', function (req, res) {
