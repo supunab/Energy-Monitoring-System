@@ -1,9 +1,10 @@
 import * as field from "../orm/Fields"
 import Model from "../model/Model"
-import Connection form "../model/Connection"
+import Connection from "../model/Connection"
 
 export default class Bill extends Model{
     constructor(){
+        super();
         this.id = new field.IntegerField(null, true, null, true, true);
         this.connection_id = new field.ForeignKeyField(Connection, true, null);
         this.starting_date = new field.DateField(true, null);

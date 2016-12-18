@@ -1,11 +1,13 @@
 import User from '../model/User'
-<<<<<<< ae7d5ecc990fa5d45e73665d4917edec0c09846d
 import Complaint from '../model/Complaint'
 import Area from '../model/Area'
 import Test from '../model/Test'
-=======
-import Complain from '../model/Complain'
->>>>>>> done views
+import Bill from '../model/Bill'
+import BillPayment from '../model/BillPayment'
+import Connection from '../model/Connection'
+import Customer from '../model/Customer'
+import PowerCut from '../model/PowerCut'
+
 
 export default class Migrate {
     constructor() {
@@ -13,5 +15,10 @@ export default class Migrate {
         this.complaint = new Complaint().generateSchema();
         this.area = new Area().generateSchema();
         this.test = new Test().generateSchema();
+        this.powerCut = new PowerCut().generateSchema();
+        this.customer = new Customer().generateSchema();
+        this.connection = new Connection().generateSchema();
+        this.bill = new Bill().generateSchema();
+        this.billPayment = new BillPayment().generateSchema();
     }
 }

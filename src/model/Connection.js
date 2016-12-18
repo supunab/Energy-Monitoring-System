@@ -5,6 +5,7 @@ import Area from '../model/Area'
 
 export default class Connection extends Model{
     constructor(){
+        super();
         this.id = new field.IntegerField(null, true, null, true, true);
         this.account_no = new field.IntegerField(null, true, null, false, false);
         this.address_line1 = new field.CharField(30, true, null, false);
