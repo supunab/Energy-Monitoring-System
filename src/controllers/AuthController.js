@@ -7,13 +7,13 @@ exports.signupGET = function (req, res) {
     res.render('signup', {message: req.flash('signupMessage')});
 };
 
-    //
+//
 exports.logoutGET = function (req, res) {
     req.logout();
     res.redirect('/');
 };
 
-    //post login
+//post login
 
 exports.loginPOST = function (passport) {
     passport.authenticate('local-login', {
@@ -24,7 +24,7 @@ exports.loginPOST = function (passport) {
     })
 };
 
-    // post signup
+// post signup
 exports.signupPOST = function (passport) {
     passport.authenticate('local-signup', {
         successRedirect: '/', // redirect to the secure profile section
@@ -33,9 +33,3 @@ exports.signupPOST = function (passport) {
 
     })
 };
-
-
-
-
-
-
