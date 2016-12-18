@@ -14,8 +14,8 @@ export default class Connection extends Model{
         this.address_city = new field.CharField(30, true, null, false);
         this.address_district = new field.CharField(30, true, null, false);
         this.connection_type = new field.CharField(30, true, null, false);
-        this.customer_id = new field.ForeignKeyField(Customer, null, true);
-        this.area_id = new field.ForeignKeyField(Area, null, true);
+        this.customer_id = new field.ForeignKeyField(Customer, true, null);
+        this.area_id = new field.ForeignKeyField(Area, true, null);
     }
 
 

@@ -6,7 +6,7 @@ export default class Customer extends Model{
         super();
         this.id = new field.IntegerField(null, true, null, true, false);
         this.email = new field.CharField(100, true, null, false);
-        this.name = new field.CharField(100, true, null, falase);
+        this.name = new field.CharField(100, true, null, false);
     }
 
     createObject(id, email, name){

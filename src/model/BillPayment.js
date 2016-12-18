@@ -1,4 +1,4 @@
-import * as field from "../orm/Field"
+import * as field from "../orm/Fields"
 import Model from "../model/Model"
 import Bill from "../model/Bill"
 
