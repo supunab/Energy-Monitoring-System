@@ -192,13 +192,16 @@ export class ManyToManyField extends Field {
     constructor(model, required = false, defaultVal = null) {
         super(required, defaultVal);
         this.model = model;
-        this.key = null;
+        this.key = [];
     }
 
     set(key) {
-        this.key = parseInt(key);
+        this.key = key;
     }
 
+    push(one) {
+        this.key.push(one);
+    }
     get() {
         return this.key;
     }

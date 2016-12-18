@@ -10,7 +10,49 @@ export default class Model {
     }
 
     save(callback) {
-        o.insert(this, callback);
+        let m2m = {};
+        let self = this;
+        for (let entity in this) {
+            if (this[entity] instanceof field.ManyToManyField) {
+                m2m[entity] = this[entity];
+            }
+        }
+        if (Object.keys(m2m).length == 0) {
+            o.insert(this, function (err, result) {
+                self.id.set(result.insertId);
+                callback(err, result);
+            });
+        }
+        else {
+            o.insert(this, function (err, result) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    self.id.set(result.insertId);
+                }
+                console.log(m2m);
+                for (let key in m2m) {
+                    let foreignTable = self[key].getModel.call(self[key]).name;
+                    let foreignPK = self[key].getPK().call(self[key]);
+                    let thisTable = self.constructor.name;
+                    let thisPK = self.getPK();
+                    let tableName = foreignTable + "_m2m_" + thisTable;
+                    let columns = [foreignTable + "_" + foreignPK, thisTable + "_" + thisPK];
+                    let values = [];
+                    for (let i = 0; i < m2m[key].get().length; i++) {
+                        let temp = [m2m[key].get()[i], self.id.get()];
+                        values.push(temp);
+                    }
+                    o.insertObject(tableName, columns, values, function (error, res) {
+                        console.log(error, res);
+
+                    })
+                }
+                callback(err, result);
+            });
+
+        }
     }
 
     generateSchema() {

@@ -2,10 +2,14 @@ const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
 const ComplainController = require("./src/controllers/ComplainController");
+const BreakDownController = require("./src/controllers/BreakDownController");
+const GeneralController = require("./src/controllers/GeneralController");
+const AdminController = require("./src/controllers/AdminController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
+        //res.redirect('/breakdownView'); //breakdownView
     });
 
     app.get('/login', function (req, res) {
@@ -24,7 +28,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/connectionRequest', // redirect to the secure profile section
+        successRedirect: '/breakdownreport', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -44,13 +48,25 @@ module.exports = function (app, passport) {
     app.post('/complain/edit', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
 
+    // For admin
+    // Publish Power Cuts
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.post("/newpowercut", AdminController.addPowerCut);
+
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
+
+
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-
     app.get('/connectionRequest',ConnectionController.getRequest);
-
     app.post('/connectionRequest',ConnectionController.postRequest);
+
+    app.get('/breakdownView',BreakDownController.getRequest);
+
+    app.post('/breakdownPost',BreakDownController.postBreakdown);
+
 };
 
 
