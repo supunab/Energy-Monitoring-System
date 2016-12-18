@@ -6,16 +6,17 @@ const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
 
+
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
     });
-
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
     });
 
     app.get('/signup', function (req, res) {
+
         // render the page and pass in any flash data if it exists
         res.render('signup', {message: req.flash('signupMessage')});
     });
