@@ -70,6 +70,7 @@ module.exports = function (app, passport) {
 
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
+    app.get("*", PageController.errorPage404);
 };
 
 
