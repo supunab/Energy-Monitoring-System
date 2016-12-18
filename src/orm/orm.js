@@ -60,7 +60,7 @@ export default class orm {
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
             , function (error, results, fields) {
-                //onsole.log(error, results, fields);
+                //console.log(error, results, fields);
                 callback(error, results[0]);
             });
     }
@@ -73,7 +73,8 @@ export default class orm {
         }
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
-        if (param.length == 0) {
+        if (Object.keys(param).length === 0) {
+            console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table + ";");
             this.connection.query(
                 "SELECT " + Object.keys(model).join() + " from " + table + ";"
                 , function (error, results, fields) {
@@ -97,7 +98,7 @@ export default class orm {
         this.connection.query(
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";"
-            , function (error, results, fields) {
+            , function (error, results, fields){
                 callback(error, results[0]);
             });
     }

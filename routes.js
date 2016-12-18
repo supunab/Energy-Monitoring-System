@@ -36,6 +36,15 @@ module.exports = function (app, passport) {
     }));
 
 
+    // For admin
+    // Publish Power Cuts
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.post("/newpowercut", AdminController.addPowerCut);
+
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
+
+
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
@@ -46,6 +55,9 @@ module.exports = function (app, passport) {
     app.get('/admin', function (req, res) {
         res.render('admin/dashboard', {layout: 'admin-main'});
     });
+
+    app.get('/breakdownView',BreakDownController.getRequest);
+
 };
 
 
@@ -56,5 +68,5 @@ function isLoggedIn(req, res, next) {
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/login');
+    res.redirect('/');
 }
