@@ -4,9 +4,9 @@ const dbConfig = require('../../db.config');
 exports.execQuery = function (sql, param, cb) {
     mysql.createPool({
         connectionLimit: 10,
-        host: dbConfig.module.host,
-        user: dbConfig.module.user,
-        password: dbConfig.module.password,
-        database: dbConfig.module.database
+        host: dbConfig.host,
+        user: dbConfig.user,
+        password: dbConfig.password,
+        database: dbConfig.database
     }).query(sql, param,cb);
 };
