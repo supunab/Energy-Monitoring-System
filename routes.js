@@ -4,6 +4,7 @@ const ConnectionController = require("./src/controllers/ConnectionController");
 const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
+const ComplainController = require("./src/controllers/ComplainController");
 
 
 module.exports = function (app, passport) {
@@ -47,6 +48,16 @@ module.exports = function (app, passport) {
 
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
+
+
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
 
 
     //dummy routes to test viwes.
