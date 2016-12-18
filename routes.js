@@ -4,6 +4,7 @@ const ConnectionController = require("./src/controllers/ConnectionController");
 const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
+const ComplainController = require("./src/controllers/ComplainController");
 
 
 module.exports = function (app, passport) {
