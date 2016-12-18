@@ -22,7 +22,7 @@ exports.getShow = function(req, res){
 
 // return all complain objects only for admins
 exports.getIndex = function (req, res) {
-    Complaint.find({user_id : req.user.id.int},(err, complains) => {
+    Complaint.find({user_id: req.user.id.int}, {}, (err, complains) => {
         res.render('complain/index', {complains : complains});
     });
 };

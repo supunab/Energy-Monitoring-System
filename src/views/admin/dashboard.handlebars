@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <div class="box">
             <div class="box-header with-border">
-                <h3 class="box-title">Monthly Recap Report</h3>
+                <h3 class="box-title">Energy Consumption Report</h3>
 
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -41,21 +41,21 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Select Area</label>
-                            <select class="form-control select2">
-                                <option value="2" selected="selected">All Areas</option>
+                            <select class="form-control select2" multiple="multiple" id="area">
+                                <option value="All Areas" selected="selected">All Areas</option>
                             </select>
                         </div>
 
                     </div>
 
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Select Connection Type</label>
-                            <select class="form-control select2">
-                                <option value="2" selected="selected">All Connections</option>
+                            <select class="form-control select2" multiple="multiple" id="connectionType">
+                                <option value="All Connections" selected="selected">All Connections</option>
                             </select>
                         </div>
 
@@ -64,7 +64,7 @@
                     <div class="col-md-2">
                         <br>
                         <div class="form-group">
-                            <button type="button" class="btn btn-success">Generate Report</button>
+                            <button type="button" class="btn btn-success" id="submit">Generate Report</button>
                         </div>
 
                     </div>

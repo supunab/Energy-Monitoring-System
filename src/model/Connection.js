@@ -19,7 +19,7 @@ export default class Connection extends Model{
     }
 
 
-    createObject(account_no, address_line1, address_line2, address_street, adress_city, address_district, connection_type, customer_id, area_id){
+    createObject(account_no, address_line1, address_line2, address_street, address_city, address_district, connection_type, customer_id, area_id) {
         this.account_no.set(account_no);
         this.address_line1.set(address_line1);
         this.address_line2.set(address_line2);
