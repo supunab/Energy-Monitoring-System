@@ -63,6 +63,7 @@ export default class orm {
                 //console.log(error, results, fields);
                 callback(error, results[0]);
             });
+
     }
 
     find(model, param, callback) {
@@ -108,6 +109,17 @@ export default class orm {
             , function (error, results, fields){
                 callback(error, results[0]);
             });
+    }
+
+    all(model, callback){
+        let table = model.constructor.name;
+        console.log("SELECT " + Object.keys(model).join() + " from " + table);
+        this.connection.query(
+            "SELECT " + Object.keys(model).join() + " FROM " + table,
+            (error, results, fields) => {
+                callback(error, results);
+            }
+        );
     }
 
 }

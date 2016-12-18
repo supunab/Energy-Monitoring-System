@@ -1,22 +1,22 @@
 const PageController = require("./src/controllers/PageController");
 const AuthController = require("./src/controllers/AuthController");
 const ConnectionController = require("./src/controllers/ConnectionController");
+const ComplainController = require("./src/controllers/ComplainController");
 const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
-
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
+
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
     });
 
     app.get('/signup', function (req, res) {
-
         // render the page and pass in any flash data if it exists
         res.render('signup', {message: req.flash('signupMessage')});
     });
@@ -39,6 +39,14 @@ module.exports = function (app, passport) {
         failureFlash: true // allow flash messages
     }));
 
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
 
     // For admin
     // Publish Power Cuts

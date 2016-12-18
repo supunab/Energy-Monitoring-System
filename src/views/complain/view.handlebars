@@ -1,0 +1,38 @@
+<h1>Complain</h1>
+<div class="row">
+    <div class="col m8 l8 s12">
+        <h5>{{complain.title}}</h5>
+        <dt style="margin-left:30px;"><strong>{{complain.description}}</strong></dt>
+        {{#if complain.comment }}
+            <hr />
+            <h6>Comments :&nbsp;</h6>
+            <dt style="margin-left:50px;">
+                {{ complain.comment }}
+            </dt>
+        {{/if}}
+    </div>
+    <div class="col s12 m4 l4">
+        <div>
+            <dl>
+                <dt>Asked : </dt>
+                <dd>{{complain.username}}</dd>
+            </dl>
+        </div>
+        <a class="btn blue text-lighten-3" href="/complain/edit/{{complain.id}}">Edit</a>
+        <a class="btn red text-lighten-3" onclick="delete_confirm()">Del</a>
+
+        <script>
+            function delete_confirm() {
+                var retVal = confirm("Do you want to delete ?");
+                if( retVal == true ){
+                    var form = document.createElement("form");
+                    form.setAttribute("method", "POST");
+                    form.setAttribute("action", "/complain/delete/{{complain.id}}");
+                    document.body.appendChild(form);
+                    form.submit();
+                    return true;
+                }
+            }
+        </script>
+    </div>
+</div>
