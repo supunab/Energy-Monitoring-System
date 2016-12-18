@@ -1,18 +1,18 @@
 <h1 style="align=center">Report Breakdown</h1>
-<form>
+<form method="post" action="/breakdownPost">
     <div class="row">
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-input"></i>
-            <input id="area" type="text" class="validate">
+            <input id="area" type="text" class="validate" name="area">
             <label for="area">Area</label>
         </div>
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-description"></i>
-            <textarea id="description" class="materialize-textarea"></textarea>
+            <textarea id="description" class="materialize-textarea" name="description"></textarea>
             <label for="description">Description</label>
         </div>
     </div>
     <div class="row">
     </div>
-    <a class="waves-effect btn">Submit</a>
+    <button type="submit" class="btn">Submit</button>
 </form>

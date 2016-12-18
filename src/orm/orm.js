@@ -60,8 +60,12 @@ export default class orm {
             "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
             , function (error, results, fields) {
-                //console.log(error, results, fields);
-                callback(error, results[0]);
+                //onsole.log(error, results, fields);
+                if (error){
+                    console.log(error);
+                }else{
+                    callback(error, results[0]);
+                }
             });
     }
 
@@ -69,18 +73,25 @@ export default class orm {
         let table = model.constructor.name;
         let vals = [];
         for (let key in param) {
-            vals.push("'" + param[key] + "'");
+           vals.push("'" + param[key] + "'");
         }
         console.log("SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
-        if (Object.keys(param).length === 0) {
+        if (Object.keys(param).length === 0 && Object.keys(param)[0]!== "size") {
             console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table + ";");
             this.connection.query(
                 "SELECT " + Object.keys(model).join() + " from " + table + ";"
                 , function (error, results, fields) {
                     callback(error, results);
                 });
-        } else {
+        }else if(Object.keys(param)[0]=== "size"){
+            console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table +" ORDER BY id DESC LIMIT "+ param['size'] +";");
+            this.connection.query("SELECT "+Object.keys(model).join() + " from " + table + " ORDER BY id DESC LIMIT "+ param['size'] +";"
+                , function (error,results,fields) {
+                    callback(error,results);
+                });
+        }
+        else {
             this.connection.query(
                 "SELECT " + Object.keys(model).join() + " from " + table +
                 " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"

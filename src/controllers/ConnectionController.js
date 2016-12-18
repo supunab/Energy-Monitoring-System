@@ -5,7 +5,6 @@ exports.getRequest = function (req, res) {
 };
 
 exports.postRequest = function (req, res) {
-    console.log("Came to Post request");
     let newConnectionRequest= new ConnectionRequest();
     let userId=req.user.getPK().int;
     console.log(userId);
