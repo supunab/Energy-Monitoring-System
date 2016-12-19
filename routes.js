@@ -83,6 +83,11 @@ module.exports = function (app, passport) {
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 
+
+    // For unregistered users check payment history
+    app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
+    app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
+
 };
 
 
