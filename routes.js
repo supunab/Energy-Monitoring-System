@@ -9,7 +9,7 @@ const PaymentController = require("./src/controllers/PaymentController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('addPayments');
+        res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -75,6 +75,7 @@ module.exports = function (app, passport) {
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 
+    app.get('/addPayments',PaymentController.getPaymentPage);
     app.post('/paymentPost',PaymentController.postPayment);
 
 };

@@ -31,7 +31,7 @@ export default class orm {
             "( " + keys.join() + " ) " +
             " VALUES " + "(" +
             values.join() + ")"
-        sql = this.connection.escape(sql);
+        //sql = this.connection.escape(sql);
         this.connection.query(
             sql,
             callback);
@@ -116,7 +116,7 @@ export default class orm {
                 }
             }
             sql += ";";
-            sql = this.connection.escape(sql);
+            //sql = this.connection.escape(sql);
             this.connection.query(
                 sql
                 , function (error, results, fields) {
@@ -129,7 +129,7 @@ export default class orm {
         let table = model.constructor.name;
         let sql = "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";";
-        sql = this.connection.escape(sql);
+        //sql = this.connection.escape(sql);
         //console.log(sql);
         this.connection.query(
             sql,
