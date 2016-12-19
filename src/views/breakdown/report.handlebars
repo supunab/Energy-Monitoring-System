@@ -1,5 +1,6 @@
-<h1 style="align=center">Report Breakdown</h1>
-<form method="post" action="/breakdownPost">
+
+<h1 style="align:center">Report Breakdown</h1>
+<form name="formk" method="post" action="/breakdownPost" onsubmit="return validateForm()">
     <div class="row">
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-input"></i>
@@ -16,3 +17,4 @@
     </div>
     <button type="submit" class="btn">Submit</button>
 </form>
+<script src="js/breakDownValidator.js"></script>
