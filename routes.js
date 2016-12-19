@@ -5,12 +5,15 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+
+const PaymentController = require("./src/controllers/PaymentController");
+
 const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
 
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('addPayments');
+        res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -83,10 +86,14 @@ module.exports = function (app, passport) {
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 
+    app.get('/addPayments',PaymentController.getPaymentPage);
+    app.post('/paymentPost',PaymentController.postPayment);
+
 
     // For unregistered users check payment history
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
+
 
 };
 

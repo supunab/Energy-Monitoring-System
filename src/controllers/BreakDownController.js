@@ -22,8 +22,8 @@ exports.postBreakdown=function (req,res) {
     let area=req.body.area;
     let description = req.body.description;
     let finished = 0;
-    let lk=new Date().toISOString().slice(0, 19).replace('T', ' ');
-    newBreakdown.createObject(userId,area,description,null,finished,lk);
+    let createdDate=new Date().toISOString().slice(0, 19).replace('T', ' ');
+    newBreakdown.createObject(userId,area,description,null,finished,createdDate);
     newBreakdown.save(function (err,result) {
         if(err)
             throw err;
