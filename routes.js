@@ -5,7 +5,11 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+
 const PaymentController = require("./src/controllers/PaymentController");
+
+const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
+
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -46,6 +50,13 @@ module.exports = function (app, passport) {
     app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
     app.post("/newpowercut", AdminController.addPowerCut);
 
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
+
+    // Payment History for registered users
+    app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
+    app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
+    app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
 
     //Complains
     app.get("/complain", ComplainController.getIndex);
@@ -61,7 +72,7 @@ module.exports = function (app, passport) {
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
 
-    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
+    app.get('/connectionRequest', ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
   
@@ -77,6 +88,12 @@ module.exports = function (app, passport) {
 
     app.get('/addPayments',PaymentController.getPaymentPage);
     app.post('/paymentPost',PaymentController.postPayment);
+
+
+    // For unregistered users check payment history
+    app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
+    app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
+
 
 };
 

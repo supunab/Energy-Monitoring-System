@@ -10,10 +10,7 @@ var express = require('express'),
     passport = require('passport'),
     crypto = require('crypto'),
     flash = require('connect-flash'),
-    path = require('path'),
-    handlebars=require('handlebars'),
-    handlebarsIntl=require('handlebars-intl');
-handlebarsIntl.registerWith(handlebars);
+    path = require('path');
 require('./src/middleware/passport')(passport);
 var app = express();
 app.use(cookieParser('energymonitor'));
