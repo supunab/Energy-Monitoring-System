@@ -34,42 +34,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.js"></script>
 
 <script>
-    var salesChartData, salesChartOptions, salesChart;
+    var salesChartData, salesChartOptions, salesChart, barChart, barChartData, barChartOptions, salesChartCanvas, barChartCanvas, areas;
     $(function () {
-//        $('#daterange-btn').daterangepicker(
-//                {
-//                    ranges: {
-//                        'Today': [moment(), moment()],
-//                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-//                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-//                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-//                        'This Month': [moment().startOf('month'), moment().endOf('month')],
-//                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-//                    },
-//                    startDate: moment().subtract(29, 'days'),
-//                    endDate: moment()
-//                },
-//                function (start, end) {
-//                    $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-//                }
-//        );
-        $('#reservation').daterangepicker();
-        var salesChartCanvas = $("#salesChart").get(0).getContext("2d");
+        $('#reservation').daterangepicker()
+        $('#reservation').val(moment().subtract(365, 'days').format('MM/D/YYYY') + " - " + moment().format('MM/D/YYYY'));
+        salesChartCanvas = $("#salesChart").get(0).getContext("2d");
         // This will get the first returned node in the jQuery collection.
 
 
         salesChartData = {
-            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            labels: [],
             datasets: [
                 {
                     label: "Energy Consumption",
-                    fillColor: "rgb(210, 214, 222)",
+                    backgroundColor: "#00c0ef",
                     strokeColor: "rgb(210, 214, 222)",
                     pointColor: "rgb(210, 214, 222)",
                     pointStrokeColor: "#c1c7d1",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgb(220,220,220)",
-                    data: [65, 59, 80, 81, 56, 55, 40]
+                    data: []
                 }
             ]
         };
@@ -110,25 +94,90 @@
             //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
             maintainAspectRatio: false,
             //Boolean - whether to make the chart responsive to window resizing
-            responsive: true
+            responsive: true,
+            scales: {
+                yAxes: [
+                    {
+                        ticks: {
+                            callback: function (label, index, labels) {
+                                return label + 'kWh';
+                            }
+                        },
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Energy Consumption'
+                        }
+                    }
+                ]
+            }
         };
 
-        //Create the line chart
-        salesChart = new Chart(salesChartCanvas, {
-            type: 'line',
-            data: salesChartData,
-            options: salesChartOptions
-        });
-        //salesChart.Line(salesChartData, salesChartOptions);
-        var data = [{id: 0, text: 'enhancement'}, {id: 1, text: 'bug'}, {id: 2, text: 'duplicate'}, {
-            id: 3,
-            text: 'invalid'
-        }, {id: 4, text: 'wontfix'}];
+        areas = [{id: "Bandarawela", text: 'Bandarawela'}, {id: "a", text: 'a'}, {id: "b", text: 'b'}, {
+            id: "c",
+            text: 'c'
+        }];
 
-        $(".select2").select2({
-            data: data,
-            maximumSelectionLength: data.length - 1
+        connections = [{id: "enterprises", text: 'Enterprises'}, {
+            id: "houses",
+            text: 'Houses'
+        }, {id: "government organizations", text: 'Government Organizations'}, {
+            id: "religious establishments",
+            text: 'Religious Establishments'
+        }];
+
+        $("#connectionType").select2({
+            data: connections,
+            maximumSelectionLength: connections.length - 1
         });
+//        $("#area").select2({
+//            data: areas,
+//            maximumSelectionLength: connections.length - 1
+//        });
+
+        barChartCanvas = $("#barChart").get(0).getContext("2d");
+        barChartData = {
+            datasets: [
+                {
+                    label: "Expected Income",
+                    backgroundColor: "#00045a",
+                },
+                {
+                    label: "Income",
+                    backgroundColor: "#dd4b39",
+                }
+
+            ]
+        };
+        barChartOptions = {
+            //Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
+            scaleBeginAtZero: true,
+            //Boolean - Whether grid lines are shown across the chart
+            scaleShowGridLines: true,
+            //String - Colour of the grid lines
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - Width of the grid lines
+            scaleGridLineWidth: 1,
+            //Boolean - Whether to show horizontal lines (except X axis)
+            scaleShowHorizontalLines: true,
+            //Boolean - Whether to show vertical lines (except Y axis)
+            scaleShowVerticalLines: true,
+            //Boolean - If there is a stroke on each bar
+            barShowStroke: true,
+            //Number - Pixel width of the bar stroke
+            barStrokeWidth: 2,
+            //Number - Spacing between each of the X value sets
+            barValueSpacing: 5,
+            //Number - Spacing between data sets within X values
+            barDatasetSpacing: 1,
+            //String - A legend template
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - whether to make the chart responsive
+            responsive: true,
+            maintainAspectRatio: true,
+            datasetFill: false
+        };
+
     });
+
 </script>
 <script src="js/adminDashboard.js"></script>

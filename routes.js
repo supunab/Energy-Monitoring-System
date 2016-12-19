@@ -46,8 +46,6 @@ module.exports = function (app, passport) {
     app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
     app.post("/newpowercut", AdminController.addPowerCut);
 
-    // Get all areas
-    app.get('/areas', GeneralController.getAllAreas);
 
     //Complains
     app.get("/complain", ComplainController.getIndex);
@@ -75,12 +73,8 @@ module.exports = function (app, passport) {
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
-
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
-
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
-
     app.get('/api/get/consumption', AdminController.powerConsumption);
+    app.get('/api/get/areas', GeneralController.getAllAreas);
 
 };
 

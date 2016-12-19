@@ -34,19 +34,17 @@ exports.powerConsumption = function (req, res) {
     let dates = dateRange.split('-');
     let startDate = new Date(dates[0]);
     let endDate = new Date(dates[1]);
+    let sD = startDate.toLocaleString('en-us', {month: "long"}) + " " + startDate.getFullYear();
+    let eD = endDate.toLocaleString('en-us', {month: "long"}) + " " + endDate.getFullYear();
+    let chartLabels = diff(sD, eD);
+    console.log(chartLabels);
     let timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
     let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
     startDate = startDate.getFullYear() + '-' + (startDate.getMonth() + 1) + '-' + startDate.getDate();
     endDate = endDate.getFullYear() + '-' + (endDate.getMonth() + 1) + '-' + endDate.getDate();
-    let groupBy = "DAY";
-    if (diffDays > 30 && diffDays < 30 * 18) {
-        groupBy = "MONTH";
-    }
-    else if (diffDays > 30 * 18) {
-        groupBy = "YEAR";
-    }
+    let groupBy = "MONTH";
 
-    let consumptionSQL = "SELECT SUM(reading) AS consumption, " + groupBy + "(Bill.ending_date) AS " + groupBy + " from (Bill LEFT JOIN Connection ON Connection.id = Bill.connection_id) LEFT JOIN Area ON Connection.area_id = Area.id" +
+    let consumptionSQL = "SELECT SUM(reading) AS consumption, DATE_FORMAT(Bill.ending_date,'%M %Y') AS MONTH , SUM(Bill.amount) AS EXPECTED_INCOME,sum(BillPayment.amount) AS INCOME from ((Bill LEFT JOIN Connection ON Connection.id = Bill.connection_id) LEFT JOIN Area ON Connection.area_id = Area.id) LEFT JOIN BillPayment on Bill.id = BillPayment.bill_id " +
         " WHERE (Bill.ending_date BETWEEN '" +
         startDate + "' AND '" + endDate + "')";
     if (!_.contains(area, 'All Areas') || (_.contains(area, "All Areas") && area.length !== 1)) {
@@ -70,21 +68,54 @@ exports.powerConsumption = function (req, res) {
         consumptionSQL += "))";
     }
 
-    consumptionSQL += " GROUP BY " + groupBy + "(Bill.ending_date);";
+    consumptionSQL += " GROUP BY DATE_FORMAT(Bill.ending_date,'%M %Y') ORDER BY DATE_FORMAT(Bill.ending_date,'%M %Y') DESC;";
+    console.log(consumptionSQL);
     let response = {};
     DB.execQuery(consumptionSQL, function (err, result) {
-        console.log(result);
         let labels = [];
         let data = [];
-        _.each(result, function (row) {
-            labels.push(row.MONTH);
-            data.push(row.consumption);
+        let expected = [];
+        let income = [];
+        _.each(chartLabels, function (lbl) {
+            let obj = _.findWhere(result, {MONTH: lbl});
+            if (obj !== undefined) {
+                labels.push(obj.MONTH);
+                data.push(obj.consumption);
+                expected.push(obj.EXPECTED_INCOME);
+                income.push(obj.INCOME);
+            }
+            else {
+                labels.push(lbl);
+                data.push(0);
+                expected.push(0);
+                income.push(0);
+            }
         });
-        console.log(labels, data);
         response["labels"] = labels;
         response["data"] = data;
+        response["expected"] = expected;
+        response["income"] = income;
+
         res.status(200).jsonp(response);
     });
-    //console.log(req.query,consumptionSQL);
 };
+
+var monthNames = ["January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"];
+
+function diff(from, to) {
+    var arr = [];
+    var datFrom = new Date('1 ' + from);
+    var datTo = new Date('1 ' + to);
+    var fromYear = datFrom.getFullYear();
+    var toYear = datTo.getFullYear();
+    var diffYear = (12 * (toYear - fromYear)) + datTo.getMonth();
+
+    for (var i = datFrom.getMonth(); i <= diffYear; i++) {
+        arr.push(monthNames[i % 12] + " " + Math.floor(fromYear + (i / 12)));
+    }
+
+    return arr;
+}
+
 

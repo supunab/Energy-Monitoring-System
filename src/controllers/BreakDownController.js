@@ -14,6 +14,7 @@ exports.getRequest = function (req,res) {
 exports.postRequest = function (req, res) {
 
 };
+//TODO change date tyoe
 exports.postBreakdown=function (req,res) {
     let newBreakdown = new Breakdown();
     let userId = req.user.id.int;

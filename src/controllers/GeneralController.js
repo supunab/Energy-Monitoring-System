@@ -7,6 +7,6 @@ exports.getAllAreas = function(req, res, next){
             res.end("Error retrieving areas from the database");
             return next(err);
         }
-        res.json(data);
+        res.jsonp(data);
     })
 };

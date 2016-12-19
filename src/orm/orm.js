@@ -60,7 +60,6 @@ export default class orm {
         }
         let sql = "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");";
-        sql = this.connection.escape(sql);
         console.log(sql);
         this.connection.query(
             sql,
@@ -95,7 +94,6 @@ export default class orm {
                 }
             }
             sql += ";";
-            sql = this.connection.escape(sql);
             this.connection.query(
                 sql
                 , function (error, results, fields) {
