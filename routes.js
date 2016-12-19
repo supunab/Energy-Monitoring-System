@@ -56,7 +56,7 @@ module.exports = function (app, passport) {
     app.post("/complain/create", ComplainController.createComplainPOST);
     app.get("/complain/:id", ComplainController.getShow);
     app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post('/complain/edit/:id', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
 
 
