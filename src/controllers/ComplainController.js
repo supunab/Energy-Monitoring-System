@@ -5,26 +5,50 @@ exports.getShow = function(req, res){
     DB.execQuery("SELECT Complaint.id, comp_type, description, title, comment, User.id as userid, User.first_name as username from " +
         "Complaint join User where Complaint.user_id = User.id and Complaint.id = ?", [req.params.id], function (err, result) {
         if(err){
-            console.log("error" , err);
+            console.log(err);
+            res.render("errorPage"); //if some sql error occur
         }else{
             if(result.length == 0){
-                res.send("404");
+                res.render('pageNotAvailable');
             }else{
                 if(result[0].userid == req.user.id.int){
                     res.render('complain/view', {complain: result[0]});
                 }else{
-                    res.send("404 - you are unauthorized to view this post");
+                    DB.execQuery("SELECT is_admin from User where id= ?", [req.user.id.int],
+                    function (err, admin) {
+                        if(admin[0].is_admin == 1){
+                            res.render("complain/complainAdminView");
+                        }else{
+                            res.render('unAuthenticatePage');
+                        }
+                    });
                 }
             }
         }
     });
 };
 
-// return all complain objects only for admins
 exports.getIndex = function (req, res) {
-    Complaint.find({user_id : req.user.id.int},(err, complains) => {
-        res.render('complain/index', {complains : complains});
+    DB.execQuery("SELECT is_admin from User where id = ?", [req.user.id.int],
+    function (err, admin) {
+        if (err){
+            console.log(err);
+            res.render("errorPage");
+        }else{
+            if (admin[0].is_admin == 0){ // normal users
+                Complaint.find({user_id : req.user.id.int},(err, complains) => {
+                    console.log(complains);
+                    res.render('complain/index', {complains : complains});
+                });
+            }else{ // for admin
+                // return all complains
+                Complaint.find({},(err, complains) => {
+                    res.render('complain/index', {complains : complains});
+                });
+            }
+        }
     });
+// return all complain objects only for admins
 };
 
 exports.CreateComplainGET = function (req, res) {
@@ -56,7 +80,7 @@ exports.createComplainPOST = function (req, res) {
         c.save(function (err, result) {
             if(err){
                 //TODO push errors to view with values
-                console.log("err");
+                res.render("errorPage");
             }else{
                 c.id.set(result.insertId);
                 res.redirect('/complain/' + result.insertId);
@@ -74,17 +98,11 @@ exports.editComplainGET = function (req, res) {
             //authorized
             Complaint.findOne({id: req.params.id},function (err, Cmpl) {
                 if(err){
-
+                    console.log(err);
+                    res.render("errorPage");
                 }else{
-                    let selArray = [];
-                    for (let x = 0; x < 2; x++){
-                        if (x == Cmpl.comp_type){
-                            selArray.push("selected");
-                        }else{
-                            selArray.push("");
-                        }
-                    }
-                    res.render('complain/edit',{complain:Cmpl, selArr: selArray});
+                    console.log(Cmpl);
+                    res.render('complain/edit',{message: [], value: Cmpl});
                 }
             });
         }else{
@@ -102,7 +120,7 @@ exports.editComplainPOST = function (req, res) {
 
         let e = req.validationErrors();
         if (e){
-            //TODO push error to view with values
+            res.render('complain/edit', {message: err, value: req.body});
         }else{
             console.log(req.body);
 
@@ -111,6 +129,7 @@ exports.editComplainPOST = function (req, res) {
                 ["", req.body.category, req.body.description,
                     req.body.title, req.body.id], function (err, result) {
                     if(err){
+                        console.log(err);
                         //TODO send errors
                     }else{
                         res.redirect('/complain/' + req.body.id);
@@ -125,7 +144,6 @@ exports.deletePOST = function (req, res) {
     DB.execQuery("SELECT user_id from Complaint where id = ?",
         [req.params.id], function (err, result) {
         if(result[0].user_id == req.user.id.int ){
-            console.log("asdf");
             DB.execQuery("DELETE FROM Complaint where id = ? ", [req.params.id],
             function (e, result) {
                 if (e){
