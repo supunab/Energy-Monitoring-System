@@ -19,8 +19,14 @@ export default class Model {
         }
         if (Object.keys(m2m).length == 0) {
             o.insert(this, function (err, result) {
-                self.id.set(result.insertId);
-                callback(err, result);
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    self.id.set(result.insertId);
+                    callback(err, result);
+                }
+
             });
         }
         else {
