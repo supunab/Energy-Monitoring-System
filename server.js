@@ -35,8 +35,8 @@ var handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
     helpers: {
         getType : function (re) {
-            if(re==0) return "Not Finished";
-            else return "Finished";
+            if(re==0) return false;
+            else return true;
         },
         getDate : function (date) {
             var day=date.toString().split(" ").slice(0,5).join(' ');

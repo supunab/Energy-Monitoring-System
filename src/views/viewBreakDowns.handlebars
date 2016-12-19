@@ -19,18 +19,34 @@
     {{#each array}}
         <div>
             <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">{{area}}</span>
-                        <p>{{description}}</p>
-                    </div>
+                {{#if getType finished}}
+                    <div class="card  light-green accent-3">
+                        <div class="card-content white-text">
+                            <span class="card-title">{{area}}</span>
+                            <p>{{description}}</p>
+                        </div>
 
-                    <div class="card-action">
-                        <a>{{getDate dateTime}}</a>
-                        {{getType finished}}
+                        <div class="card-action">
+                            <a>{{getDate dateTime}}</a>
+                            <a>Finished</a>
 
+                        </div>
                     </div>
-                </div>
+                {{else}}
+                    <div class="card  light-green accent-3">
+                        <div class="card-content white-text">
+                            <span class="card-title">{{area}}</span>
+                            <p>{{description}}</p>
+                        </div>
+
+                        <div class="card-action">
+                            <a>{{getDate dateTime}}</a>
+                            <a>Finished</a>
+
+                        </div>
+                    </div>
+                {{/if}}
+
             </div>
         </div>
     {{/each}}
