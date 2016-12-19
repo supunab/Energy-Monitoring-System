@@ -6,7 +6,7 @@ exports.getRequest = function (req, res) {
 
 exports.postRequest = function (req, res) {
     let newConnectionRequest= new ConnectionRequest();
-    let userId=req.user.getPK().int;
+    let userId = req.user.id.get();
     console.log(userId);
     let name = req.body.name;
     let telephone = req.body.tpNumber;

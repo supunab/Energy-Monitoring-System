@@ -77,6 +77,10 @@ $(document).ready(function () {
             $("#total_income").text("Rs " + total_income);
             $("#energy_header").text("Energy Consumption : " + $('#reservation').val());
             $("#income_header").text("Income Comparison : " + $('#reservation').val());
+            $("#powercuts").text(result.powercuts);
+            $("#connectionReq").text(result.connectionReq);
+            $("#complaints").text(result.complaint);
+            $("#breakdown").text(result.breakdown);
         }
     });
 
@@ -124,6 +128,10 @@ $(document).ready(function () {
                 $("#total_income").text("Rs " + total_income);
                 $("#energy_header").text("Energy Consumption : " + $('#reservation').val());
                 $("#income_header").text("Income Comparison : " + $('#reservation').val());
+                $("#powercuts").text(result.powercuts);
+                $("#connectionReq").text(result.connectionReq);
+                $("#complaints").text(result.complaint);
+                $("#breakdown").text(result.breakdown);
             }
         });
     });
