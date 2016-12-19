@@ -1,0 +1,110 @@
+<link rel="stylesheet" href="css/select2-mat-fix.css" type="text/css">
+
+<div class="container" ng-controller="ConnectionEntryCtrl">
+    <form>
+        <div class="row">
+            <div class="col m12">
+                <h3>Publish Power Cut</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="accountNo">Account Number</label>
+            </div>
+            <div class="col m3 input-field">
+                <input id="accountNo" type="text" ng-model="accountNo">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="address1">Address Line-1</label>
+            </div>
+            <div class="col m3 input-field">
+                <input id="address1" type="text" ng-model="address1">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="address2">Address Line-2</label>
+            </div>
+            <div class="col m3 input-field">
+                <input id="address2" type="text" ng-model="address2">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="addressStreet">Street Number</label>
+            </div>
+            <div class="col m3 input-field">
+                <input id="addressStreet" type="text" ng-model="addressStreet">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="city">City</label>
+            </div>
+            <div class="col m3 input-field">
+                <input id="city" type="text" ng-model="city">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="district">District</label>
+            </div>
+            <div class="col m3 input-field">
+                <select name="district" id="district" ng-model="selDistrict">
+                    <option ng-repeat="district in districts">[[district]]</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="conType">Connection Type</label>
+            </div>
+            <div class="col m3 input-field">
+                <select name="conType" id="conType" ng-model="connectionType">
+                    <option ng-repeat="type in connectionTypes">[[type]]</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="area">Area</label>
+            </div>
+            <div class="col m3 input-field">
+                <select name="area" ng-model="selArea" id="area" type="text">
+                    <option ng-repeat="area in allAreas track by $index">[[area]]</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col m3 input-field">
+                <label for="area">Area</label>
+            </div>
+            <div class="col m3 input-field">
+                <select name="area" ng-model="selArea" id="area" type="text">
+                    <option ng-repeat="area in allAreas track by $index">[[area]]</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col m3 offset-m1">
+                <a class="waves-effect waves-light btn blue" ng-click="publish()">Publish</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script src="js/connectionEntry.js"></script>

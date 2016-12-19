@@ -1,6 +1,8 @@
 import PowerCut from "../model/PowerCut"
 import Area from "../model/Area"
 import DB from '../controllers/DBController'
+import Connection from '../model/Connection'
+
 const _ = require("underscore");
 exports.addPowerCut = function(req, res, next){
     let start_date = req.body.start_date;
@@ -118,4 +120,10 @@ function diff(from, to) {
     return arr;
 }
 
+
+exports.addNewConnection = function(req, res, next){
+    let connection = new Connection();
+    connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, "")
+
+};
 

@@ -88,6 +88,10 @@ module.exports = function (app, passport) {
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
+    // Add new connection - data entry
+    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry")});
+    app.post('/addNewConnection', AdminController.addNewConnection);
+
 };
 
 
