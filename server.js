@@ -35,7 +35,7 @@ var handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
     helpers: {
         getType : function (re) {
-            if(re==0) return "No Finished";
+            if(re==0) return "Not Finished";
             else return "Finished";
         }
     }
