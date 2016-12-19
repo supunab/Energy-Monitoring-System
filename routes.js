@@ -5,6 +5,7 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
 
 
 module.exports = function (app, passport) {
@@ -58,23 +59,11 @@ module.exports = function (app, passport) {
     app.post('/complain/edit', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
 
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
 
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
+    // Payment History for registered users
+    app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
+    app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
+    app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
@@ -82,7 +71,6 @@ module.exports = function (app, passport) {
     app.get('/connectionRequest',ConnectionController.getRequest);
     app.post('/connectionRequest',ConnectionController.postRequest);
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
 
