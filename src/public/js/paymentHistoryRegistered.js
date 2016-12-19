@@ -1,10 +1,12 @@
-var app = angular.module("energy-monitor", []);
+let app = angular.module("energy-monitor", []);
+
+$('select').select2();
 
 function getFixedDate(dateString){
-    var temp = dateString.split(" ");
-    var date = temp[0];
-    var year = temp[2];
-    var month = 0;
+    let temp = dateString.split(" ");
+    let date = temp[0];
+    let year = temp[2];
+    let month = 0;
 
     temp = temp[1].replace(",","");
 
@@ -60,31 +62,58 @@ app.controller("PaymentHistoryCtrl",[
     "$http",
     function($scope, $http){
         // Assume customer id is already known (Should take from the login details)
-        var customerid = '1';
+        let customerid = '941401406';
 
-        // Assume customer id is already known (Should take from the login details)
-        var customerid = '1';
+        let selectedConnections = {};
 
-        // dummy data
-        $scope.records = [
-        {
-            connection : "local",
-            date : "test date",
-            amount : "Rs. 1000"
-        },
-        {
-            connection : "single",
-            date : "test ddsate",
-            amount : "Rs. 1000122"
-        },
-        {
-            connection : "lsdaocal",
-            date : "test dasdate",
-            amount : "Rs. 100330"
-        }
-            ];
+        $scope.start_d = new Date(2010,1,1);
+        $scope.end_d = new Date();
 
-        $scope.connections = ['test1', 'connection 2', 'connection 3'];
+        $scope.updateSelected = function(){
+            selectedConnections.connections = [123456];
+        };
+
+        $scope.connections = [];
+        $scope.records = [];
+
+        $http.get("/paymentHistory/getConnections/"+customerid)
+            .success(function(data){
+            for(let i=0; i < data.length; i++){
+                $scope.connections.push(data[i].account_no);
+            }
+
+            })
+            .error(function(err){
+                console.log(err);
+            });
+
+
+        $scope.updateTable = function(){
+            let start = new Date($scope.start_d);
+            let end = new Date($scope.end_d);
+
+            start = start.getFullYear() +"-"+(start.getMonth()+1)+"-"+start.getDate();
+            end = end.getFullYear()+"-"+(end.getMonth()+1)+"-"+end.getDate();
+
+            let selectedCons = $scope.selectedConnections;
+
+            // To retrive all the connections if no connection is selected
+            if (typeof selectedCons === "undefined" || selectedCons.length === 0){
+                selectedCons = ['true'];
+            }
+
+            // if (typeof $scope.selectedConnections === "undefined")
+            selectedConnections = {
+                connections : selectedCons,
+                start_date : start,
+                end_date : end
+            };
+
+            $http.get("/paymentHistory/getHistory/"+encodeURIComponent(JSON.stringify(selectedConnections)))
+                .success(function(data){
+                    angular.copy(data, $scope.records);
+                });
+        };
 
     }
 ]);

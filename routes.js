@@ -5,6 +5,7 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
 
 
 module.exports = function (app, passport) {
@@ -46,6 +47,13 @@ module.exports = function (app, passport) {
     app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
     app.post("/newpowercut", AdminController.addPowerCut);
 
+    // Get all areas
+    app.get('/areas', GeneralController.getAllAreas);
+
+    // Payment History for registered users
+    app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
+    app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
+    app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
 
     //Complains
     app.get("/complain", ComplainController.getIndex);
