@@ -56,7 +56,7 @@ export default class Model {
     }
 
     generateSchema() {
-        let schema = 'CREATE TABLE ' + this.constructor.name + '(';
+        let schema = 'CREATE TABLE IF NOT EXISTS ' + this.constructor.name + ' (';
         let pk;
         let fk = [];
         let m2m = [];
@@ -78,6 +78,9 @@ export default class Model {
                 if (this[entity].ai && this[entity].pk) {
                     pk = entity;
                     statement += ' AUTO_INCREMENT';
+                }
+                if (this[entity].pk){
+                    pk = entity;
                 }
                 if (this[entity].defaultVal !== null) {
                     statement += ' DEFAULT ' + this[entity].defaultVal;
@@ -230,7 +233,7 @@ export default class Model {
                 let foreignPK = this[entity].getPK().call(this[entity]);
                 let thisTable = this.constructor.name;
                 let thisPK = this.getPK();
-                let reference = "CREATE TABLE " + foreignTable + "_m2m_" + thisTable +
+                let reference = "CREATE TABLE IF NOT EXISTS " + foreignTable + "_m2m_" + thisTable +
                     "(" +
                     foreignTable + "_" + foreignPK + " INT NOT NULL, " +
                     thisTable + "_" + thisPK + " INT NOT NULL, " +
@@ -277,5 +280,4 @@ export default class Model {
             this[key].set(model[key]);
         }
     }
-
 }

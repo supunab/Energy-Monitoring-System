@@ -4,6 +4,7 @@ const ConnectionController = require("./src/controllers/ConnectionController");
 const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
+const ComplainController = require("./src/controllers/ComplainController");
 
 
 module.exports = function (app, passport) {
@@ -48,14 +49,61 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
+
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
+
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
+
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
+
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-    app.get('/connectionRequest',ConnectionController.getRequest);
+
+    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
+
     app.post('/connectionRequest',ConnectionController.postRequest);
+  
+    app.get('/admin', function (req, res) {
+        res.render('admin/dashboard', {layout: 'admin-main'});
+    });
 
     app.get('/breakdownView',BreakDownController.getRequest);
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
+    app.post('/breakdownPost',BreakDownController.postBreakdown);
+
+
+    app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
