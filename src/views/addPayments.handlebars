@@ -6,28 +6,28 @@
         " src="http://www.credit-card-logos.com/images/multiple_credit-card-logos-1/credit_card_logos_10.gif" width="251" height="50" border="0" /></a>
     </h2>
     <div class=".center-align">
-        <form class="col s12 offset-s3">
+        <form name="payment" class="col s12 offset-s3" onsubmit="return validateForm()">
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="amount" type="text" class="validate">
+                    <input id="amount" type="number" class="validate" name="amount" required>
                     <label for="amount">Amount</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6 ">
-                    <input id="card_name" type="text" class="validate">
+                    <input id="card_name" type="text" class="validate" name="name_on_card" required>
                     <label for="card_name">Name on Card</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="password" type="password" class="validate">
+                    <input id="password" type="password" class="validate" name="password" required>
                     <label for="password">Security Code</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s6">
-                    <input id="postal_code" type="email" class="validate">
+                    <input id="postal_code" type="number" class="validate">
                     <label for="postal_code">Zip/Postal code</label>
                 </div>
             </div>
@@ -35,3 +35,4 @@
         </form>
     </div>
 </div>
+<script src="js/addPayments.js"></script>
