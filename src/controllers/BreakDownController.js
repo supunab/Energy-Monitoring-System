@@ -5,7 +5,6 @@ exports.getRequest = function (req,res) {
         if(err)
             throw err;
         if(result.size!=0){
-
             res.render('viewBreakDowns',{array : result});
         }
     });
