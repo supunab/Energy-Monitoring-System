@@ -7,6 +7,7 @@ import BillPayment from '../model/BillPayment'
 import Connection from '../model/Connection'
 import Customer from '../model/Customer'
 import PowerCut from '../model/PowerCut'
+import BreakDowns from '../model/Breakdown'
 
 export default class Migrate {
     constructor() {
@@ -19,5 +20,6 @@ export default class Migrate {
         this.connection = new Connection().generateSchema();
         this.bill = new Bill().generateSchema();
         this.billPayment = new BillPayment().generateSchema();
+        this.breakDowns = new BreakDowns().generateSchema();
     }
 }
