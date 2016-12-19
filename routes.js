@@ -65,6 +65,16 @@ module.exports = function (app, passport) {
     app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
     app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
 
+    //Complains
+    app.get("/complain", ComplainController.getIndex);
+    app.get("/complain/create", ComplainController.CreateComplainGET);
+    app.post("/complain/create", ComplainController.createComplainPOST);
+    app.get("/complain/:id", ComplainController.getShow);
+    app.get('/complain/edit/:id', ComplainController.editComplainGET);
+    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post("/complain/delete/:id", ComplainController.deletePOST);
+
+
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
@@ -73,6 +83,8 @@ module.exports = function (app, passport) {
     app.get('/breakdownView',BreakDownController.getRequest);
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
+
+    app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 

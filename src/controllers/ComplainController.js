@@ -3,8 +3,7 @@ const DB = require("./DBController");
 
 exports.getShow = function(req, res){
     DB.execQuery("SELECT Complaint.id, comp_type, description, title, comment, User.id as userid, User.first_name as username from " +
-    "Complaint join User where Complaint.user_id = User.id and Complaint.id = ?", [req.params.id], function (err, result) {
-
+        "Complaint join User where Complaint.user_id = User.id and Complaint.id = ?", [req.params.id], function (err, result) {
         if(err){
             console.log("error" , err);
         }else{
@@ -125,18 +124,18 @@ exports.editComplainPOST = function (req, res) {
 exports.deletePOST = function (req, res) {
     DB.execQuery("SELECT user_id from Complaint where id = ?",
         [req.params.id], function (err, result) {
-            if(result[0].user_id == req.user.id.int ){
-                console.log("asdf");
-                DB.execQuery("DELETE FROM Complaint where id = ? ", [req.params.id],
-                    function (e, result) {
-                        if (e){
-                            //ERROR
-                        }else{
-                            res.redirect('/complain/');
-                        }
-                    })
-            }else{
-                res.send("401");
-            }
-        });
+        if(result[0].user_id == req.user.id.int ){
+            console.log("asdf");
+            DB.execQuery("DELETE FROM Complaint where id = ? ", [req.params.id],
+            function (e, result) {
+                if (e){
+                    //ERROR
+                }else{
+                    res.redirect('/complain/');
+                }
+            })
+        }else{
+            res.send("401");
+        }
+    });
 }
