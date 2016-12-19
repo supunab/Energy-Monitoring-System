@@ -7,7 +7,7 @@ export default class Breakdown extends Model {
         super();
         this.id=new field.IntegerField(null, true, null, true, true);
         this.userId=new field.IntegerField(null, true, null, true, true);
-        this.dateTime=new field.DateTimeField(true,null);
+        this.dateTime = new field.DateTimeField(true, null);
         this.area =new field.CharField(50);
         this.description=new field.CharField(255);
         this.status=new field.CharField(255);
