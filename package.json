@@ -31,7 +31,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "node dist/manage.js",
-    "compile": "babel src server.js routes.js manage.js db.config.js --out-dir dist --ignore public --source-maps  --presets es2015"
+    "compile": "babel src server.js routes.js manage.js db.config.js --ignore public --out-dir dist --source-maps  --presets es2015"
   },
   "repository": {
     "type": "git",
