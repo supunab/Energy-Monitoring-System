@@ -18,6 +18,7 @@
     "express": "^4.12.4",
     "express-handlebars": "^3.0.0",
     "express-validator": "^2.10.0",
+    "handlebars-intl": "^1.1.2",
     "jade": "^1.11.0",
     "load-grunt-tasks": "^3.5.2",
     "mysql": "^2.6.2",
@@ -30,7 +31,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "node dist/manage.js",
-    "compile": "babel src server.js routes.js manage.js db.config.js --out-dir dist --source-maps  --presets es2015"
+    "compile": "babel src server.js routes.js manage.js db.config.js --ignore public --out-dir dist --source-maps  --presets es2015"
   },
   "repository": {
     "type": "git",

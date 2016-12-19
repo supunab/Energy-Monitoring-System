@@ -10,7 +10,7 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('addPayments');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -30,7 +30,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/breakdownreport', // redirect to the secure profile section
+        successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -50,16 +50,6 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-
     // Payment History for registered users
     app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
     app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
@@ -78,15 +68,20 @@ module.exports = function (app, passport) {
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
-    app.get('/connectionRequest',ConnectionController.getRequest);
+
+    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
+
     app.post('/connectionRequest',ConnectionController.postRequest);
+  
+    app.get('/admin', function (req, res) {
+        res.render('admin/dashboard', {layout: 'admin-main'});
+    });
+
     app.get('/breakdownView',BreakDownController.getRequest);
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
-
-
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
-
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
+    app.get('/api/get/consumption', AdminController.powerConsumption);
+    app.get('/api/get/areas', GeneralController.getAllAreas);
 
 };
 

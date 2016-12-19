@@ -271,8 +271,8 @@ export default class Model {
         o.findById(new this(), id, callback);
     }
 
-    static find(param, callback) {
-        o.find(new this(), param, callback);
+    static find(param, options, callback) {
+        o.find(new this(), param, options, callback);
     }
 
     fromDB(model) {

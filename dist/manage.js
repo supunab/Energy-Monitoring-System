@@ -9,9 +9,6 @@ var _dbConfig = require('./db.config.js');
 var _dbConfig2 = _interopRequireDefault(_dbConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-require("babel-register");
-
-require("babel-register");
 
 var mysql = require('mysql');
 
