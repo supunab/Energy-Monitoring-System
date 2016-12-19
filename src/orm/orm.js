@@ -45,7 +45,8 @@ export default class orm {
         let sql = "INSERT INTO " + table +
             "( " + columns.join() + " ) " +
             " VALUES " + val;
-        sql = this.connection.escape(sql);
+        // sql = this.connection.escape(sql);
+        console.log(sql);
         this.connection.query(
             sql,
             callback);
