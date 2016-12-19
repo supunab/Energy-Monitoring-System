@@ -5,7 +5,7 @@ exports.getRequest = function (req,res) {
         if(err)
             throw err;
         if(result.size!=0){
-
+            console.log(result);
             res.render('viewBreakDowns',{array : result});
         }
     });
@@ -21,22 +21,8 @@ exports.postBreakdown=function (req,res) {
     let area=req.body.area;
     let description = req.body.description;
     let finished = 0;
-    let date=new Date();
-    let year = date.getFullYear();
-    let month = date.getMonth()+1;
-    var weekday=new Array(7);
-    weekday[1]="Monday";
-    weekday[2]="Tuesday";
-    weekday[3]="Wednesday";
-    weekday[4]="Thursday";
-    weekday[5]="Friday";
-    weekday[6]="Saturday";
-    weekday[0]="Sunday";
-    let day= weekday[date.getDay()];
-    let hour=date.getHours();
-    let minute=date.getMinutes();
-    let dwant = day + "-" + month + "-" + year + "  " + hour + ":" + minute;
-    newBreakdown.createObject(userId,area,description,null,finished,dwant);
+    let lk=new Date().toISOString().slice(0, 19).replace('T', ' ');
+    newBreakdown.createObject(userId,area,description,null,finished,lk);
     newBreakdown.save(function (err,result) {
         if(err)
             throw err;
