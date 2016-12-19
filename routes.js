@@ -5,7 +5,7 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
-
+const PaymentController = require("./src/controllers/PaymentController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -101,6 +101,8 @@ module.exports = function (app, passport) {
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+
+    app.post('/paymentPost',PaymentController.postPayment);
 
 };
 
