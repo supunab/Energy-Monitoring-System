@@ -18,6 +18,7 @@
     "express": "^4.12.4",
     "express-handlebars": "^3.0.0",
     "express-validator": "^2.10.0",
+    "handlebars-intl": "^1.1.2",
     "jade": "^1.11.0",
     "load-grunt-tasks": "^3.5.2",
     "mysql": "^2.6.2",

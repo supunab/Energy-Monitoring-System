@@ -9,7 +9,7 @@ const ComplainController = require("./src/controllers/ComplainController");
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('addPayments');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -72,7 +72,6 @@ module.exports = function (app, passport) {
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
-
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 

@@ -10,7 +10,10 @@ var express = require('express'),
     passport = require('passport'),
     crypto = require('crypto'),
     flash = require('connect-flash'),
-    path = require('path');
+    path = require('path'),
+    handlebars=require('handlebars'),
+    handlebarsIntl=require('handlebars-intl');
+handlebarsIntl.registerWith(handlebars);
 require('./src/middleware/passport')(passport);
 var app = express();
 app.use(cookieParser('energymonitor'));
@@ -35,8 +38,12 @@ var handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
     helpers: {
         getType : function (re) {
-            if(re==0) return "No Finished";
+            if(re==0) return "Not Finished";
             else return "Finished";
+        },
+        getDate : function (date) {
+            var day=date.toString().split(" ").slice(0,5).join(' ');
+            return day;
         }
     }
 });

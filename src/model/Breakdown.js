@@ -3,6 +3,7 @@ import Model from '../model/Model'
 import User from '../model/User'
 import Area from '../model/Area'
 
+
 export default class Breakdown extends Model {
     constructor(){
         super();
@@ -17,7 +18,7 @@ export default class Breakdown extends Model {
     createObject(userId,area,description,status,finished,date){
         this.area.set(area);
         this.dateTime.set(date);
-        this.userId.set(userId);
+        this.user_id.set(userId);
         this.description.set(description);
         this.status.set(status);
         this.finished.set(finished);
