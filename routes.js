@@ -13,8 +13,7 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('breakdown/update_status');
-        //res.redirect('/breakdownView'); //breakdownView
+        res.render('index');
     });
 
     app.get('/login', function (req, res) {
@@ -26,6 +25,7 @@ module.exports = function (app, passport) {
         // render the page and pass in any flash data if it exists
         res.render('signup', {message: req.flash('signupMessage')});
     });
+
 
     app.get('/logout', function (req, res) {
         req.logout();
@@ -45,11 +45,15 @@ module.exports = function (app, passport) {
     }));
 
     //user dash board
-    app.get('/home', (req, res) => {res.render('user-dashboard')});
+    app.get('/home', (req, res) => {
+        res.render('user-dashboard')
+    });
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {layout: 'admin-main', needAngular : true})});
+    app.get("/powercuts", (req, res) => {
+        res.render('admin/publishPowerCut', {layout: 'admin-main', needAngular: true})
+    });
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -71,12 +75,11 @@ module.exports = function (app, passport) {
     app.get("/complain/admin/:id", ComplainController.adminCommentGET);
     app.post("/complain/admin/:id", ComplainController.adminCommentPost);
 
-    //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+    app.get('/breakdownView',BreakDownController.getRequest);
 
     app.get('/connectionRequest', ConnectionController.getRequest);
-
     app.post('/connectionRequest',ConnectionController.postRequest);
 
     app.get('/admin', isAdminLoggedIn, function (req, res) {
@@ -84,35 +87,41 @@ module.exports = function (app, passport) {
     });
     app.get('/admin/powercuts', AdminController.viewPowerCut);
 
+
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : true})});
+    app.get('/paymentHistoryRegistered', (req, res) => {
+        res.render('registeredUser/paymentHistory', {needAngular: true})
+    });
+
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
+    app.get('/api/get/connection', GeneralController.getConnection);
 
     app.get('/addPayments',PaymentController.getPaymentPage);
     app.post('/paymentPost',PaymentController.postPayment);
-
 
     // For unregistered users check payment history
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
     // Add new connection - data entry
-    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry",  {layout: 'admin-main' , needAngular : true})});
+    app.get('/addNewConnection', (req, res) => {
+        res.render("admin/connectionEntry", {layout: 'admin-main', needAngular: true})
+    });
     app.post('/addNewConnection', AdminController.addNewConnection);
     app.get('/api/get/customers', GeneralController.getAllCustomers);
 
-    app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
-    app.get('/sortByFinished',BreakDownController.sortByFinished);
+    app.get('/sortByNotFinished', BreakDownController.sortByNotFinished);
+    app.get('/sortByFinished', BreakDownController.sortByFinished);
 
 
+    app.post('/updateBreakDown/:id', BreakDownController.updateBreakDown);
 
-    app.post('/updateBreakDown/:id',BreakDownController.updateBreakDown);
-
-    app.get('/getBreakDown/:id',BreakDownController.getBreakDown);
-
+    app.get('/getBreakDown/:id', BreakDownController.getBreakDown);
+    app.get('/admin/addBill', AdminController.addBill);
+    app.post('/admin/addbillPOST', AdminController.addBillPOST);
     app.get("*", PageController.errorPage404);
 
 };
