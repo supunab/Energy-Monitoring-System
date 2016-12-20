@@ -47,7 +47,9 @@ module.exports = function (app, passport) {
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.get("/powercuts", (req, res) => {
+        res.render('admin/publishPowerCut', {layout: 'admin-main'})
+    });
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -75,14 +77,16 @@ module.exports = function (app, passport) {
     app.get('/connectionRequest', ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
-  
-    app.get('/admin', function (req, res) {
+
+    app.get('/admin', isAdminLoggedIn, function (req, res) {
         res.render('admin/dashboard', {layout: 'admin-main'});
     });
+    app.get('/admin/powercuts', AdminController.viewPowerCut);
 
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 
@@ -98,12 +102,28 @@ module.exports = function (app, passport) {
 };
 
 
-function isLoggedIn(req, res, next) {
+function isUserLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
+}
+
+function isAdminLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) {
+        if (req.user.is_admin.get()) {
+            return next();
+        }
+        else {
+            res.status(403);
+            res.send("Access Denied");
+        }
+    }
+    // if they aren't redirect them to the home page
+    res.redirect('/login');
 }

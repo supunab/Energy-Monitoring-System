@@ -1,50 +1,51 @@
 <link rel="stylesheet" href="css/select2-mat-fix.css" type="text/css">
-
+<div>
 <div class="container" ng-controller="PowerCutController">
     <div class="row">
-        <div class="col m12">
+        <div class="col-md-12">
             <h3>Publish Power Cut</h3>
         </div>
     </div>
 
     <div class="row">
-        <form class="col m12" action="">
+        <form class="col-md-12" action="">
             <div class="row">
-                <div class="input-field col m6">
+                <div class="form-group col-md-6">
                     <label for="from_datetime">From</label>
                 </div>
 
-                <div class="input-field col m6">
+                <div class="form-group col-md-6">
                     <label for="to_datetime">To</label>
                 </div>
 
             </div>
 
             <div class="row">
-                <div class="input-field col m3">
-                    <input id="from_datetime1" type="date" ng-model="start_d"/>
+                <div class="form-group col-md-3">
+                    <input id="from_datetime1" type="date" ng-model="start_d" class="form-control"/>
                 </div>
-                <div class="input-field col m3">
-                    <input id="from_datetime2" type="time" ng-model="start_t"/>
+                <div class="form-group col-md-3">
+                    <input id="from_datetime2" type="time" ng-model="start_t" class="form-control"/>
                 </div>
 
-                <div class="input-field col m3">
-                    <input id="to_datetime3" type="date" ng-model="to_d"/>
+                <div class="form-group col-md-3">
+                    <input id="to_datetime3" type="date" ng-model="to_d" class="form-control"/>
                 </div>
-                <div class="input-field col m3">
-                    <input id="to_datetime" type="time" ng-model="to_t"/>
+                <div class="form-group col-md-3">
+                    <input id="to_datetime" type="time" ng-model="to_t" class="form-control"/>
                 </div>
             </div>
 
             <div class="row">
-                <div class="input-field col m12">
-                    <textarea ng-model="description" id="description" class="materialize-textarea" length="45"></textarea>
+                <div class="form-group col-md-12">
                     <label for="description">Description</label>
+                    <textarea ng-model="description" id="description" length="45" class="form-control"></textarea>
+
                 </div>
             </div>
 
             <div class="row">
-                <div class="input-field col m5 offset-m3">
+                <div class="form-group col-md-5 col-md-offset-3">
                     <label for="area">Area</label>
                 </div>
 
@@ -52,7 +53,7 @@
 
 
             <div class="row">
-                <div class="input-field col m5 offset-m3">
+                <div class="form-group col-md-5 col-md-offset-3">
                     <select name="area" ng-model="newArea" id="area" type="text">
                         <option ng-repeat="area in allAreas track by $index">[[area]]</option>
                     </select>
@@ -62,10 +63,15 @@
             </div>
 
             <div class="row">
-                <div class="col m10 offset-m1">
+                <div class="col-md-10 col-md-offset-1">
                     <ul class="collection">
                         <div ng-repeat="area in areas track by $index">
-                            <li class="collection-item"><div>[[area]]<a href="#!" class="secondary-content"><i ng-click="removeArea($index)" class="material-icons" style="color:red;">not_interested</i></a></div></li>
+                            <li class="collection-item">
+                                <div>[[area]]<a href="#!" class="secondary-content"><i ng-click="removeArea($index)"
+                                                                                       class="fa fa-close"
+                                                                                       style="color:red;">not_interested</i></a>
+                                </div>
+                            </li>
                         </div>
 
                     </ul>
@@ -73,12 +79,13 @@
             </div>
 
             <div class="row">
-                <div class="col m3 offset-m4">
+                <div class="col-md-3 col-md-offset-4">
                     <a class="waves-effect waves-light btn blue" ng-click="publish()">Publish</a>
                 </div>
             </div>
         </form>
     </div>
+</div>
 </div>
 
 <script src="js/publishPowerCut.js"></script>

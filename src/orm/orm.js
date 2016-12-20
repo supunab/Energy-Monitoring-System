@@ -82,9 +82,6 @@ export default class orm {
 
         if (Object.keys(param).length === 0) {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table;
-            if (options["limit"] !== undefined && isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
-            }
 
             if (options["orderby"] !== undefined) {
                 sql += " ORDER BY " + options["orderby"];
@@ -92,6 +89,10 @@ export default class orm {
                 if (options["order"] !== undefined) {
                     sql += " " + options["order"];
                 }
+            }
+
+            if (options["limit"] !== undefined && isNumeric(options["limit"])) {
+                sql += " LIMIT" + options["limit"];
             }
             sql += ";";
             this.connection.query(

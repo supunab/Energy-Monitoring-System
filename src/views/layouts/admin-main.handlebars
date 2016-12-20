@@ -6,7 +6,7 @@
     {{>admintopnav}}
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="energy-monitor">
 <div class="wrapper">
     {{>adminnavbar}}
 
@@ -15,7 +15,7 @@
         <section class="content-header">
             {{{adminheader}}}
         </section>
-
+        {{>adminscripts}}
         <!-- Main content -->
         <section class="content">
             {{{body}}}
@@ -33,6 +33,6 @@
         reserved.
     </footer>
 
-    {{>adminscripts}}
+
 </body>
 </html>
