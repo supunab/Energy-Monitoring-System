@@ -48,7 +48,7 @@ var handlebars = require('express-handlebars').create({
             return day;
         },
         formatDate: function (date) {
-            let day = new Date(date);
+            var day = new Date(date);
             return day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate() + " " + day.getUTCHours() + ':' + day.getUTCMinutes();
         },
         relativeTime: function (options) {
