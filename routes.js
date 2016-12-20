@@ -55,40 +55,10 @@ module.exports = function (app, passport) {
     app.post("/complain/create", ComplainController.createComplainPOST);
     app.get("/complain/:id", ComplainController.getShow);
     app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
     app.post('/complain/edit/:id', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-
-    //dummy routes to test viwes.
-    app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
-    app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+    app.get("/complain/admin/:id", ComplainController.adminCommentGET);
+    app.post("/complain/admin/:id", ComplainController.adminCommentPost);
 
     app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
 
@@ -102,17 +72,17 @@ module.exports = function (app, passport) {
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
-
     app.post('/breakdownPost',BreakDownController.postBreakdown);
-
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
-
+    app.get("/test", (req, res) => {
+       res.render('breakdown/report');
+    });
+    app.get("/test2", (req, res) => {
+       res.render('breakdown/update_status');
+    });
     app.get("*", PageController.errorPage404);
 };
 
-
 function isLoggedIn(req, res, next) {
-
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
