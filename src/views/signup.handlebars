@@ -11,28 +11,44 @@
 
         <!-- LOGIN FORM -->
         <form action="/signup" method="post">
-            <div class="form-group">
-                <label>First Name</label>
-                <input type="text" class="form-control" name="first_name">
-            </div>
-            <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" class="form-control" name="last_name">
-            </div>
-            <div class="form-group">
+            <div class="input-field col s12 m6">
                 <label>Email</label>
                 <input type="text" class="form-control" name="email">
             </div>
-            <div class="form-group">
+
+            <div class="input-field col s12 m6">
                 <label>Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
-            <div class="form-group">
-                <label>User Name</label>
-                <input type="text" class="form-control" name="user_name">
+
+            <div class="input-field col s12 m6">
+                <label>NIC Number</label>
+                <input type="text" class="form-control" name="customer_id">
             </div>
 
-            <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+            <div class="input-field col s12 m6">
+                <input class="with-gap" type="radio" name="signupChioce" id="already" value="already" checked>
+                <label for="already">Already a Customer</label>
+
+                <input class="with-gap" type="radio" name="signupChioce" id="new_customer" value="new_customer">
+                <label for="new_customer">New Customer</label>
+            </div>
+
+            <div id="moreField" style="display:none;">
+                <div class="input-field col s12 m6">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="first_name">
+                </div>
+                <div class="input-field col s12 m6">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="last_name">
+                </div>
+
+            </div>
+            <div class="input-field">
+                <button type="submit" class="btn btn-warning btn-lg">Signup</button>
+            </div>
+
         </form>
 
         <hr>
@@ -41,5 +57,16 @@
         <p>Or go <a href="/">home</a>.</p>
 
     </div>
-
+    <script>
+        $(function () {
+            $("input:radio[name=signupChioce]").change(function () {
+                if (this.value == 'already') {
+                    $("#moreField").slideToggle();
+                }
+                else if (this.value == 'new_customer') {
+                    $("#moreField").slideToggle();
+                }
+            });
+        });
+    </script>
 </div>

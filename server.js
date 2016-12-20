@@ -11,8 +11,8 @@ var express = require('express'),
     crypto = require('crypto'),
     flash = require('connect-flash'),
     path = require('path');
-require('./src/middleware/passport')(passport);
 var app = express();
+require('./src/middleware/passport')(passport, app);
 app.use(cookieParser('energymonitor'));
 app.use(cookieSession({
     keys: ['key1', 'key2']
@@ -36,8 +36,8 @@ var handlebars = require('express-handlebars').create({
     helpers: {
         getType : function (re) {
 
-            if(re==0){
-                return  '';
+            if (re == 0) {
+                return '';
             }
             else {
                 return 'checked';
@@ -87,6 +87,9 @@ var handlebars = require('express-handlebars').create({
             } else {
                 return 'Not Valid';
             }
+        },
+        user: function () {
+            return app.locals.user;
         }
     }
 });

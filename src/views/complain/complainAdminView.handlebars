@@ -1,15 +1,11 @@
-<h1>Complaint</h1>
-<div class="row">
-    <div class="col m8 l8 s12">
-        <h5>{{complain.title}}</h5>
-        <dt style="margin-left:30px;">{{complain.description}}</dt>
-    </div>
-</div>
-<div class="row">
+<div class="jumbotron">
+    <h1>Complaint</h1>
+    <h3>{{complain.title}}</h3>
+    <dt style="margin-left:30px;">{{complain.description}}</dt>
     <form action="/complain/admin/{{complain.id}}" method="post">
-        <div class="col s12 input-field m8 l8">
-            <textarea name="comment" class="materialize-textarea"></textarea>
-            <label for="comment">Enter your comment here.</label>
+        <div class="form-group">
+            <label>Comment</label>
+            <textarea class="form-control" name='comment' rows="3" placeholder="Enter ..."></textarea>
         </div>
         <div class="col s12 m5 l5">
             <button class="btn" type="submit">Save</button>

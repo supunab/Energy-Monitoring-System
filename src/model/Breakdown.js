@@ -15,7 +15,8 @@ export default class Breakdown extends Model {
         this.finished=new field.BooleanField(true,false);
         this.created_at = new field.DateTimeField(true, "CURRENT_TIMESTAMP");
     }
-    createObject(userId,area,description,status,finished){
+
+    createObject(userId, area, description, status, finished) {
         this.area.set(area);
         this.user_id.set(userId);
         this.description.set(description);

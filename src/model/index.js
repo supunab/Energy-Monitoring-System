@@ -11,11 +11,11 @@ import Breakdown from '../model/Breakdown'
 
 export default class Migrate {
     constructor() {
+        this.customer = new Customer().generateSchema();
         this.user = new User().generateSchema();
         this.complaint = new Complaint().generateSchema();
         this.area = new Area().generateSchema();
         this.powerCut = new PowerCut().generateSchema();
-        this.customer = new Customer().generateSchema();
         this.connection = new Connection().generateSchema();
         this.bill = new Bill().generateSchema();
         this.billPayment = new BillPayment().generateSchema();

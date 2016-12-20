@@ -2,6 +2,7 @@ import PowerCut from "../model/PowerCut"
 import Area from "../model/Area"
 import DB from '../controllers/DBController'
 import Connection from '../model/Connection'
+import Bill from '../model/Bill'
 
 const _ = require("underscore");
 exports.addPowerCut = function(req, res, next){
@@ -193,9 +194,9 @@ function diff(from, to) {
     return arr;
 }
 
-exports.addNewConnection = function(req, res, next){
-    DB.execQuery("SELECT id from area where name=?;",req.body.area, function(err, data){
-        if (err){
+exports.addNewConnection = function (req, res, next) {
+    DB.execQuery("SELECT id from Area where name=?;", req.body.area, function (err, data) {
+        if (err) {
             console.log(err);
             return next(err);
         }
@@ -203,10 +204,10 @@ exports.addNewConnection = function(req, res, next){
         let area_id = data[0].id;
 
         let connection = new Connection();
-        connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, req.body.customer_id, area_id );
+        connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, req.body.customer_id, area_id);
 
-        connection.save(function(err){
-            if (err){
+        connection.save(function (err) {
+            if (err) {
                 console.log(err);
             }
 
@@ -222,6 +223,29 @@ exports.viewPowerCut = function (req, res) {
         "PowerCut ORDER BY PowerCut.id DESC LIMIT 10 ;";
     DB.execQuery(sql, function (err, result) {
         console.log(err, result);
-        res.render('admin/powerCutView', {layout: 'admin-main', results: result})
+        res.render('admin/powerCutView', {layout: 'admin-main', results: result});
+    })
+};
+
+exports.addBill = function (req, res) {
+    res.render('admin/addBill', {layout: 'admin-main', message: req.flash('addBill')});
+};
+
+exports.addBillPOST = function (req, res) {
+    let bill = new Bill();
+    bill.connection_id.set(req.body.connection_id);
+    bill.starting_date.set(req.body.starting_date);
+    bill.ending_date.set(req.body.ending_date);
+    bill.reading.set(req.body.energy_consumption);
+    bill.amount.set(req.body.amount);
+    bill.save(function (err, result) {
+        if (err) {
+            console.log(err);
+            req.flash('addbill', 'Error Inserting to database!!');
+        }
+        else {
+            req.flash('addbill', 'Successfully added to database!!');
+            res.redirect('/admin/addBill');
+        }
     })
 };
