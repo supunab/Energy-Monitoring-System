@@ -8,7 +8,7 @@
     <!-- Dropdown Structure -->
     <ul id='dropdown2' class='dropdown-content'>
         <li class="divider"></li>
-        <li><a href="/sortByArea">Sort by Area</a></li>
+        <li><a href="/breakdownView">Sort by Area</a></li>
         <li class="divider"></li>
         <li><a href="/sortByNotFinished">Not Finished</a></li>
         <li class="divider"></li>
@@ -22,20 +22,21 @@
         <div>
             <div class="col s12 m6">
                 {{#if finished}}
-                    <div class="card  light-green accent-1">
+                    <div class="card  light-green accent-1 hoverable">
                         <div class="card-content darken-text">
                             <span class="card-title">{{area}}</span>
                             <p>{{description}}</p>
+
                         </div>
 
                         <div class="card-action">
                             <a>{{getDate created_at}}</a>
-                            <a>Finished</a>
+                            <a href="/getBreakDown/{{id}}">Finished</a>
 
                         </div>
                     </div>
                 {{else}}
-                    <div class="card light-blue lighten-4">
+                    <div class="card light-blue lighten-4 hoverable">
                         <div class="card-content blue-text">
                             <span class="card-title">{{area}}</span>
                             <p>{{description}}</p>
@@ -43,7 +44,7 @@
 
                         <div class="card-action">
                             <a>{{getDate created_at}}</a>
-                            <a>Not Finished</a>
+                            <a href="/getBreakDown/{{id}}">Not Finished</a>
 
                         </div>
                     </div>

@@ -94,6 +94,7 @@ export default class orm {
             if (options["limit"] !== undefined && isNumeric(options["limit"])) {
                 sql += " LIMIT" + options["limit"];
             }
+
             sql += ";";
             this.connection.query(
                 sql
