@@ -92,6 +92,7 @@ module.exports = function (passport, app) {
                                         newUser.id.set(result[2].insertId);
                                         return done(null, newUser);
                                         app.locals.user = newUser.email.get();
+                                        app.locals.id = newUser.id.get();
                                     }
                                 }
                             )
@@ -100,6 +101,7 @@ module.exports = function (passport, app) {
                                 if (err)
                                     throw err;
                                 app.locals.user = newUser.email.get();
+                                app.locals.id = newUser.id.get();
                                 return done(null, newUser);
                             });
                         }
@@ -139,6 +141,7 @@ module.exports = function (passport, app) {
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
                 // all is well, return successful user
                 app.locals.user = loggedin.email.get();
+                app.locals.id = loggedin.id.get();
                 return done(null, loggedin);
             });
 

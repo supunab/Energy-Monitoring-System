@@ -62,7 +62,7 @@ app.controller("PaymentHistoryCtrl",[
     "$http",
     function($scope, $http){
         // Assume customer id is already known (Should take from the login details)
-        let customerid = '941401406';
+        let customerid = user_id;
 
         let selectedConnections = {};
 
