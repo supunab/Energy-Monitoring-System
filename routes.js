@@ -95,8 +95,11 @@ module.exports = function (app, passport) {
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
+    app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
+    app.get('/sortByFinished',BreakDownController.sortByFinished);
 
     app.get("*", PageController.errorPage404);
+
 };
 
 

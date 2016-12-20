@@ -15,6 +15,7 @@ export default class orm {
         //this.connection.connect();
     }
 
+
     insert(model, callback) {
         let table = model.constructor.name;
         let values = [];
@@ -83,7 +84,7 @@ export default class orm {
         if (Object.keys(param).length === 0) {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table;
             if (options["limit"] !== undefined && isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
+                sql += " LIMIT " + options["limit"];
             }
 
             if (options["orderby"] !== undefined) {
@@ -104,8 +105,8 @@ export default class orm {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table +
                 " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ")";
 
-            if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
+            if (options["limit"] !== undefined && isNumeric(options["limit"])) {
+                sql += " LIMIT " + options["limit"];
             }
 
             if (options["orderby"] !== undefined) {
