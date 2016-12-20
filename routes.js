@@ -14,7 +14,6 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
         res.render('index');
-        //res.redirect('/breakdownView'); //breakdownView
     });
 
     app.get('/login', function (req, res) {
@@ -76,12 +75,11 @@ module.exports = function (app, passport) {
     app.get("/complain/admin/:id", ComplainController.adminCommentGET);
     app.post("/complain/admin/:id", ComplainController.adminCommentPost);
 
-    //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
+    app.get('/breakdownView',BreakDownController.getRequest);
 
     app.get('/connectionRequest', ConnectionController.getRequest);
-
     app.post('/connectionRequest',ConnectionController.postRequest);
 
     app.get('/admin', isAdminLoggedIn, function (req, res) {
@@ -89,10 +87,12 @@ module.exports = function (app, passport) {
     });
     app.get('/admin/powercuts', AdminController.viewPowerCut);
 
+
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {
         res.render('registeredUser/paymentHistory', {needAngular: true})
     });
+
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.get('/api/get/consumption', AdminController.powerConsumption);
@@ -101,7 +101,6 @@ module.exports = function (app, passport) {
 
     app.get('/addPayments',PaymentController.getPaymentPage);
     app.post('/paymentPost',PaymentController.postPayment);
-
 
     // For unregistered users check payment history
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
