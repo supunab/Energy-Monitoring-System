@@ -7,30 +7,49 @@
                 class="material-icons">play_for_work</i></span></a></h4>
     <!-- Dropdown Structure -->
     <ul id='dropdown2' class='dropdown-content'>
-        <li><a href="#!">Sort by Date</a></li>
         <li class="divider"></li>
-        <li><a href="#!">Sort by Area</a></li>
+        <li><a href="/breakdownView">Sort by Area</a></li>
         <li class="divider"></li>
-        <li><a href="#!">Not Finished</a></li>
+        <li><a href="/sortByNotFinished">Not Finished</a></li>
+        <li class="divider"></li>
+        <li><a href="/sortByFinished">Finished</a></li>
     </ul>
 </div>
 
 <div class="row">
     {{#each array}}
+
         <div>
             <div class="col s12 m6">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                        <span class="card-title">{{area}}</span>
-                        <p>{{description}}</p>
-                    </div>
+                {{#if finished}}
+                    <div class="card  light-green accent-1 hoverable">
+                        <div class="card-content darken-text">
+                            <span class="card-title">{{area}}</span>
+                            <p>{{description}}</p>
 
-                    <div class="card-action">
-                        <a>{{getDate dateTime}}</a>
-                        {{getType finished}}
+                        </div>
 
+                        <div class="card-action">
+                            <a>{{getDate created_at}}</a>
+                            <a href="/getBreakDown/{{id}}">Finished</a>
+
+                        </div>
                     </div>
-                </div>
+                {{else}}
+                    <div class="card light-blue lighten-4 hoverable">
+                        <div class="card-content blue-text">
+                            <span class="card-title">{{area}}</span>
+                            <p>{{description}}</p>
+                        </div>
+
+                        <div class="card-action">
+                            <a>{{getDate created_at}}</a>
+                            <a href="/getBreakDown/{{id}}">Not Finished</a>
+
+                        </div>
+                    </div>
+                {{/if}}
+
             </div>
         </div>
     {{/each}}

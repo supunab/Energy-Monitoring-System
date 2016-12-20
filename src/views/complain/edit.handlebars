@@ -1,19 +1,21 @@
-<h1>Complain</h1>
-<form method="post" action="/complain/edit">
+<h1>Complaint - edit</h1>
+<form method="post" action="/complain/edit/{{value.id}}">
     <div class="row">
-        {{#if message}}
-            {{#each message}}
-                {{this.msg}}
-            {{/each}}
-        {{/if}}
+        <blockquote class="red lighten-5">
+            {{#if message}}
+                {{#each message}}
+                    {{this.msg}} <br>
+                {{/each}}
+            {{/if}}
+        </blockquote>
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-dns"></i>
-            <input type="text" name="title" value="{{complain.title}}">
+            <input type="text" name="title" value="{{value.title}}">
             <label for="title">Title</label>
         </div>
         <div class="input-field col s8 m8 l8">
             <i class="material-icons prefix mdi-action-description"></i>
-            <textarea name="description" class="materialize-textarea">{{complain.description}}</textarea>
+            <textarea name="description" class="materialize-textarea">{{value.description}}</textarea>
             <label for="description">Description</label>
         </div>
         <div class="input-field col s8 m8 l8">
@@ -31,7 +33,7 @@
     </div>
     <div class="row">
     </div>
-    <input type="hidden" name="id" value="{{complain.id}}">
+    <input type="hidden" name="id" value="{{value.id}}">
     <button class="waves-effect btn teal" type="submit">Edit</button>
 </form>
 </div>

@@ -1,6 +1,8 @@
 import PowerCut from "../model/PowerCut"
 import Area from "../model/Area"
 import DB from '../controllers/DBController'
+import Connection from '../model/Connection'
+
 const _ = require("underscore");
 exports.addPowerCut = function(req, res, next){
     let start_date = req.body.start_date;
@@ -20,7 +22,11 @@ exports.addPowerCut = function(req, res, next){
                 powerCut.save(function(err){
                     if (err){
                         console.log("Save Error : "+err);
+                        return;
                     }
+
+                    res.status(200);
+                    res.end("Okay");
                 })
             }
         });
@@ -187,4 +193,35 @@ function diff(from, to) {
     return arr;
 }
 
+exports.addNewConnection = function(req, res, next){
+    DB.execQuery("SELECT id from area where name=?;",req.body.area, function(err, data){
+        if (err){
+            console.log(err);
+            return next(err);
+        }
 
+        let area_id = data[0].id;
+
+        let connection = new Connection();
+        connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, req.body.customer_id, area_id );
+
+        connection.save(function(err){
+            if (err){
+                console.log(err);
+            }
+
+            res.status(200);
+            res.end("Okay");
+        });
+
+    });
+};
+
+exports.viewPowerCut = function (req, res) {
+    let sql = "SELECT PowerCut.starting_date,PowerCut.ending_date,PowerCut.description from " +
+        "PowerCut ORDER BY PowerCut.id DESC LIMIT 10 ;";
+    DB.execQuery(sql, function (err, result) {
+        console.log(err, result);
+        res.render('admin/powerCutView', {layout: 'admin-main', results: result})
+    })
+};
