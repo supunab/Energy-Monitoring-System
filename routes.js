@@ -16,6 +16,7 @@ module.exports = function (app, passport) {
         res.render('breakdown/update_status');
         //res.redirect('/breakdownView'); //breakdownView
     });
+
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
     });
@@ -25,7 +26,6 @@ module.exports = function (app, passport) {
         // render the page and pass in any flash data if it exists
         res.render('signup', {message: req.flash('signupMessage')});
     });
-
 
     app.get('/logout', function (req, res) {
         req.logout();
@@ -39,15 +39,17 @@ module.exports = function (app, passport) {
     }));
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/', // redirect to the secure profile section
+        successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
 
+    //user dash board
+    app.get('/home', (req, res) => {res.render('user-dashboard')});
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {layout: 'admin-main', needAngular : true})});
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -76,14 +78,16 @@ module.exports = function (app, passport) {
     app.get('/connectionRequest', ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
-  
-    app.get('/admin', function (req, res) {
+
+    app.get('/admin', isAdminLoggedIn, function (req, res) {
         res.render('admin/dashboard', {layout: 'admin-main'});
     });
+    app.get('/admin/powercuts', AdminController.viewPowerCut);
 
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : true})});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
 
@@ -94,6 +98,11 @@ module.exports = function (app, passport) {
     // For unregistered users check payment history
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
+
+    // Add new connection - data entry
+    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry",  {layout: 'admin-main' , needAngular : true})});
+    app.post('/addNewConnection', AdminController.addNewConnection);
+    app.get('/api/get/customers', GeneralController.getAllCustomers);
 
     app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
     app.get('/sortByFinished',BreakDownController.sortByFinished);
@@ -109,12 +118,28 @@ module.exports = function (app, passport) {
 };
 
 
-function isLoggedIn(req, res, next) {
+function isUserLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
+}
+
+function isAdminLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) {
+        if (req.user.is_admin.get()) {
+            return next();
+        }
+        else {
+            res.status(403);
+            res.send("Access Denied");
+        }
+    }
+    // if they aren't redirect them to the home page
+    res.redirect('/login');
 }

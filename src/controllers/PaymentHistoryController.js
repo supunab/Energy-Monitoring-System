@@ -13,7 +13,7 @@ exports.getConnections = function(req, res, next){
 
 
 exports.renderPage = function(req, res){
-    res.render('registeredUser/paymentHistory');
+    res.render('registeredUser/paymentHistory', {needAngular : " true"});
 };
 
 
@@ -51,7 +51,7 @@ exports.getPaymentHistory = function(req, res, next){
 
 
 exports.renderOtherView = function(req, res, next){
-    res.render("paymentHistoryOther");
+    res.render("paymentHistoryOther", {needAngular : " true"});
 };
 
 exports.checkConnectionId = function(req, res, next){
