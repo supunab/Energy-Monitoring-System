@@ -22,7 +22,11 @@ exports.addPowerCut = function(req, res, next){
                 powerCut.save(function(err){
                     if (err){
                         console.log("Save Error : "+err);
+                        return;
                     }
+
+                    res.status(200);
+                    res.end("Okay");
                 })
             }
         });
