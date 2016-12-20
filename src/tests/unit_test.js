@@ -7,6 +7,11 @@ import orm from '../orm/orm'
 
 let user = new User();
 let complaint = new Complaint();
+console.log(user.generateSchema());
+console.log(complaint.generateSchema());
+let o = new orm('localhost', 'root', 'root', 'university');
+
+
 let area1 = new Area();
 area1.name.set("a");
 let area2 = new Area();
