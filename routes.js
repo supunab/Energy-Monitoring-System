@@ -13,7 +13,7 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('index');
+        res.render('breakdown/update_status');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -97,6 +97,12 @@ module.exports = function (app, passport) {
 
     app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
     app.get('/sortByFinished',BreakDownController.sortByFinished);
+
+
+
+    app.post('/updateBreakDown/:id',BreakDownController.updateBreakDown);
+
+    app.get('/getBreakDown/:id',BreakDownController.getBreakDown);
 
     app.get("*", PageController.errorPage404);
 

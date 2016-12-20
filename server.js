@@ -35,8 +35,13 @@ var handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
     helpers: {
         getType : function (re) {
-            if(re==0) return false;
-            else return block(this);
+
+            if(re==0){
+                return  '';
+            }
+            else {
+                return 'checked';
+            }
         },
         getDate : function (date) {
             var day=date.toString().split(" ").slice(0,5).join(' ');
