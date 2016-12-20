@@ -2,13 +2,20 @@ import Breakdown from '../model/Breakdown';
 import db from './DBController'
 
 exports.getRequest = function (req,res) {
-    Breakdown.find({}, {limit:10,orderby:'id',order:'DESC'}, function (err, result) {
+    db.execQuery("SELECT Breakdown.id,description,status,finished,created_at,name FROM Breakdown JOIN Area on Breakdown.area=Area.id ORDER BY Breakdown.id DESC LIMIT ?",15 ,function(err, result){
         if(err)
             throw err;
         if(result.size!=0){
             res.render('viewBreakDowns',{array : result});
         }
     });
+   /* Breakdown.find({}, {limit:10,orderby:'id',order:'DESC'}, function (err, result) {
+        if(err)
+            throw err;
+        if(result.size!=0){
+            res.render('viewBreakDowns',{array : result});
+        }
+    });*/
 };
 
 exports.postRequest = function (req, res) {
@@ -32,7 +39,7 @@ exports.postBreakdown=function (req,res) {
 };
 
 exports.sortByFinished=function (req,res) {
-    Breakdown.find({'finished':1}, {limit: 20}, function (err, result) {
+    db.execQuery("SELECT Breakdown.id,description,status,finished,created_at,name FROM Breakdown JOIN Area on Breakdown.area=Area.id HAVING finished=?;", 1 ,function(err, result){
         if(err)
             throw err;
         if(result.size!=0){
@@ -42,7 +49,7 @@ exports.sortByFinished=function (req,res) {
 };
 
 exports.sortByNotFinished=function (req,res) {
-    Breakdown.find({'finished':0}, {limit: 20}, function (err, result) {
+    db.execQuery("SELECT Breakdown.id,description,status,finished,created_at,name FROM Breakdown JOIN Area on Breakdown.area=Area.id HAVING finished=?;", 0 ,function(err, result){
         if(err)
             throw err;
         if(result.size!=0){
@@ -78,7 +85,18 @@ exports.updateBreakDown = function (req,res) {
 
 exports.getBreakDown = function (req,res) {
     let breakDownId=req.params.id;
-    Breakdown.findOne({'id':breakDownId},function (err,result) {
+    console.log("SELECT Breakdown.id,description,status,finished,created_at,name FROM Breakdown JOIN Area on Breakdown.area=Area.id WHERE Breakdown.id=", breakDownId);
+    db.execQuery("SELECT Breakdown.id,description,status,finished,created_at,name FROM Breakdown JOIN Area on Breakdown.area=Area.id WHERE Breakdown.id=?", breakDownId ,function(err, result){
+        if(err) {
+            console.log(err);
+            res.render("errorPage");
+        }else {
+            console.log(result);
+            res.render('breakdown/update_status',{breakDown:result[0]});
+        }
+    });
+
+    /*Breakdown.findOne({'id':breakDownId},function (err,result) {
         if(err) {
             console.log(err);
             res.render("errorPage");
@@ -86,5 +104,5 @@ exports.getBreakDown = function (req,res) {
             console.log(result);
             res.render('breakdown/update_status',{breakDown:result});
         }
-    });
+    });*/
 };
