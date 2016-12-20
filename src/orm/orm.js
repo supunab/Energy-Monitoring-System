@@ -15,6 +15,7 @@ export default class orm {
         //this.connection.connect();
     }
 
+
     insert(model, callback) {
         let table = model.constructor.name;
         let values = [];
@@ -82,6 +83,7 @@ export default class orm {
 
         if (Object.keys(param).length === 0) {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table;
+            console.log(sql);
             if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
                 sql += " LIMIT" + options["limit"];
             }
