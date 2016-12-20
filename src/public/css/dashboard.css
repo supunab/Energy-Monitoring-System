@@ -1,0 +1,25 @@
+
+
+.power-cut-table
+{
+    border-radius: 10px;
+    border: solid;
+    background-color: #f5e9e9;
+}
+
+.notification-card
+{
+    width: 160px;
+    height: 50px;
+    background-color: #23ab00;
+}
+
+.notify-test
+{
+    font-size: 13px;
+}
+
+.nofity-link
+{
+}
+

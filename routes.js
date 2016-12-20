@@ -5,12 +5,15 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
+
+const PaymentController = require("./src/controllers/PaymentController");
+
 const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
 
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('addPayments');
+        res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
     app.get('/login', function (req, res) {
@@ -61,27 +64,33 @@ module.exports = function (app, passport) {
     app.post("/complain/create", ComplainController.createComplainPOST);
     app.get("/complain/:id", ComplainController.getShow);
     app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
+    app.post('/complain/edit/:id', ComplainController.editComplainPOST);
     app.post("/complain/delete/:id", ComplainController.deletePOST);
-
+    app.get("/complain/admin/:id", ComplainController.adminCommentGET);
+    app.post("/complain/admin/:id", ComplainController.adminCommentPost);
 
     //dummy routes to test viwes.
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
 
-    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
+    app.get('/connectionRequest', ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
-  
-    app.get('/admin', function (req, res) {
+
+    app.get('/admin', isAdminLoggedIn, function (req, res) {
         res.render('admin/dashboard', {layout: 'admin-main'});
     });
+    app.get('/admin/powercuts', AdminController.viewPowerCut);
 
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : true})});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
+
+    app.get('/addPayments',PaymentController.getPaymentPage);
+    app.post('/paymentPost',PaymentController.postPayment);
 
 
     // For unregistered users check payment history
@@ -93,15 +102,36 @@ module.exports = function (app, passport) {
     app.post('/addNewConnection', AdminController.addNewConnection);
     app.get('/api/get/customers', GeneralController.getAllCustomers);
 
+    app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
+    app.get('/sortByFinished',BreakDownController.sortByFinished);
+
+    app.get("*", PageController.errorPage404);
+
 };
 
 
-function isLoggedIn(req, res, next) {
+function isUserLoggedIn(req, res, next) {
 
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
 
     // if they aren't redirect them to the home page
-    res.redirect('/');
+    res.redirect('/login');
+}
+
+function isAdminLoggedIn(req, res, next) {
+
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated()) {
+        if (req.user.is_admin.get()) {
+            return next();
+        }
+        else {
+            res.status(403);
+            res.send("Access Denied");
+        }
+    }
+    // if they aren't redirect them to the home page
+    res.redirect('/login');
 }

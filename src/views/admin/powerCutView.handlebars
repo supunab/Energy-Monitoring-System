@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-12">
+        <!-- The time line -->
+
+        <ul class="timeline">
+            <!-- timeline time label -->
+            {{#each results}}
+                <li class="time-label">
+                  <span class="bg-red">
+                    {{{formatDate this.starting_date }}} - {{{formatDate this.ending_date}}}
+                  </span>
+                </li>
+                <!-- /.timeline-label -->
+                <!-- timeline item -->
+                <li>
+                    <i class="fa fa-comments bg-blue"></i>
+
+                    <div class="timeline-item">
+                        <span class="time"><i class="fa fa-clock-o"></i> {{{relativeTime this.starting_date}}}</span>
+
+                        <h3 class="timeline-header">Power Cut Happened on {{{formatDate this.starting_date}}}</h3>
+
+                        <div class="timeline-body">
+                            {{this.description}}
+                        </div>
+                    </div>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>

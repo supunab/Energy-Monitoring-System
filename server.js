@@ -11,9 +11,6 @@ var express = require('express'),
     crypto = require('crypto'),
     flash = require('connect-flash'),
     path = require('path');
-    // handlebars = require('handlebars'),
-    // handlebarsIntl=require('handlebars-intl');
-// handlebarsIntl.registerWith(handlebars);
 require('./src/middleware/passport')(passport);
 var app = express();
 app.use(cookieParser('energymonitor'));
@@ -38,12 +35,53 @@ var handlebars = require('express-handlebars').create({
     defaultLayout: 'main',
     helpers: {
         getType : function (re) {
-            if(re==0) return "Not Finished";
-            else return "Finished";
+            if(re==0) return false;
+            else return block(this);
         },
         getDate : function (date) {
             var day=date.toString().split(" ").slice(0,5).join(' ');
             return day;
+        },
+        formatDate: function (date) {
+            let day = new Date(date);
+            return day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate() + " " + day.getUTCHours() + ':' + day.getUTCMinutes();
+        },
+        relativeTime: function (options) {
+            var timeAgo = new Date(options);
+
+            if (Object.prototype.toString.call(timeAgo) === "[object Date]") {
+                if (isNaN(timeAgo.getTime())) {
+                    return 'Not Valid';
+                } else {
+                    var seconds = Math.floor((new Date() - timeAgo) / 1000),
+                        intervals = [
+                            Math.floor(seconds / 31536000),
+                            Math.floor(seconds / 2592000),
+                            Math.floor(seconds / 86400),
+                            Math.floor(seconds / 3600),
+                            Math.floor(seconds / 60)
+                        ],
+                        times = [
+                            'year',
+                            'month',
+                            'day',
+                            'hour',
+                            'minute'
+                        ];
+
+                    var key;
+                    for (key in intervals) {
+                        if (intervals[key] > 1)
+                            return intervals[key] + ' ' + times[key] + 's ago';
+                        else if (intervals[key] === 1)
+                            return intervals[key] + ' ' + times[key] + ' ago';
+                    }
+
+                    return Math.floor(seconds) + ' seconds ago';
+                }
+            } else {
+                return 'Not Valid';
+            }
         }
     }
 });

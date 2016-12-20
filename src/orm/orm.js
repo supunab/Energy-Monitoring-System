@@ -30,9 +30,7 @@ export default class orm {
         let sql = "INSERT INTO " + table +
             "( " + keys.join() + " ) " +
             " VALUES " + "(" +
-            values.join() + ")"
-        //sql = this.connection.escape(sql);
-        console.log(sql);
+            values.join() + ")";
         this.connection.query(
             sql,
             callback);
@@ -84,9 +82,6 @@ export default class orm {
 
         if (Object.keys(param).length === 0) {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table;
-            if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
-            }
 
             if (options["orderby"] !== undefined) {
                 sql += " ORDER BY " + options["orderby"];
@@ -94,6 +89,10 @@ export default class orm {
                 if (options["order"] !== undefined) {
                     sql += " " + options["order"];
                 }
+            }
+
+            if (options["limit"] !== undefined && isNumeric(options["limit"])) {
+                sql += " LIMIT" + options["limit"];
             }
             sql += ";";
             this.connection.query(
@@ -118,8 +117,6 @@ export default class orm {
                 }
             }
             sql += ";";
-            // sql = this.connection.escape(sql);
-            console.log(sql);
             this.connection.query(
                 sql
                 , function (error, results, fields) {
@@ -132,7 +129,6 @@ export default class orm {
         let table = model.constructor.name;
         let sql = "SELECT " + Object.keys(model).join() + " from " + table +
             " WHERE id = " + id + ";";
-        sql = this.connection.escape(sql);
         //console.log(sql);
         this.connection.query(
             sql,
@@ -141,4 +137,7 @@ export default class orm {
             });
     }
 
+}
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }
