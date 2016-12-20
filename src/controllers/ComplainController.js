@@ -15,13 +15,13 @@ exports.getShow = function(req, res){
                     res.render('complain/view', {complain: result[0]});
                 }else{
                     DB.execQuery("SELECT is_admin from User where id= ?", [req.user.id.int],
-                    function (err, admin) {
-                        if(admin[0].is_admin == 1){
-                            res.render("complain/complainAdminView");
-                        }else{
-                            res.render('unAuthenticatePage');
-                        }
-                    });
+                        function (err, admin) {
+                            if(admin[0].is_admin == 1){
+                                res.render("complain/complainAdminView");
+                            }else{
+                                res.render('unAuthenticatePage');
+                            }
+                        });
                 }
             }
         }
@@ -30,24 +30,28 @@ exports.getShow = function(req, res){
 
 exports.getIndex = function (req, res) {
     DB.execQuery("SELECT is_admin from User where id = ?", [req.user.id.int],
-    function (err, admin) {
-        if (err){
-            console.log(err);
-            res.render("errorPage");
-        }else{
-            if (admin[0].is_admin == 0){ // normal users
-                Complaint.find({user_id : req.user.id.int},(err, complains) => {
-                    console.log(complains);
-                    res.render('complain/index', {complains : complains});
-                });
-            }else{ // for admin
-                // return all complains
-                Complaint.find({},(err, complains) => {
-                    res.render('complain/index', {complains : complains});
-                });
+        function (err, admin) {
+            if (err){
+                console.log(err);
+                res.render("errorPage");
+            }else{
+                if (admin[0].is_admin == 0){ // normal users
+                    Complaint.find({user_id : req.user.id.int},(err, complains) => {
+                        console.log('normal User', complains);
+                        res.render('complain/index', {complains : complains});
+                    });
+                }else{ // for admin
+                    // return all complains
+                    DB.execQuery("SELECT c.id AS id, c.comment AS comment, c.comp_type AS comp_type, " +
+                        "c.description AS description, c.title AS title, u.first_name AS first_name," +
+                        "u.last_name AS last_name FROM Complaint AS c JOIN User AS u ON c.user_id = u.id",[],
+                        function (err, complains) {
+                            res.render('complain/index', {complains : complains});
+                            console.log("amdin", complains);
+                        })
+                }
             }
-        }
-    });
+        });
 // return all complain objects only for admins
 };
 
@@ -143,17 +147,42 @@ exports.editComplainPOST = function (req, res) {
 exports.deletePOST = function (req, res) {
     DB.execQuery("SELECT user_id from Complaint where id = ?",
         [req.params.id], function (err, result) {
-        if(result[0].user_id == req.user.id.int ){
-            DB.execQuery("DELETE FROM Complaint where id = ? ", [req.params.id],
-            function (e, result) {
-                if (e){
-                    //ERROR
-                }else{
-                    res.redirect('/complain/');
+            if(result[0].user_id == req.user.id.int ){
+                DB.execQuery("DELETE FROM Complaint where id = ? ", [req.params.id],
+                    function (e, result) {
+                        if (e){
+                            //ERROR
+                        }else{
+                            res.redirect('/complain/');
+                        }
+                    })
+            }else{
+                res.send("401");
+            }
+        });
+}
+
+exports.adminCommentPost = function (req, res) {
+    DB.execQuery("SELECT is_admin from User where id = ?", [req.user.id.int],
+        function (err, admin) {
+            if (err){
+                console.log(err);
+                res.render("errorPage");
+            }else{
+                if (admin[0].is_admin == 0){ // normal users
+                    res.send("401");
+                }else{ // for admin
+                    DB.execQuery("UPDATE Complaint SET comment = ? where id = ?",[req.body.comment, req.params.id],
+                        function (e, result) {
+                            res.redirect('/complain/')
+                        });
                 }
-            })
-        }else{
-            res.send("401");
-        }
+            }
+        });
+}
+
+exports.adminCommentGET = function (req, res) {
+    DB.execQuery("SELECT * from Complaint where id = ?", [req.params.id], function (err, comp) {
+        res.render("complain/complainAdminView", {complain : comp[0]});
     });
 }
