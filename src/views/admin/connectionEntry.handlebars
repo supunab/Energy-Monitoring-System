@@ -1,105 +1,73 @@
-<div class="container" ng-controller="ConnectionEntryCtrl" >
+<div class="box box-primary" style="max-width: 70%" ng-controller="ConnectionEntryCtrl" >
     <form>
-        <div class="row" style="margin-top: 2%">
-            <div class="col-md-12">
-                <h3>Add New Connection</h3>
-            </div>
+        <!--<div class="box-header with-border">-->
+            <!--<h3>Add New Connection</h3>-->
+        <!--</div>-->
+
+        <div class="box-header with-border">
+            <h3 class="box-title">Add New Connection</h3>
         </div>
 
-        <div class="row" style="margin-top: 2%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="accountNo">Account Number</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <input id="accountNo" type="text" ng-model="accountNo">
-            </div>
-        </div>
+        <form role="form">
+            <div class="box-body">
+                <div class="form-group" style="max-width: 50%">
+                    <label for="accountNo">Account Number</label>
+                    <input id="accountNo" type="text" ng-model="accountNo" class="form-control" placeholder="Enter Account Number">
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="address1">Address Line-1</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <input id="address1" type="text" ng-model="address1">
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="address1">Address Line-1</label>
+                    <input id="address1" type="text" class="form-control" ng-model="address1" placeholder="Address Line 1">
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="address2">Address Line-2</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <input id="address2" type="text" ng-model="address2">
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="address2">Address Line-2</label>
+                    <input id="address2" type="text" class="form-control" ng-model="address2" placeholder="Address Line 2">
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="addressStreet">Street Number</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <input id="addressStreet" type="text" ng-model="addressStreet">
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="addressStreet">Street Number</label>
+                    <input class="form-control" placeholder="Enter Street No" id="addressStreet" type="text" ng-model="addressStreet">
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class=" col-md-offset-1 col-md-2 input-field">
-                <label for="city">City</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <input id="city" type="text" ng-model="city">
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="city">City</label>
+                    <input id="city" class="form-control" type="text" ng-model="city" placeholder="Enter Nearest City">
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="district">District</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <select name="district" id="district" ng-model="selDistrict">
-                    <option ng-repeat="district in districts">[[district]]</option>
-                </select>
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="district">District</label>
+                    <select name="district" class="form-control" id="district" ng-model="selDistrict">
+                        <option ng-repeat="district in districts">[[district]]</option>
+                    </select>
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2">
-                <label for="conType">Connection Type</label>
-            </div>
-            <div class="col-md-3">
-                <select name="conType" id="conType" ng-model="connectionType">
-                    <option ng-repeat="type in connectionTypes">[[type]]</option>
-                </select>
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="conType">Connection Type</label>
+                    <select name="conType" class="form-control" id="conType" ng-model="connectionType">
+                        <option ng-repeat="type in connectionTypes">[[type]]</option>
+                    </select>
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="area">Area</label>
-            </div>
-            <div class="col-md-3 input-field">
-                <select name="area" ng-model="selArea" id="area" type="text">
-                    <option ng-repeat="area in allAreas track by $index">[[area]]</option>
-                </select>
-            </div>
-        </div>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="area">Area</label>
+                    <select class="form-control" name="area" ng-model="selArea" id="area" type="text">
+                        <option ng-repeat="area in allAreas track by $index">[[area]]</option>
+                    </select>
+                </div>
 
-        <div class="row" style="margin-top: 1%">
-            <div class="col-md-offset-1 col-md-2 input-field">
-                <label for="customer">Customer</label>
+                <div class="form-group" style="max-width: 50%">
+                    <label for="customer">Customer</label>
+                    <select class="form-control" name="customer" ng-model="selCustomer" id="area" type="text">
+                        <option ng-repeat="customer in allCustomers track by $index" value="[[customer.id]]">[[customer.name]]</option>
+                    </select>
+                </div>
             </div>
-            <div class="col-md-3 input-field">
-                <select name="customer" ng-model="selCustomer" id="area" type="text">
-                    <option ng-repeat="customer in allCustomers track by $index" value="[[customer.id]]">[[customer.name]]</option>
-                </select>
-            </div>
-        </div>
 
-        <div class="row" style="margin-top: 2%">
-            <div class="col-md-3 col-md-offset-2">
-                <button class="btn btn-google" type="button" ng-click="publish()">Submit</button>
+            <div class="box-footer">
+                <button type="button" class="btn btn-primary" ng-click="publish()">Submit</button>
             </div>
-        </div>
+        </form>
     </form>
 </div>
 <script src="js/connectionEntry.js"></script>
