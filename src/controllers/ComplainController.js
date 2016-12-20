@@ -46,8 +46,8 @@ exports.getIndex = function (req, res) {
                         "c.description AS description, c.title AS title, u.first_name AS first_name," +
                         "u.last_name AS last_name FROM Complaint AS c JOIN User AS u ON c.user_id = u.id", [],
                         function (err, complains) {
-                            res.render('complain/index', {complains : complains, pageTitle: "Complaints - admin"});
-                        })
+                            res.render('complain/index', {complains : complains, pageTitle: "Complaints - admin", layout: 'admin-main'});
+                        });
                 }
             }
         });
@@ -178,7 +178,6 @@ exports.adminCommentPost = function (req, res) {
 
 exports.adminCommentGET = function (req, res) {
     DB.execQuery("SELECT * from Complaint where id = ?", [req.params.id], function (err, comp) {
-        res.render("complain/complainAdminView", {complain: comp[0]});
-        res.render("complain/complainAdminView", {complain : comp[0], pageTitle:'Complains'});
+        res.render("complain/complainAdminView", {complain : comp[0], pageTitle:'Complains', layout : 'admin-main'});
     });
 }
