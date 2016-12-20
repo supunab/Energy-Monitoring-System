@@ -36,8 +36,8 @@ var handlebars = require('express-handlebars').create({
     helpers: {
         getType : function (re) {
 
-            if(re==0){
-                return  '';
+            if (re == 0) {
+                return '';
             }
             else {
                 return 'checked';

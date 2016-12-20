@@ -34,11 +34,11 @@ exports.getIndex = function (req, res) {
             if (err) {
                 console.log(err);
                 res.render("errorPage", {pageTitle: "Error"});
-            }else{
-                if (admin[0].is_admin == 0){ // normal users
-                    Complaint.find({user_id : req.user.id.int}, {},function(err, complains) {
+            } else {
+                if (admin[0].is_admin == 0) { // normal users
+                    Complaint.find({user_id: req.user.id.int}, {}, function (err, complains) {
                         console.log('normal User', complains);
-                        res.render('complain/index', {complains : complains, pageTitle: "Complaints"});
+                        res.render('complain/index', {complains: complains, pageTitle: "Complaints"});
                     });
                 } else { // for admin
                     // return all complains
@@ -48,6 +48,7 @@ exports.getIndex = function (req, res) {
                         function (err, complains) {
                             res.render('complain/index', {complains : complains, pageTitle: "Complaints - admin", layout: 'admin-main'});
                         });
+
                 }
             }
         });
@@ -57,7 +58,7 @@ exports.CreateComplainGET = function (req, res) {
     if(req.user == null){
         res.render('index');
     }else{
-        res.render('complain/create', {pageTitle:'Make a complaint'});
+        res.render('complain/create', {pageTitle: 'Make a complaint'});
     }
 };
 
@@ -69,7 +70,7 @@ exports.createComplainPOST = function (req, res) {
 
     let err = req.validationErrors();
     if (err){
-        res.render('complain/create', {message: err, value: req.body, pageTitle:'Make a complaint'});
+        res.render('complain/create', {message: err, value: req.body, pageTitle: 'Make a complaint'});
     }else{
         let c = new Complaint();
 
@@ -81,7 +82,7 @@ exports.createComplainPOST = function (req, res) {
 
         c.save(function (err, result) {
             if(err){
-                res.render("errorPage", {pageTitle : "Error"});
+                res.render("errorPage", {pageTitle: "Error"});
             }else{
                 c.id.set(result.insertId);
                 res.redirect('/complain/' + result.insertId);
@@ -100,9 +101,9 @@ exports.editComplainGET = function (req, res) {
             Complaint.findOne({id: req.params.id},function (err, Cmpl) {
                 if(err){
                     console.log(err);
-                    res.render("errorPage", {pageTitle:'Error'});
+                    res.render("errorPage", {pageTitle: 'Error'});
                 }else{
-                    res.render('complain/edit',{message: [], value: Cmpl, pageTitle:'Complain Edit'});
+                    res.render('complain/edit', {message: [], value: Cmpl, pageTitle: 'Complain Edit'});
                 }
             });
         }else{
@@ -120,7 +121,7 @@ exports.editComplainPOST = function (req, res) {
 
         let e = req.validationErrors();
         if (e){
-            res.render('complain/edit', {message: err, value: req.body, pageTitle:"Complain Edit"});
+            res.render('complain/edit', {message: err, value: req.body, pageTitle: "Complain Edit"});
         }else{
             DB.execQuery("UPDATE Complaint SET comment = ?," +
                 "comp_type = ?, description = ?, title = ? where id = ?",
@@ -161,9 +162,9 @@ exports.adminCommentPost = function (req, res) {
         function (err, admin) {
             if (err) {
                 console.log(err);
-                res.render("errorPage", {pageTitle:'Error'});
-            }else{
-                if (admin[0].is_admin == 0){ // normal users
+                res.render("errorPage", {pageTitle: 'Error'});
+            } else {
+                if (admin[0].is_admin == 0) { // normal users
                     res.send("401");
                 } else { // for admin
                     console.log("admin here");
@@ -179,5 +180,6 @@ exports.adminCommentPost = function (req, res) {
 exports.adminCommentGET = function (req, res) {
     DB.execQuery("SELECT * from Complaint where id = ?", [req.params.id], function (err, comp) {
         res.render("complain/complainAdminView", {complain : comp[0], pageTitle:'Complains', layout : 'admin-main'});
+
     });
 }
