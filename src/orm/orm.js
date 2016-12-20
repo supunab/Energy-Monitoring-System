@@ -103,7 +103,7 @@ export default class orm {
         else {
             let sql = "SELECT " + Object.keys(model).join() + " from " + table +
                 " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ")";
-
+            console.log(sql);
             if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
                 sql += " LIMIT" + options["limit"];
             }
