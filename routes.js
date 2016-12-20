@@ -13,7 +13,7 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
-        res.render('breakdown/update_status');
+        res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
 
@@ -26,6 +26,7 @@ module.exports = function (app, passport) {
         // render the page and pass in any flash data if it exists
         res.render('signup', {message: req.flash('signupMessage')});
     });
+
 
     app.get('/logout', function (req, res) {
         req.logout();

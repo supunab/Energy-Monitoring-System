@@ -7,6 +7,7 @@ exports.execQuery = function (sql, param, cb) {
         host: dbConfig.host,
         user: dbConfig.user,
         password: dbConfig.password,
-        database: dbConfig.database
+        database: dbConfig.database,
+        multipleStatements: true
     }).query(sql, param,cb);
 };
