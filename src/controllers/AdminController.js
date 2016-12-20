@@ -188,3 +188,11 @@ function diff(from, to) {
 }
 
 
+exports.viewPowerCut = function (req, res) {
+    let sql = "SELECT PowerCut.starting_date,PowerCut.ending_date,PowerCut.description from " +
+        "PowerCut ORDER BY PowerCut.id DESC LIMIT 10 ;";
+    DB.execQuery(sql, function (err, result) {
+        console.log(err, result);
+        res.render('admin/powerCutView', {layout: 'admin-main', results: result})
+    })
+};
