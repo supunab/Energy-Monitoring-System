@@ -3,12 +3,12 @@
     <ul class="collapsible">
         {{#each complains}}
         <li>
-            <div class="collapsible-header">{{this.title}}{{#if this.first_name}} - {{this.first_name}} {{this.last_name}}{{/if}}</div>
+            <div class="collapsible-header blue lighten-5">{{this.title}}{{#if this.first_name}} - {{this.first_name}} {{this.last_name}}{{/if}}</div>
             <div class="collapsible-body">
                 <p>{{this.description}}
                 {{#if this.comment}}
                     <hr>
-                        {{this.comment}}
+                    <p>Admin Comment :- {{{this.comment}}}</p>
                 {{else}}
                     <p style="margin-left:50px"><a href="/complain/admin/{{this.id}}">Add Comment >></a></p>
                 {{/if}}

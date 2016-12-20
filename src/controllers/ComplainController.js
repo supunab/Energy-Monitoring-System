@@ -47,7 +47,6 @@ exports.getIndex = function (req, res) {
                         "u.last_name AS last_name FROM Complaint AS c JOIN User AS u ON c.user_id = u.id",[],
                         function (err, complains) {
                             res.render('complain/index', {complains : complains});
-                            console.log("amdin", complains);
                         })
                 }
             }
@@ -104,7 +103,6 @@ exports.editComplainGET = function (req, res) {
                     console.log(err);
                     res.render("errorPage");
                 }else{
-                    console.log(Cmpl);
                     res.render('complain/edit',{message: [], value: Cmpl});
                 }
             });
@@ -125,8 +123,6 @@ exports.editComplainPOST = function (req, res) {
         if (e){
             res.render('complain/edit', {message: err, value: req.body});
         }else{
-            console.log(req.body);
-
             DB.execQuery("UPDATE Complaint SET comment = ?," +
                 "comp_type = ?, description = ?, title = ? where id = ?",
                 ["", req.body.category, req.body.description,
@@ -171,9 +167,10 @@ exports.adminCommentPost = function (req, res) {
                 if (admin[0].is_admin == 0){ // normal users
                     res.send("401");
                 }else{ // for admin
+                    console.log("admin here");
                     DB.execQuery("UPDATE Complaint SET comment = ? where id = ?",[req.body.comment, req.params.id],
                         function (e, result) {
-                            res.redirect('/complain/')
+                            res.redirect('/complain/');
                         });
                 }
             }
