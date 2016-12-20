@@ -1,0 +1,20 @@
+
+
+<div class="row">
+    <div class="col s12 m4 l4 offset-m8 offset-l8" style="border-radius: 10px; border: 2px solid red;">
+        <table>
+            <thead>
+            <tr>
+                <th data-field="id">Power cut on this week</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each powercuts}}
+            <tr>
+                <td><i class="prefix mdi-notification-do-not-disturb red-text"></i>  {{this.area}} - {{this.time}}</td>
+            </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</div>

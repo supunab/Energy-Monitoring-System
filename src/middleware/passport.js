@@ -3,9 +3,11 @@ let LocalStrategy = require('passport-local').Strategy;
 
 // load up the user model
 import User from '../model/User'
+import Customer from '../model/Customer'
+import DB from '../controllers/DBController'
 
 // expose this function to our app using module.exports
-module.exports = function (passport) {
+module.exports = function (passport, app) {
 
     // =========================================================================
     // passport session setup ==================================================
@@ -64,17 +66,43 @@ module.exports = function (passport) {
                         // set the user's local credentials
                         newUser.email.set(email);
                         newUser.password.set(User.generateHash(password));
-                        newUser.first_name.set(req.body.first_name);
-                        newUser.last_name.set(req.body.last_name);
-                        newUser.user_name.set(req.body.user_name);
+                        newUser.customer_id.set(req.body.customer_id);
+                        let sql = "START TRANSACTION;" +
+                            "INSERT INTO Customer(first_name," +
+                            "last_name," +
+                            "id" +
+                            ")" +
+                            "VALUES(?,?,?);" +
 
-
+                            "INSERT INTO User(email," +
+                            "password," +
+                            "customer_id" +
+                            ") " +
+                            "VALUES(?,?,?);" +
+                            "COMMIT;";
                         // save the user
-                        newUser.save(function (err, result) {
-                            if (err)
-                                throw err;
-                            return done(null, newUser);
-                        });
+                        if (req.body.signupChioce == "new_customer") {
+                            DB.execQuery(sql,
+                                [req.body.first_name, req.body.last_name, req.body.customer_id >> 0, email, User.generateHash(password), req.body.customer_id >> 0],
+                                function (err, result) {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    else {
+                                        newUser.id.set(result[2].insertId);
+                                        return done(null, newUser);
+                                        app.locals.user = newUser.email.get();
+                                    }
+                                }
+                            )
+                        } else {
+                            newUser.save(function (err, result) {
+                                if (err)
+                                    throw err;
+                                app.locals.user = newUser.email.get();
+                                return done(null, newUser);
+                            });
+                        }
                     }
 
                 });
@@ -104,11 +132,13 @@ module.exports = function (passport) {
                 if (!user)
                     return done(null, false, req.flash('loginMessage', 'No user found.')); // req.flash is the way to set flashdata using connect-flash
                 let loggedin = new User();
+
                 loggedin.fromDB(user);
                 // if the user is found but the password is wrong
                 if (!loggedin.validPassword(password))
                     return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
                 // all is well, return successful user
+                app.locals.user = loggedin.email.get();
                 return done(null, loggedin);
             });
 

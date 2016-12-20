@@ -23,7 +23,7 @@ exports.postBreakdown=function (req,res) {
     let description = req.body.description;
     let finished = 0;
     let createdDate=new Date().toISOString().slice(0, 19).replace('T', ' ');
-    newBreakdown.createObject(userId,area,description,null,finished);
+    newBreakdown.createObject(userId, area, description, null, finished);
     newBreakdown.save(function (err,result) {
         if(err)
             throw err;
@@ -31,22 +31,22 @@ exports.postBreakdown=function (req,res) {
     });
 };
 
-exports.sortByFinished=function (req,res) {
-    Breakdown.find({'finished':1}, {limit: 20}, function (err, result) {
-        if(err)
+exports.sortByFinished = function (req, res) {
+    Breakdown.find({'finished': 1}, {limit: 20}, function (err, result) {
+        if (err)
             throw err;
-        if(result.size!=0){
-            res.render('viewBreakDowns',{array : result});
+        if (result.size != 0) {
+            res.render('viewBreakDowns', {array: result});
         }
     });
 };
 
-exports.sortByNotFinished=function (req,res) {
-    Breakdown.find({'finished':0}, {limit: 20}, function (err, result) {
-        if(err)
+exports.sortByNotFinished = function (req, res) {
+    Breakdown.find({'finished': 0}, {limit: 20}, function (err, result) {
+        if (err)
             throw err;
-        if(result.size!=0){
-            res.render('viewBreakDowns',{array : result});
+        if (result.size != 0) {
+            res.render('viewBreakDowns', {array: result});
         }
     });
 };

@@ -11,8 +11,8 @@ var express = require('express'),
     crypto = require('crypto'),
     flash = require('connect-flash'),
     path = require('path');
-require('./src/middleware/passport')(passport);
 var app = express();
+require('./src/middleware/passport')(passport, app);
 app.use(cookieParser('energymonitor'));
 app.use(cookieSession({
     keys: ['key1', 'key2']
@@ -48,7 +48,7 @@ var handlebars = require('express-handlebars').create({
             return day;
         },
         formatDate: function (date) {
-            let day = new Date(date);
+            var day = new Date(date);
             return day.getFullYear() + '-' + (day.getMonth() + 1) + '-' + day.getDate() + " " + day.getUTCHours() + ':' + day.getUTCMinutes();
         },
         relativeTime: function (options) {
@@ -87,6 +87,9 @@ var handlebars = require('express-handlebars').create({
             } else {
                 return 'Not Valid';
             }
+        },
+        user: function () {
+            return app.locals.user;
         }
     }
 });

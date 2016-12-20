@@ -26,6 +26,7 @@ module.exports = function (app, passport) {
         res.render('signup', {message: req.flash('signupMessage')});
     });
 
+
     app.get('/logout', function (req, res) {
         req.logout();
         res.redirect('/');
