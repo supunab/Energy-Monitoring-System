@@ -92,7 +92,7 @@ export default class orm {
             }
 
             if (options["limit"] !== undefined && isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
+                sql += " LIMIT " + options["limit"];
             }
 
             sql += ";";
@@ -107,7 +107,7 @@ export default class orm {
                 " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ")";
             console.log(sql);
             if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
-                sql += " LIMIT" + options["limit"];
+                sql += " LIMIT " + options["limit"];
             }
 
             if (options["orderby"] !== undefined) {
