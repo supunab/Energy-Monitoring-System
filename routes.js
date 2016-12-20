@@ -44,7 +44,7 @@ module.exports = function (app, passport) {
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {needAngular : " true"})});
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {layout: 'admin-main', needAngular : true})});
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -78,7 +78,7 @@ module.exports = function (app, passport) {
     });
 
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : " true"})});
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : true})});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
