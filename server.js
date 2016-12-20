@@ -36,7 +36,7 @@ var handlebars = require('express-handlebars').create({
     helpers: {
         getType : function (re) {
             if(re==0) return false;
-            else return true;
+            else return block(this);
         },
         getDate : function (date) {
             var day=date.toString().split(" ").slice(0,5).join(' ');
