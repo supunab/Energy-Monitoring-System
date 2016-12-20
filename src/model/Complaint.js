@@ -12,6 +12,7 @@ export default class Complaint extends Model {
         this.user_id = new field.ForeignKeyField(User);
         this.title = new field.CharField(200, true,);
         this.description = new field.TextField(true);
+        this.comment = new field.TextField(true);
         this.comp_type = new field.CharField(20, true);
         this.created_at = new field.DateTimeField(true, "CURRENT_TIMESTAMP");
     }
