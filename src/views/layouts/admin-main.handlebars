@@ -6,7 +6,7 @@
     {{>admintopnav}}
 </head>
 
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini" ng-app="energy-monitor">
 <div class="wrapper">
     {{>adminnavbar}}
 
@@ -15,6 +15,8 @@
         <section class="content-header">
             {{{adminheader}}}
         </section>
+
+        {{>adminscripts}}
 
         <!-- Main content -->
         <section class="content">
@@ -32,7 +34,6 @@
         <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
         reserved.
     </footer>
-
-    {{>adminscripts}}
+</div>
 </body>
 </html>

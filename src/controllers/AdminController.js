@@ -122,8 +122,26 @@ function diff(from, to) {
 
 
 exports.addNewConnection = function(req, res, next){
-    let connection = new Connection();
-    connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, "")
+    DB.execQuery("SELECT id from area where name=?;",req.body.area, function(err, data){
+        if (err){
+            console.log(err);
+            return next(err);
+        }
 
+        let area_id = data[0].id;
+
+        let connection = new Connection();
+        connection.createObject(req.body.account_no, req.body.address1, req.body.address2, req.body.addressStreet, req.body.city, req.body.district, req.body.connection_type, req.body.customer_id, area_id );
+
+        connection.save(function(err){
+            if (err){
+                console.log(err);
+            }
+
+            res.status(200);
+            res.end("Okay");
+        });
+
+    });
 };
 

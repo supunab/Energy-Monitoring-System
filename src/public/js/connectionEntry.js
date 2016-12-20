@@ -1,4 +1,4 @@
-let app = angular.module('energy-monitor',[])
+let app = angular.module('energy-monitor',[]);
 
 $("select").select2();
 
@@ -19,10 +19,19 @@ app.controller("ConnectionEntryCtrl",[
         $scope.allAreas = [];
 
         $http.get('/areas').success(function(data){
-            for(var i=0; i <data.length; i++){
+            for(let i=0; i <data.length; i++){
                 $scope.allAreas.push(data[i].name);
             }
         });
+
+        // Load all the customers from the database
+        $scope.allCustomers = [];
+
+        $http.get("/api/get/customers")
+            .success(function(data){
+                angular.copy(data,$scope.allCustomers);
+            });
+
 
         $scope.publish = function(){
             let data = {
@@ -34,18 +43,19 @@ app.controller("ConnectionEntryCtrl",[
                 district : $scope.selDistrict,
                 connection_type : $scope.connectionType,
                 area : $scope.selArea,
-                customer_id : "941401406"
+                customer_id : $scope.selCustomer
             };
-
-            console.log(data);
 
             $http.post('/addNewConnection/',data)
                 .success(function (data) {
                     console.log("added successfully!");
+                    alert("Submit success!");
+                    // Refresh the page after successful adding
+                    document.location.reload();
                 })
                 .error(function(err){
                     console.log("An error occured : "+err);
-                })
+                });
         };
     }
 ]);

@@ -44,7 +44,7 @@ module.exports = function (app, passport) {
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut')});
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {needAngular : " true"})});
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -78,7 +78,7 @@ module.exports = function (app, passport) {
     });
 
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : " true"})});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
     app.get('/api/get/consumption', AdminController.powerConsumption);
     app.get('/api/get/areas', GeneralController.getAllAreas);
@@ -89,8 +89,9 @@ module.exports = function (app, passport) {
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
     // Add new connection - data entry
-    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry")});
+    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry",  {layout: 'admin-main' , needAngular : true})});
     app.post('/addNewConnection', AdminController.addNewConnection);
+    app.get('/api/get/customers', GeneralController.getAllCustomers);
 
 };
 
