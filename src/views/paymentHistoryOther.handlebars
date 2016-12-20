@@ -1,0 +1,61 @@
+<div class="container" ng-controller="PaymentHistoryOtherCtrl">
+    <div class="row">
+        <div class="col m6">
+            <h3 class="page-header">Payment History</h3>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col m4 offset-m4 input-field">
+            <input id="connectionId" type="text" ng-model="connectionId">
+            <label for="connectionId">Connection ID</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col m1 input-field">
+            <label for="startDate">From</label>
+        </div>
+        <div class="col m4 input-field">
+            <input id="startDate" ng-model="start_d" type="date">
+        </div>
+        <div class="col m1 offset-m2 input-field">
+            <label for="endDate">To</label>
+        </div>
+        <div class="col m4 input-field">
+            <input id="endDate" ng-model="end_d" type="date">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col m4 offset-m5">
+            <a class="waves-effect waves-light btn" href="" ng-click="updateTable()">Filter</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col m10 offset-m1">
+            <div class="row">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr ng-repeat="record in records track by $index">
+                        <td>[[record.pay_date.substring(0,10)]]</td>
+                        <td>[[record.amount]]</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/paymentHistoryOther.js"></script>

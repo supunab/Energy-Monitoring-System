@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="css/select2-mat-fix.css" type="text/css">
+
 <div class="container" ng-controller="PowerCutController">
     <div class="row">
         <div class="col m12">
@@ -43,13 +45,17 @@
 
             <div class="row">
                 <div class="input-field col m5 offset-m3">
-                    <input ng-model="newArea" id="area" type="text" list="areas" placeholder="Enter affected areas" />
-                    <datalist id="areas">
-                        <div ng-repeat="area in allAreas track by $index">
-                            <option>[[area]]</option>
-                        </div>
-                    </datalist>
                     <label for="area">Area</label>
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="input-field col m5 offset-m3">
+                    <select name="area" ng-model="newArea" id="area" type="text">
+                        <option ng-repeat="area in allAreas track by $index">[[area]]</option>
+                    </select>
                 </div>
 
                 <div class="col m1 section"><button onclick="return false;" ng-click="addNewArea()" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></button></div>

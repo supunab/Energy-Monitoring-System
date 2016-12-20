@@ -52,7 +52,6 @@ exports.getIndex = function (req, res) {
                 }
             }
         });
-// return all complain objects only for admins
 };
 
 exports.CreateComplainGET = function (req, res) {

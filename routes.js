@@ -6,6 +6,10 @@ const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
 
+const PaymentController = require("./src/controllers/PaymentController");
+
+const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
+
 
 module.exports = function (app, passport) {
     app.get('/', function (req, res) {
@@ -29,7 +33,7 @@ module.exports = function (app, passport) {
     });
 
     app.post('/login', passport.authenticate('local-login', {
-        successRedirect: '/breakdownreport', // redirect to the secure profile section
+        successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/login', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
@@ -49,32 +53,10 @@ module.exports = function (app, passport) {
     // Get all areas
     app.get('/areas', GeneralController.getAllAreas);
 
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
-
-    //Complains
-    app.get("/complain", ComplainController.getIndex);
-    app.get("/complain/create", ComplainController.CreateComplainGET);
-    app.post("/complain/create", ComplainController.createComplainPOST);
-    app.get("/complain/:id", ComplainController.getShow);
-    app.get('/complain/edit/:id', ComplainController.editComplainGET);
-    app.post('/complain/edit', ComplainController.editComplainPOST);
-    app.post("/complain/delete/:id", ComplainController.deletePOST);
+    // Payment History for registered users
+    app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
+    app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
+    app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
 
     //Complains
     app.get("/complain", ComplainController.getIndex);
@@ -91,7 +73,7 @@ module.exports = function (app, passport) {
     app.get("/breakdownreport", (req, res) => {res.render('breakdown/report');});
     app.get("/breakdownupdate", (req, res) => {res.render('breakdown/update_status');});
 
-    app.get('/connectionRequest', isLoggedIn, ConnectionController.getRequest);
+    app.get('/connectionRequest', ConnectionController.getRequest);
 
     app.post('/connectionRequest',ConnectionController.postRequest);
   
@@ -102,11 +84,17 @@ module.exports = function (app, passport) {
     app.get('/breakdownView',BreakDownController.getRequest);
     app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
+    app.get('/api/get/consumption', AdminController.powerConsumption);
+    app.get('/api/get/areas', GeneralController.getAllAreas);
+
+    app.get('/addPayments',PaymentController.getPaymentPage);
+    app.post('/paymentPost',PaymentController.postPayment);
 
 
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
+    // For unregistered users check payment history
+    app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
+    app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
-    app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.get("*", PageController.errorPage404);
 };

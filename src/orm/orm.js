@@ -27,11 +27,12 @@ export default class orm {
 
         }
         console.log(values, keys);
-        this.connection.query(
-            "INSERT INTO " + table +
+        let sql = "INSERT INTO " + table +
             "( " + keys.join() + " ) " +
             " VALUES " + "(" +
-            values.join() + ")",
+            values.join() + ")";
+        this.connection.query(
+            sql,
             callback);
     }
 
@@ -41,10 +42,13 @@ export default class orm {
             val += '(' + values[i].join() + "),"
         }
         val = val.substring(0, val.length - 1);
-        this.connection.query(
-            "INSERT INTO " + table +
+        let sql = "INSERT INTO " + table +
             "( " + columns.join() + " ) " +
-            " VALUES " + val,
+            " VALUES " + val;
+        // sql = this.connection.escape(sql);
+        console.log(sql);
+        this.connection.query(
+            sql,
             callback);
     }
 
@@ -54,47 +58,66 @@ export default class orm {
         for (let key in param) {
             vals.push("'" + param[key] + "'");
         }
-        console.log("SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
+        let sql = "SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");";
+        console.log(sql);
         this.connection.query(
-            "SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
-            , function (error, results, fields) {
+            sql,
+            function (error, results, fields) {
                 //onsole.log(error, results, fields);
-                if (error){
+                if (error) {
                     console.log(error);
-                }else{
+                } else {
                     callback(error, results[0]);
                 }
             });
     }
 
-    find(model, param, callback) {
+    find(model, param, options, callback) {
         let table = model.constructor.name;
         let vals = [];
         for (let key in param) {
-           vals.push("'" + param[key] + "'");
+            vals.push("'" + param[key] + "'");
         }
-        console.log("SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");");
-        if (Object.keys(param).length === 0 && Object.keys(param)[0]!== "size") {
-            console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table + ";");
+
+        if (Object.keys(param).length === 0) {
+            let sql = "SELECT " + Object.keys(model).join() + " from " + table;
+            if (options["limit"] !== undefined && isNumeric(options["limit"])) {
+                sql += " LIMIT" + options["limit"];
+            }
+
+            if (options["orderby"] !== undefined) {
+                sql += " ORDER BY " + options["orderby"];
+
+                if (options["order"] !== undefined) {
+                    sql += " " + options["order"];
+                }
+            }
+            sql += ";";
             this.connection.query(
-                "SELECT " + Object.keys(model).join() + " from " + table + ";"
+                sql
                 , function (error, results, fields) {
                     callback(error, results);
                 });
-        }else if(Object.keys(param)[0]=== "size"){
-            console.log("Executed Query: "+"SELECT " + Object.keys(model).join() + " from " + table +" ORDER BY id DESC LIMIT "+ param['size'] +";");
-            this.connection.query("SELECT "+Object.keys(model).join() + " from " + table + " ORDER BY id DESC LIMIT "+ param['size'] +";"
-                , function (error,results,fields) {
-                    callback(error,results);
-                });
         }
         else {
+            let sql = "SELECT " + Object.keys(model).join() + " from " + table +
+                " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ")";
+
+            if (options["limit"] !== undefined && $.isNumeric(options["limit"])) {
+                sql += " LIMIT" + options["limit"];
+            }
+
+            if (options["orderby"] !== undefined) {
+                sql += " ORDER BY " + options["orderby"];
+
+                if (options["order"] !== undefined) {
+                    sql += " " + options["order"];
+                }
+            }
+            sql += ";";
             this.connection.query(
-                "SELECT " + Object.keys(model).join() + " from " + table +
-                " WHERE " + "(" + Object.keys(param).join() + " )" + " = (" + vals.join() + ");"
+                sql
                 , function (error, results, fields) {
                     callback(error, results);
                 });
@@ -103,15 +126,17 @@ export default class orm {
 
     findById(model, id, callback) {
         let table = model.constructor.name;
-        console.log("SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE id = " + id + ";");
-        console.log("this is id", id);
+        let sql = "SELECT " + Object.keys(model).join() + " from " + table +
+            " WHERE id = " + id + ";";
+        //console.log(sql);
         this.connection.query(
-            "SELECT " + Object.keys(model).join() + " from " + table +
-            " WHERE id = " + id + ";"
-            , function (error, results, fields){
+            sql,
+            function (error, results, fields) {
                 callback(error, results[0]);
             });
     }
 
+}
+function isNumeric(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
 }
