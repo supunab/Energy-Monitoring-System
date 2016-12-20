@@ -16,6 +16,7 @@ module.exports = function (app, passport) {
         res.render('index');
         //res.redirect('/breakdownView'); //breakdownView
     });
+
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
     });
@@ -39,17 +40,17 @@ module.exports = function (app, passport) {
     }));
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/', // redirect to the secure profile section
+        successRedirect: '/home', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
 
+    //user dash board
+    app.get('/home', (req, res) => {res.render('user-dashboard')});
 
     // For admin
     // Publish Power Cuts
-    app.get("/powercuts", (req, res) => {
-        res.render('admin/publishPowerCut', {layout: 'admin-main'})
-    });
+    app.get("/powercuts", (req, res) => {res.render('admin/publishPowerCut', {layout: 'admin-main', needAngular : true})});
     app.post("/newpowercut", AdminController.addPowerCut);
 
     // Get all areas
@@ -85,7 +86,7 @@ module.exports = function (app, passport) {
     app.get('/admin/powercuts', AdminController.viewPowerCut);
 
     app.get('/breakdownView',BreakDownController.getRequest);
-    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory')});
+    app.get('/paymentHistoryRegistered', (req, res) => {res.render('registeredUser/paymentHistory', {needAngular : true})});
     app.post('/breakdownPost',BreakDownController.postBreakdown);
 
     app.get('/api/get/consumption', AdminController.powerConsumption);
@@ -99,8 +100,19 @@ module.exports = function (app, passport) {
     app.get('/paymentHistoryOther', PaymentHistoryController.renderOtherView);
     app.get('/checkConnection/:connectionID', PaymentHistoryController.checkConnectionId);
 
-    app.get('/sortByNotFinished', BreakDownController.sortByNotFinished);
-    app.get('/sortByFinished', BreakDownController.sortByFinished);
+    // Add new connection - data entry
+    app.get('/addNewConnection', (req, res) => {res.render("admin/connectionEntry",  {layout: 'admin-main' , needAngular : true})});
+    app.post('/addNewConnection', AdminController.addNewConnection);
+    app.get('/api/get/customers', GeneralController.getAllCustomers);
+
+    app.get('/sortByNotFinished',BreakDownController.sortByNotFinished);
+    app.get('/sortByFinished',BreakDownController.sortByFinished);
+
+
+
+    app.post('/updateBreakDown/:id',BreakDownController.updateBreakDown);
+
+    app.get('/getBreakDown/:id',BreakDownController.getBreakDown);
 
     app.get("*", PageController.errorPage404);
 

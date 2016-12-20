@@ -1,89 +1,109 @@
-<link rel="stylesheet" href="css/select2-mat-fix.css" type="text/css">
-<div>
 <div class="container" ng-controller="PowerCutController">
     <div class="row">
-        <div class="col-md-12">
-            <h3>Publish Power Cut</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <form class="col-md-12" action="">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label for="from_datetime">From</label>
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3>Publish Power Cut</h3>
                 </div>
 
-                <div class="form-group col-md-6">
-                    <label for="to_datetime">To</label>
-                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="from_datetime1">From</label>
 
-            </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="date" class="form-control pull-right" id="from_datetime1" ng-model="start_d">
+                                    </div>
+                                </div>
 
-            <div class="row">
-                <div class="form-group col-md-3">
-                    <input id="from_datetime1" type="date" ng-model="start_d" class="form-control"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <input id="from_datetime2" type="time" ng-model="start_t" class="form-control"/>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <input id="to_datetime3" type="date" ng-model="to_d" class="form-control"/>
-                </div>
-                <div class="form-group col-md-3">
-                    <input id="to_datetime" type="time" ng-model="to_t" class="form-control"/>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-12">
-                    <label for="description">Description</label>
-                    <textarea ng-model="description" id="description" length="45" class="form-control"></textarea>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="form-group col-md-5 col-md-offset-3">
-                    <label for="area">Area</label>
-                </div>
-
-            </div>
+                                <div class="col-md-2">
+                                    <div class="input-group time">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <input type="time" class="form-control pull-right" id="from_datetime2" ng-model="start_t">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
 
-            <div class="row">
-                <div class="form-group col-md-5 col-md-offset-3">
-                    <select name="area" ng-model="newArea" id="area" type="text">
-                        <option ng-repeat="area in allAreas track by $index">[[area]]</option>
-                    </select>
-                </div>
+                    </div>
 
-                <div class="col m1 section"><button onclick="return false;" ng-click="addNewArea()" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">add</i></button></div>
-            </div>
+                    <div class="form-group">
+                        <label for="to_datetime">To</label>
 
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <ul class="collection">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="input-group date">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="date" class="form-control pull-right" id="to_datetime3" ng-model="to_d">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div class="input-group time">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-clock-o"></i>
+                                        </div>
+                                        <input type="time" class="form-control pull-right" id="to_datetime" ng-model="to_t">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="max-width: 65%">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" placeholder="Enter Description" ng-model="description" id="description" class="materialize-textarea" length="45"></textarea>
+                    </div>
+
+                    <div class="form-group" style="max-width: 65%">
+                        <label for="area">Area</label>
+                    </div>
+
+                    <div class="container">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <select name="area" ng-model="newArea" id="area" class="form-control">
+                                    <option ng-repeat="area in allAreas track by $index">[[area]]</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                            <!--add button not responsive!!-->
+                            <button type="button" ng-click="addNewArea()" onclick="return false;" class="btn btn-warning btn-sm" style="height: 28px">+</button>
+                        </div>
+                    </div>
+
+                    <ul class="list-group">
                         <div ng-repeat="area in areas track by $index">
-                            <li class="collection-item">
-                                <div>[[area]]<a href="#!" class="secondary-content"><i ng-click="removeArea($index)"
-                                                                                       class="fa fa-close"
-                                                                                       style="color:red;">not_interested</i></a>
+                            <li class="list-group-item" style="width: 70%;margin-left: 2%;">
+                                <div>
+                                    [[area]]
+                                    <!--<button class="btn btn-google btn-xs" ng-click="removeArea($index)">-</button>-->
+                                    <a class="pull-right" href="" data-placement="left" title="" style="color: rgb(255, 0, 0); font-size: 35px; margin-top: -3.2%;">×</a>
                                 </div>
                             </li>
                         </div>
-
                     </ul>
                 </div>
-            </div>
 
-            <div class="row">
-                <div class="col-md-3 col-md-offset-4">
-                    <a class="waves-effect waves-light btn blue" ng-click="publish()">Publish</a>
+                <div class="box-footer">
+                    <button type="button" class="btn btn-primary" ng-click="publish()">Submit</button>
                 </div>
+
             </div>
-        </form>
+        </div>
+
     </div>
 </div>
 </div>

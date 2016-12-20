@@ -73,7 +73,11 @@ app.controller("PowerCutController",[
             console.log(powerCut);
 
             // Send request
-            $http.post("/newpowercut", powerCut);
+            $http.post("/newpowercut", powerCut)
+                .success(function(){
+                    alert("Submit success!");
+                    document.location.reload();
+                })
 
         };
 
