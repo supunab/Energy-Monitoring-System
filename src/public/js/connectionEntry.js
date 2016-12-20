@@ -11,9 +11,9 @@ app.controller("ConnectionEntryCtrl", [
     "$scope",
     "$http",
     function ($scope, $http) {
-        $scope.districts = ["Kandy", "Colombo", "Rathnapura", "Badulle"];
+        $scope.districts = "Kandy.Matale.Nuwara Eliya.Ampara.Batticaloa.Trincomalee.Anuradhapura.Polonnaruwa.Jaffna.Kilinochchi.Mannar.Mullaitivu.Vavuniya".split(".");
 
-        $scope.connectionTypes = ["Temple", "School", "Government", "Home", "Industry"];
+        $scope.connectionTypes = ['Enterprises', 'Houses', 'Government Organizations', 'Religious Establishments'];
 
         // Load all the areas from the database
         $scope.allAreas = [];
