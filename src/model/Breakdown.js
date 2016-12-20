@@ -8,16 +8,15 @@ export default class Breakdown extends Model {
     constructor(){
         super();
         this.id=new field.IntegerField(null, true, null, true, true);
-        this.userId = new field.ForeignKeyField(User);
+        this.user_id = new field.ForeignKeyField(User);
         this.area = new field.ForeignKeyField(Area);
         this.description=new field.CharField(255);
         this.status=new field.CharField(255);
         this.finished=new field.BooleanField(true,false);
         this.created_at = new field.DateTimeField(true, "CURRENT_TIMESTAMP");
     }
-    createObject(userId,area,description,status,finished,date){
+    createObject(userId,area,description,status,finished){
         this.area.set(area);
-        this.created_at.set(date);
         this.user_id.set(userId);
         this.description.set(description);
         this.status.set(status);
