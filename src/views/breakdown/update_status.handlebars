@@ -2,7 +2,7 @@
 <ul>
     <li>
         <h5>Area :</h5>
-        <dt style="margin-left:30px;">{{breakDown.area}}</dt>
+        <dt style="margin-left:30px;">{{breakDown.name}}</dt>
     </li>
     <li>
         <h5>Description :</h5>
@@ -11,7 +11,7 @@
 </ul>
 <div class="light-blue lighten-4">
     <div class="row">
-        <form class="col s12" action="/updateBreakDown/{{breakDown.id}}" method="post">
+        <form class="col s12" action="/updateBreakDown/{{breakDown.id}}" name="update" method="post" onsubmit="return validateUpdate()">
             <div class="row">
                 <div class="input-field col s12">
                     <textarea id="remarks" class="materialize-textarea" name="remarks">{{breakDown.status}}</textarea>
@@ -33,3 +33,4 @@
     </div>
 
 </div>
+<script src="/js/breakDownValidator.js"></script>
