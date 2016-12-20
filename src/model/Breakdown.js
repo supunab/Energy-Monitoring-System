@@ -17,7 +17,7 @@ export default class Breakdown extends Model {
     }
     createObject(userId,area,description,status,finished,date){
         this.area.set(area);
-        this.dateTime.set(date);
+        this.created_at.set(date);
         this.user_id.set(userId);
         this.description.set(description);
         this.status.set(status);

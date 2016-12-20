@@ -48,3 +48,24 @@ exports.getPaymentHistory = function(req, res, next){
         res.jsonp(data);
     });
 };
+
+
+exports.renderOtherView = function(req, res, next){
+    res.render("paymentHistoryOther");
+};
+
+exports.checkConnectionId = function(req, res, next){
+    DB.execQuery("SELECT account_no FROM connection WHERE account_no=?", req.params.connectionID, function(err, data){
+        if (err){
+            console.log(err);
+            return next(err);
+        }
+
+        if (data.length == 0){
+            res.jsonp({available : false});
+        }else{
+            res.jsonp({available : true});
+        }
+
+    });
+};
