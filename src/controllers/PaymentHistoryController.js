@@ -2,7 +2,7 @@ import DB from "../controllers/DBController"
 
 exports.getConnections = function(req, res, next){
     console.log("SELECT Customer.id,account_no FROM Customer JOIN Connection on Customer.id=Connection.customer_id HAVING id="+req.params.customer);
-    DB.execQuery("SELECT Customer.id,account_no FROM Customer JOIN Connection on Customer.id=Connection.customer_id HAVING id=?;", req.params.customer,function(err, result){
+    DB.execQuery("SELECT User.id, a.account_no AS account_no FROM user JOIN (SELECT Customer.id,account_no FROM Customer JOIN Connection on Customer.id=Connection.customer_id) as a on User.customer_id = a.id having User.id=?;", req.params.customer,function(err, result){
         if (err){
             console.log(err);
             return next(err);
