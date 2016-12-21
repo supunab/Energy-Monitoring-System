@@ -249,3 +249,49 @@ exports.addBillPOST = function (req, res) {
         }
     })
 };
+
+exports.getConnectionReq = function(req, res, next){
+    DB.execQuery("SELECT * FROM connectionrequest where status='' ORDER BY created_at;", function(err, data){
+        if(err){
+            console.log(err);
+            return next(err);
+        }
+
+        res.jsonp(data);
+        res.status(200);
+    })
+};
+
+exports.rejectConnection = function(req, res, next){
+    let id = req.params.connection;
+
+    DB.execQuery("UPDATE connectionrequest SET status='Rejected' where id=?;", id, function(err){
+        if (err){
+            console.log(err);
+            return next(err);
+        }
+        res.status(200);
+    });
+};
+
+exports.acceptConnection = function(req, res, next){
+    DB.execQuery("UPDATE connectionrequest SET status='Success' where id=?;", req.body.data.id, function (err) {
+        if (err){
+            console.log(err);
+            return next(err);
+        }
+
+        let data = req.body.data;
+
+        // DB.execQuery("INSERT INTO connection (account_no, address_line1, address_line2, address_street, address_city, address_district, connection_type, customer_id, area_id) values" +
+        //     "(?,?,?,?,?,?,?,?,?);", req.body.accountNumber, data.address1, data.address2, data.street, data.city, data.district, "Home", data.userId, 1, function(err){
+        //     if (err){
+        //         console.log(err);
+        //         return next(err);
+        //     }
+        //
+        //     res.status(200);
+        //
+        // });
+    });
+};

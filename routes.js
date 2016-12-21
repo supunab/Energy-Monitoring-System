@@ -58,9 +58,12 @@ module.exports = function (app, passport) {
     app.get('/areas', GeneralController.getAllAreas);
 
     // For connection request approval
-    app.get("/admin/connectionRequest", (res, req) => {
-        res.render("admin/acceptConnectionRequest");
+    app.get("/admin/connectionRequest", (req, res) => {
+        res.render("admin/acceptConnectionRequest", {layout: 'admin-main', needAngular: true});
     });
+    app.get("/admin/getConnectionRequest", AdminController.getConnectionReq);
+    app.put("/admin/rejectConnection/:connection", AdminController.rejectConnection);
+    app.post("/admin/acceptConnection", AdminController.acceptConnection)
 
     // Payment History for registered users
     app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
