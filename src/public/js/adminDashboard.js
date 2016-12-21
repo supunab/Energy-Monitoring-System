@@ -19,7 +19,7 @@ $(document).ready(function () {
             console.log(result);
             $("#area").select2({
                 data: temp,
-                maximumSelectionLength: connections.length - 1
+                maximumSelectionLength: areas.length - 1
             });
         }
     });
