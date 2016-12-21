@@ -1,0 +1,45 @@
+<div class="box box-primary" style="max-width: 70%">
+    <div class="box-header with-border">
+        <h3 class="box-title">Add New Connection</h3>
+    </div>
+    {{#if message.length}}
+        <div class="callout callout-info">
+            <h4>{{message}}</h4>
+        </div>
+    {{/if}}
+
+    <form role="form" action="/admin/addbillPOST" method="post">
+        <div class="box-body">
+            <div class="form-group" style="max-width: 50%">
+                <label for="connection_id">Connection ID</label>
+                <select name="connection_id" class="form-control" id="connection_id">
+                </select>
+            </div>
+
+            <div class="form-group" style="max-width: 50%">
+                <label for="starting_date">Starting Date</label>
+                <input name="starting_date" type="date" class="form-control">
+            </div>
+
+            <div class="form-group" style="max-width: 50%">
+                <label for="ending_date">Ending Date</label>
+                <input name="ending_date" type="date" class="form-control">
+            </div>
+
+            <div class="form-group" style="max-width: 50%">
+                <label for="energy_consumption">Energy Consumption</label>
+                <input class="form-control" placeholder="Energy Consumption" name="energy_consumption" type="number">
+            </div>
+
+            <div class="form-group" style="max-width: 50%">
+                <label for="amount">Bill Amount</label>
+                <input name="amount" class="form-control" type="number" placeholder="Bill Amount">
+            </div>
+        </div>
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+<script src="/js/addBill.js"></script>

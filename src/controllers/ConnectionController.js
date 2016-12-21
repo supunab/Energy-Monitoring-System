@@ -15,7 +15,7 @@ exports.postRequest = function (req, res) {
     let street = req.body.street;
     let city=req.body.city;
     let district=req.body.district;
-    newConnectionRequest.createObject(userId,telephone,address1,address2,street,city,district);
+    newConnectionRequest.createObject(userId,telephone,"",address1,address2,street,city,district);
     newConnectionRequest.save(function (err,result) {
         if(err)
             throw err;

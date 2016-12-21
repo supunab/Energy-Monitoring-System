@@ -299,11 +299,11 @@
             text: 'c'
         }];
 
-        connections = [{id: "enterprises", text: 'Enterprises'}, {
-            id: "houses",
+        connections = [{id: "Enterprises", text: 'Enterprises'}, {
+            id: "Houses",
             text: 'Houses'
-        }, {id: "government organizations", text: 'Government Organizations'}, {
-            id: "religious establishments",
+        }, {id: "Government Organizations", text: 'Government Organizations'}, {
+            id: "Religious Establishments",
             text: 'Religious Establishments'
         }];
 
@@ -355,7 +355,7 @@
             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
             //Boolean - whether to make the chart responsive
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             datasetFill: false
         };
 

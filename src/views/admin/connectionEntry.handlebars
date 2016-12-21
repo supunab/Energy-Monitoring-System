@@ -1,9 +1,5 @@
-<div class="box box-primary" style="max-width: 70%" ng-controller="ConnectionEntryCtrl" >
+<div class="box box-primary" style="max-width: 70%" ng-controller="ConnectionEntryCtrl">
     <form>
-        <!--<div class="box-header with-border">-->
-            <!--<h3>Add New Connection</h3>-->
-        <!--</div>-->
-
         <div class="box-header with-border">
             <h3 class="box-title">Add New Connection</h3>
         </div>
@@ -12,22 +8,26 @@
             <div class="box-body">
                 <div class="form-group" style="max-width: 50%">
                     <label for="accountNo">Account Number</label>
-                    <input id="accountNo" type="text" ng-model="accountNo" class="form-control" placeholder="Enter Account Number">
+                    <input id="accountNo" type="text" ng-model="accountNo" class="form-control"
+                           placeholder="Enter Account Number">
                 </div>
 
                 <div class="form-group" style="max-width: 50%">
                     <label for="address1">Address Line-1</label>
-                    <input id="address1" type="text" class="form-control" ng-model="address1" placeholder="Address Line 1">
+                    <input id="address1" type="text" class="form-control" ng-model="address1"
+                           placeholder="Address Line 1">
                 </div>
 
                 <div class="form-group" style="max-width: 50%">
                     <label for="address2">Address Line-2</label>
-                    <input id="address2" type="text" class="form-control" ng-model="address2" placeholder="Address Line 2">
+                    <input id="address2" type="text" class="form-control" ng-model="address2"
+                           placeholder="Address Line 2">
                 </div>
 
                 <div class="form-group" style="max-width: 50%">
                     <label for="addressStreet">Street Number</label>
-                    <input class="form-control" placeholder="Enter Street No" id="addressStreet" type="text" ng-model="addressStreet">
+                    <input class="form-control" placeholder="Enter Street No" id="addressStreet" type="text"
+                           ng-model="addressStreet">
                 </div>
 
                 <div class="form-group" style="max-width: 50%">
@@ -59,7 +59,9 @@
                 <div class="form-group" style="max-width: 50%">
                     <label for="customer">Customer</label>
                     <select class="form-control" name="customer" ng-model="selCustomer" id="area" type="text">
-                        <option ng-repeat="customer in allCustomers track by $index" value="[[customer.id]]">[[customer.name]]</option>
+                        <option ng-repeat="customer in allCustomers track by $index" value="[[customer.id]]">
+                            [[customer.name]]
+                        </option>
                     </select>
                 </div>
             </div>
