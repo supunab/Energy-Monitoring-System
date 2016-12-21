@@ -5,14 +5,12 @@ const BreakDownController = require("./src/controllers/BreakDownController");
 const GeneralController = require("./src/controllers/GeneralController");
 const AdminController = require("./src/controllers/AdminController");
 const ComplainController = require("./src/controllers/ComplainController");
-
 const PaymentController = require("./src/controllers/PaymentController");
-
 const PaymentHistoryController = require("./src/controllers/PaymentHistoryController");
 
 
 module.exports = function (app, passport) {
-    app.get('/home', PageController.getIndex);
+    app.get('/',isUserLoggedIn,  PageController.getIndex);
 
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
@@ -37,7 +35,7 @@ module.exports = function (app, passport) {
     }));
 
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect: '/home', // redirect to the secure profile section
+        successRedirect: '/', // redirect to the secure profile section
         failureRedirect: '/signup', // redirect back to the signup page if there is an error
         failureFlash: true // allow flash messages
     }));
