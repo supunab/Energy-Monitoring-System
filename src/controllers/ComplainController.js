@@ -2,8 +2,8 @@ import Complaint from '../model/Complaint'
 const DB = require("./DBController");
 
 exports.getShow = function(req, res){
-    DB.execQuery("SELECT Complaint.id, comp_type, description, title, comment, User.id as userid, User.first_name as username from " +
-        "Complaint join User where Complaint.user_id = User.id and Complaint.id = ?", [req.params.id], function (err, result) {
+    DB.execQuery("SELECT Complaint.id, comp_type, description, title, comment, User.id as userid, Customer.first_name as username from " +
+        "Complaint JOIN User ON Complaint.user_id = User.id JOIN Customer ON Customer.id = User.customer_id where Complaint.id = ? ", [req.params.id], function (err, result) {
         if(err){
             console.log(err);
             res.render("errorPage"); //if some sql error occur
@@ -42,9 +42,11 @@ exports.getIndex = function (req, res) {
                     });
                 } else { // for admin
                     // return all complains
-                    DB.execQuery("SELECT c.id AS id, c.comment AS comment, c.comp_type AS comp_type, " +
-                        "c.description AS description, c.title AS title, u.first_name AS first_name," +
-                        "u.last_name AS last_name FROM Complaint AS c JOIN User AS u ON c.user_id = u.id", [],
+                    DB.execQuery("SELECT c.id AS id, c.comment AS comment, c.comp_type AS comp_type," +
+                            "c.description AS description, c.title AS title, u.first_name AS first_name," +
+                            "u.last_name AS last_name FROM Complaint AS c JOIN ( "+
+                            "SELECT User.id, Customer.last_name, Customer.first_name FROM User JOIN Customer ON User.customer_id = Customer.id)"+
+                            "AS u ON c.user_id = u.id;", [],
                         function (err, complains) {
                             res.render('complain/index', {complains : complains, pageTitle: "Complaints - admin", layout: 'admin-main'});
                         });

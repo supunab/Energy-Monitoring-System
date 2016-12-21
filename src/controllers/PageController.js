@@ -20,10 +20,10 @@ exports.getIndex = function (req, res) {
             console.log(err);
         }else{
             console.log(pc);
+            // TODO call the function
             res.render('user-dashboard', {powercuts: pc});
         }
     });
-    res.render('index');
 }
 
 exports.errorPage404 = function (req, res) {
