@@ -90,6 +90,9 @@ var handlebars = require('express-handlebars').create({
         },
         user: function () {
             return app.locals.user;
+        },
+        userid: function () {
+            return app.locals.id;
         }
     }
 });
