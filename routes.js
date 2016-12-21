@@ -10,7 +10,8 @@ const PaymentHistoryController = require("./src/controllers/PaymentHistoryContro
 
 
 module.exports = function (app, passport) {
-    app.get('/',isUserLoggedIn,  PageController.getIndex);
+    app.get('/', (req, res) => {res.render('index')});
+    app.get('/home',isUserLoggedIn,  PageController.getIndex);
 
     app.get('/login', function (req, res) {
         res.render('login', {message: req.flash('loginMessage')});
@@ -59,14 +60,14 @@ module.exports = function (app, passport) {
     app.get("/admin/connectionRequest", (req, res) => {
         res.render("admin/acceptConnectionRequest", {layout: 'admin-main', needAngular: true});
     });
-    app.get("/admin/getConnectionRequest", AdminController.getConnectionReq);
-    app.put("/admin/rejectConnection/:connection", AdminController.rejectConnection);
-    app.post("/admin/acceptConnection", AdminController.acceptConnection)
+    app.get("/admin/getConnectionRequest", isAdminLoggedIn, AdminController.getConnectionReq);
+    app.put("/admin/rejectConnection/:connection",isAdminLoggedIn, AdminController.rejectConnection);
+    app.post("/admin/acceptConnection", isAdminLoggedIn,AdminController.acceptConnection)
 
     // Payment History for registered users
-    app.get('/paymentHistoryRegistered', PaymentHistoryController.renderPage);
-    app.get('/paymentHistory/getConnections/:customer', PaymentHistoryController.getConnections);
-    app.get('/paymentHistory/getHistory/:data', PaymentHistoryController.getPaymentHistory);
+    app.get('/paymentHistoryRegistered', isUserLoggedIn, PaymentHistoryController.renderPage);
+    app.get('/paymentHistory/getConnections/:customer', isUserLoggedIn, PaymentHistoryController.getConnections);
+    app.get('/paymentHistory/getHistory/:data', isUserLoggedIn, PaymentHistoryController.getPaymentHistory);
 
     //Complains
     app.get("/complain", ComplainController.getIndex);
@@ -89,7 +90,7 @@ module.exports = function (app, passport) {
     app.get('/admin', isAdminLoggedIn, function (req, res) {
         res.render('admin/dashboard', {layout: 'admin-main'});
     });
-    app.get('/admin/powercuts', AdminController.viewPowerCut);
+    app.get('/admin/powercuts', isAdminLoggedIn, AdminController.viewPowerCut);
 
 
     app.get('/breakdownView',BreakDownController.getRequest);

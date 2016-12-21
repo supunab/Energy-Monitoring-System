@@ -20,8 +20,9 @@ exports.getIndex = function (req, res) {
             console.log(err);
         }else{
             console.log(pc);
-            // TODO call the function
-            res.render('user-dashboard', {powercuts: pc});
+            DB.execQuery("SELECT 'CalcBalance'(?) as amount", [req.user.id.int],function (err, amount) {
+                res.render('user-dashboard', {powercuts: pc, amount : amount});
+            });
         }
     });
 }
