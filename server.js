@@ -36,8 +36,8 @@ var handlebars = require('express-handlebars').create({
     helpers: {
         getType : function (re) {
 
-            if(re==0){
-                return  '';
+            if (re == 0) {
+                return '';
             }
             else {
                 return 'checked';
@@ -90,6 +90,9 @@ var handlebars = require('express-handlebars').create({
         },
         user: function () {
             return app.locals.user;
+        },
+        userid: function () {
+            return app.locals.id;
         }
     }
 });

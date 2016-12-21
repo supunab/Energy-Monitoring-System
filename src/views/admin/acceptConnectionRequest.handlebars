@@ -1,0 +1,41 @@
+<div ng-app="energy-monitor" ng-controller="AccConCtrl">
+    <div class="box box-primary" style="max-width: 70%">
+        <form>
+            <div class="box-header with-border">
+                <h3 class="box-title">Approval of Connections</h3>
+                <button type="button" class="btn btn-primary pull-right" ng-click="loadConnectionReq()">Get Next Request</button>
+            </div>
+
+            <div class="box-body with-border">
+                <ul class="list-group">
+                    <li class="list-group-item">Address 1 : [[data.address1]]</li>
+                    <li class="list-group-item">Address 2 : [[data.address2]]</li>
+                    <li class="list-group-item">Street : [[data.street]]</li>
+                    <li class="list-group-item">City      : [[data.city]]</li>
+                    <li class="list-group-item">District : [[data.district]]</li>
+                    <li class="list-group-item">Telephone : [[data.telephone]]</li>
+                </ul>
+
+                <div class="form-group">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <input type="number" class="form-control" ng-model="accountNumber" id="accountNumber" placeholder="Enter Account Number">
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-bitbucket" ng-click="approve()">Approve</button>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <button type="button" class="btn btn-danger" ng-click="disapprove()">Remove</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+        </form>
+    </div>
+</div>
+
+<script src="/js/adminConReq.js"></script>
